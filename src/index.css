@@ -6,3 +6,21 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-weight: 400; /* Соответствует значению normal */
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Regular.woff2");
+}
+
+@font-face {
+  font-weight: 700; /* Соответствует значению bold */
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Bold.woff2");
+}
+
+@font-face {
+  font-weight: 300;
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Light.woff2");
+}

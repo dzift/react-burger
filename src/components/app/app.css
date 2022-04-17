@@ -1,17 +1,37 @@
 .appHeader {
   background-color: #1c1c21;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .contentHeader {
   max-width: 1280px;
-  height: 88px;
+
   margin: 0 auto;
   border: 1px red solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  text-align: center;
+}
+a {
+  color: #8585ad;
 }
 
+.contentHeader a {
+  text-decoration: none;
+}
 .menu {
   display: flex;
+}
+.itemHeader {
+  border: 1px dotted grey;
+}
+
+.logo {
+  background-color: red;
 }
