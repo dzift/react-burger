@@ -1,0 +1,23 @@
+.burgerIngredients {
+  border: gray dotted 1px;
+}
+
+.tabsMenu {
+  display: flex;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tabItem {
+  height: 56px;
+  width: 200px;
+  border-bottom: 1px #2f2f37 solid;
+}
+
+span {
+  vertical-align: middle;
+}
+.menuIngredients {
+  height: 756px;
+  border-top: 1px;
+}

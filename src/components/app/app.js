@@ -1,37 +1,25 @@
 import React from "react";
 import "./app.css";
-import {
-  BurgerIcon,
-  ListIcon,
-  ProfileIcon,
-  Logo,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+
+import AppHeader from "../app-header/app-header.js";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients.js";
 
 function App() {
   return (
     <div className="App">
-      <header className="appHeader">
-        <div className="contentHeader">
-          <div className="menu">
-            <a href="/" className="itemHeader pl-5 pr-5 mr-2 mt-4 mb-4">
-              <BurgerIcon type="primary" />
-              <span className="ml-2">Конструктор</span>
-            </a>
-            <a href="/" className="itemHeader pl-5 pr-5 mt-4 mb-4">
-              <ListIcon type="secondary" />
-              <span className="ml-2">Лента заказов</span>
-            </a>
+      <AppHeader />
+      <main>
+        <div className="content">
+          <BurgerIngredients />
+          <div
+            style={{
+              background: "#934838",
+            }}
+          >
+            2
           </div>
-          <a href="/" className="itemHeader">
-            <Logo />
-          </a>
-          <a href="/" className="itemHeader  mt-4 mb-4">
-            <ProfileIcon type="secondary" />
-            <span className="ml-2">Личный кабинет</span>
-          </a>
         </div>
-      </header>
-      <main></main>
+      </main>
     </div>
   );
 }
