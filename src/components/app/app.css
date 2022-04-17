@@ -1,11 +1,17 @@
 .appHeader {
   background-color: #1c1c21;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .contentHeader {
   max-width: 1280px;
+  height: 88px;
   margin: 0 auto;
   border: 1px red solid;
+}
+
+.menu {
   display: flex;
-  justify-content: space-between;
 }

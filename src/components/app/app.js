@@ -12,20 +12,22 @@ function App() {
     <div className="App">
       <header className="appHeader">
         <div className="contentHeader">
-          <a href="/" className="itemHeader">
-            <BurgerIcon type="primary" />
-            <p className="text-icon">Конструктор</p>
-          </a>
-          <a href="/" className="itemHeader">
-            <ListIcon type="secondary" />
-            <p className="text-icon">Лента заказов</p>
-          </a>
+          <div className="menu">
+            <a href="/" className="itemHeader">
+              <BurgerIcon type="primary" />
+              Конструктор
+            </a>
+            <a href="/" className="itemHeader">
+              <ListIcon type="secondary" />
+              Лента заказов
+            </a>
+          </div>
           <a href="/" className="itemHeader">
             <Logo />
           </a>
           <a href="/" className="itemHeader">
             <ProfileIcon type="secondary" />
-            <p className="text-icon">Личный кабинет</p>
+            Личный кабинет
           </a>
         </div>
       </header>
