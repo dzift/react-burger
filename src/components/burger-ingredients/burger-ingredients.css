@@ -2,7 +2,30 @@
 }
 
 .menuIngredients {
-  height: 756px;
+  width: auto;
+  height: 696px;
   border-top: 1px;
   list-style-type: none;
+  overflow-y: scroll;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+.itemImg {
+}
+.groupIngridents {
+  display: flex;
+  flex-wrap: wrap;
+}
+.itemPrice {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.itemName {
+  max-width: 255px;
+  text-align: center;
 }

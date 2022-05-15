@@ -1,43 +1,25 @@
 import React from "react";
 import "./burger-ingredients.css";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Tab,
+  CurrencyIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { data } from "../app/utils/data.js";
 
 const Ingredient = (props) => {
   return (
-    <div>
+    <div className="item pb-8" key={props.id}>
       <div>
-        <p></p>
+        <img className="itemImg pl-4 pb-1" src={props.image} alt="fff" />
       </div>
-      <div>
-        <img src="URL" />
+      <div className="itemPrice">
+        {props.price}
+        <CurrencyIcon type="primary" />
       </div>
-      <div>
-        <span>{/* <Test>test</Test> */}</span>
-        <img src="URL" />
-      </div>
-      <div className="">{data.id}</div>
+      <div className="text text_type_main-small itemName">{props.name}</div>
     </div>
   );
 };
-
-const data = [
-  {
-    _id: "60666c42cc7b410027a1a9b1",
-    name: "Краторная булка N-200i",
-    type: "bun",
-    proteins: 80,
-    fat: 24,
-    carbohydrates: 53,
-    calories: 420,
-    price: 1255,
-    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-    __v: 0,
-  },
-];
-
-console.log(data);
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
@@ -64,9 +46,65 @@ function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <ul className="menuIngredients">
-        <Ingredient />
-      </ul>
+
+      <div className="menuIngredients ml-4">
+        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
+          Булки
+        </div>
+
+        <div className="groupIngridents">
+          {data.map((obj, index) => {
+            if (obj.type === "bun") {
+              return (
+                <Ingredient
+                  key={obj._id}
+                  image={obj.image}
+                  price={obj.price}
+                  name={obj.name}
+                />
+              );
+            }
+          })}
+        </div>
+
+        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
+          Соусы
+        </div>
+
+        <div className="groupIngridents">
+          {data.map((obj, index) => {
+            if (obj.type === "sauce") {
+              return (
+                <Ingredient
+                  key={obj._id}
+                  image={obj.image}
+                  price={obj.price}
+                  name={obj.name}
+                />
+              );
+            }
+          })}
+        </div>
+
+        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
+          Начинки
+        </div>
+
+        <div className="groupIngridents">
+          {data.map((obj, index) => {
+            if (obj.type === "main") {
+              return (
+                <Ingredient
+                  key={obj._id}
+                  image={obj.image}
+                  price={obj.price}
+                  name={obj.name}
+                />
+              );
+            }
+          })}
+        </div>
+      </div>
     </div>
   );
 }
