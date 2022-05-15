@@ -1,8 +1,8 @@
 import React from "react";
 import "./app.css";
 
-import AppHeader from "../app-header/app-header.js";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients.js";
+import AppHeader from "../app-header/app-header.jsx";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 
 function App() {
   return (
