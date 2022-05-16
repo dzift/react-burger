@@ -1,0 +1,51 @@
+.constructor {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.constructorPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.constructorMenu {
+  width: 100%;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.constructorItemFlex {
+  width: 100%;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow-y: auto;
+}
+.constructorItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.constructorelementPrice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  font-family: "Iceland";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 36px;
+}

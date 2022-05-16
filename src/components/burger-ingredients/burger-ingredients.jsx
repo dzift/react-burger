@@ -13,7 +13,7 @@ const Ingredient = (props) => {
         <img className="itemImg pl-4 pb-1" src={props.image} alt="fff" />
       </div>
       <div className="itemPrice">
-        {props.price}
+        <span className="elementPrice mr-2">{props.price}</span>
         <CurrencyIcon type="primary" />
       </div>
       <div className="text text_type_main-small itemName">{props.name}</div>

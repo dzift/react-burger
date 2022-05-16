@@ -8,3 +8,15 @@
   margin: auto 340px;
   align-items: center;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8585ad;
+}
