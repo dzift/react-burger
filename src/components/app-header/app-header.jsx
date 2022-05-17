@@ -7,7 +7,6 @@ import {
   ProfileIcon,
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-console.log(styles);
 
 class AppHeader extends React.Component {
   render() {
@@ -17,7 +16,7 @@ class AppHeader extends React.Component {
           <div className={styles.menu}>
             <a
               href="/"
-              className={`pl-5 pr-5 mr-2 mt-4 mb-4 text  ${styles.active}`}
+              className={`${styles.active} pr-5 mr-2 mt-4 mb-4 text  `}
             >
               <BurgerIcon type="primary" />
               <span className="ml-2">Конструктор</span>

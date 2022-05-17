@@ -4,17 +4,15 @@ import styles from "./burger-ingredientsr.module.css";
 import {
   Tab,
   CurrencyIcon,
+  Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { data } from "../../utils/data.js";
-
-console.log(styles);
 
 const Ingredient = (props) => {
   return (
     <div className={`${styles.item} pb-8`} key={props.id}>
-      <div>
-        <img className="pl-4 pb-1" src={props.image} alt="fff" />
-      </div>
+      <Counter count={1} size="default" />
+      <img className="pl-4 pb-1" src={props.image} alt="fff" />
       <div className={styles.itemPrice}>
         <span className={`${styles.elementPrice} mr-2`}>{props.price}</span>
         <CurrencyIcon type="primary" />

@@ -5,6 +5,34 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  border: 1px dotted plum;
+}
+.constructorMenu {
+  width: 100%;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.constructorItemFlex {
+  width: 100%;
+  max-height: 550px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-left: 0;
+}
+.constructorItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-type: none;
+  left: 0;
+}
+.constructorItemTop {
+}
+.constructorItemBottom {
 }
 
 .constructorPrice {
@@ -12,30 +40,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-}
-
-.constructorMenu {
-  width: 100%;
-  max-height: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.constructorItemFlex {
-  width: 100%;
-  max-height: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  overflow-y: auto;
-}
-.constructorItem {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  border: 1px red dotted;
 }
 
 .constructorelementPrice {

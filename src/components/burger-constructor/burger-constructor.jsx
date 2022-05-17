@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -7,78 +7,63 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { data } from "../../utils/data.js";
+
+const Element = (props) => {
+  return (
+    <li className={`${styles.constructorItem} pl-4`}>
+      <DragIcon type="primary" />
+      <ConstructorElement
+        text={`${props.obj.name}(верх)`}
+        price={props.obj.price}
+        thumbnail={props.obj.image_mobile}
+      />
+    </li>
+  );
+};
+
 function BurgerConstructor() {
   return (
-    <div className={`${styles.constructor} pt-25 pl-4`}>
+    <div className={`${styles.constructor} pt-25 pl-4 pb-10`}>
       <div className={styles.constructorMenu}>
-        <div className={styles.constructorItemTop}>
+        <div
+          className={`${styles.constructorItemTop} pl-8`}
+          id="constructorItemTop"
+        >
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
+            text="Краторная булка N-200i(верх)"
             price={200}
             thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
           />
         </div>
-        <div className={styles.constructorItemFlex}>
-          <div className={styles.constructorItem}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Биокотлета из марсианской Магнолии"
-              price={50}
-              thumbnail="https://code.s3.yandex.net/react/code/meat-01-mobile.png"
-            />
-          </div>
-          <div className={styles.constructorItem}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Говяжий метеорит (отбивная)"
-              price={50}
-              thumbnail="https://code.s3.yandex.net/react/code/meat-04-mobile.png"
-            />
-          </div>
-          <div className={styles.constructorItem}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Соус Spicy-X"
-              price={50}
-              thumbnail="https://code.s3.yandex.net/react/code/sauce-02-mobile.png"
-            />
-          </div>
-          <div className={styles.constructorItem}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Краторная булка N-200i (верх)"
-              price={50}
-              thumbnail="https://code.s3.yandex.net/react/code/meat-01-mobile.png"
-            />
-          </div>
-          <div className={styles.constructorItem}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Плоды Фалленианского дерева"
-              price={50}
-              thumbnail="https://code.s3.yandex.net/react/code/sp_1-mobile.png"
-            />
-          </div>
-        </div>
+        <ul className={styles.constructorItemFlex}>
+          {data.map((obj) => {
+            if (obj.type !== "bun") {
+              return <Element key={obj._id} obj={obj} />;
+            }
+          })}
+        </ul>
 
-        <div className={styles.constructorItemBottom}>
+        <div
+          className={`${styles.constructorItemBottom} pl-8`}
+          id="constructorItemBottom"
+        >
           {" "}
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Флюоресцентная булка R2-D3"
+            text="Краторная булка N-200i(низ)"
             price={200}
-            thumbnail="https://code.s3.yandex.net/react/code/bun-01-mobile.png"
+            thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
           />
         </div>
       </div>
-      <div className={`${styles.constructorPrice}pb-10 pr-4`}>
+      <div className={`${styles.constructorPrice} pt-10 pr-4`}>
         <span className={`${styles.constructorelementPrice} mr-10`}>
           1000 <CurrencyIcon type="primary" />
         </span>
-
         <Button type="primary" size="large">
           Оформить заказ
         </Button>
