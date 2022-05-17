@@ -24,17 +24,69 @@ const Ingredient = (props) => {
   );
 };
 
+Ingredient.propTypes = {
+  image: PropTypes.string,
+  price: PropTypes.number,
+  name: PropTypes.string,
+};
+
 function Tabs() {
   const [current, setCurrent] = React.useState("one");
+
   return (
     <div className={styles.tab}>
-      <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+      <Tab
+        value="Булки"
+        active={current === "Булки"}
+        onClick={
+          (setCurrent,
+          function () {
+            let type = document.getElementById("bun");
+            if (type) {
+              type.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }
+          })
+        }
+      >
         Булки
       </Tab>
-      <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+      <Tab
+        value="Соусы"
+        active={current === "Соусы"}
+        onClick={
+          (setCurrent,
+          function () {
+            let type = document.getElementById("sauce");
+            if (type) {
+              type.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }
+          })
+        }
+      >
         Соусы
       </Tab>
-      <Tab value="Начинки" active={current === "Начинки"} onClick={setCurrent}>
+      <Tab
+        value="Начинки"
+        active={current === "Начинки"}
+        onClick={
+          (setCurrent,
+          function () {
+            let type = document.getElementById("main");
+            if (type) {
+              type.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+            }
+          })
+        }
+      >
         Начинки
       </Tab>
     </div>
@@ -51,6 +103,7 @@ function BurgerIngredients() {
       <div className={`${styles.menuIngredients} ml-4`}>
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+          id="bun"
         >
           Булки
         </div>
@@ -72,6 +125,7 @@ function BurgerIngredients() {
 
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+          id="sauce"
         >
           Соусы
         </div>
@@ -93,6 +147,7 @@ function BurgerIngredients() {
 
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+          id="main"
         >
           Начинки
         </div>

@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
-  border: 1px dotted plum;
 }
 .constructorMenu {
   width: 100%;
@@ -15,8 +14,6 @@
 }
 
 .constructorItemFlex {
-  width: 100%;
-  max-height: 550px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -40,7 +37,6 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border: 1px red dotted;
 }
 
 .constructorelementPrice {

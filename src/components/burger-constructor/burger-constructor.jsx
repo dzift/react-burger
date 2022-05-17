@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -14,12 +15,18 @@ const Element = (props) => {
     <li className={`${styles.constructorItem} pl-4`}>
       <DragIcon type="primary" />
       <ConstructorElement
-        text={`${props.obj.name}(верх)`}
-        price={props.obj.price}
-        thumbnail={props.obj.image_mobile}
+        text={`${props.name}(верх)`}
+        price={props.price}
+        thumbnail={props.image_mobile}
       />
     </li>
   );
+};
+
+Element.propTypes = {
+  name: PropTypes.string,
+  price: PropTypes.number,
+  image_mobile: PropTypes.string,
 };
 
 function BurgerConstructor() {
@@ -41,7 +48,14 @@ function BurgerConstructor() {
         <ul className={styles.constructorItemFlex}>
           {data.map((obj) => {
             if (obj.type !== "bun") {
-              return <Element key={obj._id} obj={obj} />;
+              return (
+                <Element
+                  key={obj._id}
+                  image_mobile={obj.image_mobile}
+                  price={obj.price}
+                  name={obj.name}
+                />
+              );
             }
           })}
         </ul>
