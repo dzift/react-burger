@@ -1,59 +1,64 @@
 import React from "react";
-import "./burger-ingredients.css";
+import PropTypes from "prop-types";
+import styles from "./burger-ingredientsr.module.css";
 import {
   Tab,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { data } from "../app/utils/data.js";
+import { data } from "../../utils/data.js";
+
+console.log(styles);
 
 const Ingredient = (props) => {
   return (
-    <div className="item pb-8" key={props.id}>
+    <div className={`${styles.item} pb-8`} key={props.id}>
       <div>
-        <img className="itemImg pl-4 pb-1" src={props.image} alt="fff" />
+        <img className="pl-4 pb-1" src={props.image} alt="fff" />
       </div>
-      <div className="itemPrice">
-        <span className="elementPrice mr-2">{props.price}</span>
+      <div className={styles.itemPrice}>
+        <span className={`${styles.elementPrice} mr-2`}>{props.price}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <div className="text text_type_main-small itemName">{props.name}</div>
+      <div className={`${styles.itemName} text text_type_main-small`}>
+        {props.name}
+      </div>
     </div>
   );
 };
 
-function BurgerIngredients() {
+function Tabs() {
   const [current, setCurrent] = React.useState("one");
-
   return (
-    <div className="mr-10 burgerIngredients ">
-      <div className="pt-10 pb-5 text text_type_main-large">
+    <div className={styles.tab}>
+      <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+        Булки
+      </Tab>
+      <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+        Соусы
+      </Tab>
+      <Tab value="Начинки" active={current === "Начинки"} onClick={setCurrent}>
+        Начинки
+      </Tab>
+    </div>
+  );
+}
+
+function BurgerIngredients() {
+  return (
+    <div className={`${styles.burgerIngredients} mr-10`}>
+      <div className="text text_type_main-large pt-10 pb-5">
         Соберите бургер
       </div>
-      <div
-        style={{ display: "grid", gridTemplateColumns: "200px 200px 200px" }}
-      >
-        <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
-          Булки
-        </Tab>
-        <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab
-          value="Начинки"
-          active={current === "Начинки"}
-          onClick={setCurrent}
+      <Tabs />
+      <div className={`${styles.menuIngredients} ml-4`}>
+        <div
+          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
         >
-          Начинки
-        </Tab>
-      </div>
-
-      <div className="menuIngredients ml-4">
-        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
           Булки
         </div>
 
-        <div className="groupIngridents">
-          {data.map((obj, index) => {
+        <div className={styles.groupIngridents}>
+          {data.map((obj) => {
             if (obj.type === "bun") {
               return (
                 <Ingredient
@@ -67,12 +72,14 @@ function BurgerIngredients() {
           })}
         </div>
 
-        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
+        <div
+          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+        >
           Соусы
         </div>
 
-        <div className="groupIngridents">
-          {data.map((obj, index) => {
+        <div className={styles.groupIngridents}>
+          {data.map((obj) => {
             if (obj.type === "sauce") {
               return (
                 <Ingredient
@@ -86,12 +93,14 @@ function BurgerIngredients() {
           })}
         </div>
 
-        <div className="text text_type_main-medium groupIngridents pb-6 pt-10">
+        <div
+          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+        >
           Начинки
         </div>
 
-        <div className="groupIngridents">
-          {data.map((obj, index) => {
+        <div className={styles.groupIngridents}>
+          {data.map((obj) => {
             if (obj.type === "main") {
               return (
                 <Ingredient

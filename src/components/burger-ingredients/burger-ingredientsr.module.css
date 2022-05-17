@@ -13,8 +13,7 @@
   flex-direction: column;
   align-content: center;
 }
-.itemImg {
-}
+
 .groupIngridents {
   display: flex;
   flex-wrap: wrap;
@@ -39,4 +38,9 @@
   font-weight: normal;
   font-size: 28px;
   line-height: 24px;
+}
+
+.tab {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
 }

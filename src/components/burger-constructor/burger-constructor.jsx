@@ -1,5 +1,5 @@
 import React from "react";
-import "./burger-constructor.css";
+import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
   DragIcon,
@@ -9,9 +9,9 @@ import {
 
 function BurgerConstructor() {
   return (
-    <div className="constructor pt-25 pl-4 ">
-      <div className="constructorMenu">
-        <div className="constructorItemTop">
+    <div className={`${styles.constructor} pt-25 pl-4`}>
+      <div className={styles.constructorMenu}>
+        <div className={styles.constructorItemTop}>
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -20,41 +20,41 @@ function BurgerConstructor() {
             thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
           />
         </div>
-        <div className="constructorItemFlex">
-          <div className="constructorItem">
-            <DragIcon type="primary" className="dragIcon" />
+        <div className={styles.constructorItemFlex}>
+          <div className={styles.constructorItem}>
+            <DragIcon type="primary" />
             <ConstructorElement
               text="Биокотлета из марсианской Магнолии"
               price={50}
               thumbnail="https://code.s3.yandex.net/react/code/meat-01-mobile.png"
             />
           </div>
-          <div className="constructorItem">
-            <DragIcon type="primary" className="dragIcon" />
+          <div className={styles.constructorItem}>
+            <DragIcon type="primary" />
             <ConstructorElement
               text="Говяжий метеорит (отбивная)"
               price={50}
               thumbnail="https://code.s3.yandex.net/react/code/meat-04-mobile.png"
             />
           </div>
-          <div className="constructorItem">
-            <DragIcon type="primary" className="dragIcon" />
+          <div className={styles.constructorItem}>
+            <DragIcon type="primary" />
             <ConstructorElement
               text="Соус Spicy-X"
               price={50}
               thumbnail="https://code.s3.yandex.net/react/code/sauce-02-mobile.png"
             />
           </div>
-          <div className="constructorItem">
-            <DragIcon type="primary" className="dragIcon" />
+          <div className={styles.constructorItem}>
+            <DragIcon type="primary" />
             <ConstructorElement
               text="Краторная булка N-200i (верх)"
               price={50}
               thumbnail="https://code.s3.yandex.net/react/code/meat-01-mobile.png"
             />
           </div>
-          <div className="constructorItem">
-            <DragIcon type="primary" className="dragIcon" />
+          <div className={styles.constructorItem}>
+            <DragIcon type="primary" />
             <ConstructorElement
               text="Плоды Фалленианского дерева"
               price={50}
@@ -63,7 +63,7 @@ function BurgerConstructor() {
           </div>
         </div>
 
-        <div className="constructorItemBottom">
+        <div className={styles.constructorItemBottom}>
           {" "}
           <ConstructorElement
             type="bottom"
@@ -74,8 +74,8 @@ function BurgerConstructor() {
           />
         </div>
       </div>
-      <div className="constructorPrice pb-10 pr-4">
-        <span className="constructorelementPrice mr-10">
+      <div className={`${styles.constructorPrice}pb-10 pr-4`}>
+        <span className={`${styles.constructorelementPrice} mr-10`}>
           1000 <CurrencyIcon type="primary" />
         </span>
 
