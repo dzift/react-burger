@@ -15,7 +15,7 @@ const Element = (props) => {
     <li className={`${styles.constructorItem} pl-4`}>
       <DragIcon type="primary" />
       <ConstructorElement
-        text={`${props.name}(верх)`}
+        text={`${props.name}`}
         price={props.price}
         thumbnail={props.image_mobile}
       />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-ingredientsr.module.css";
 import {
@@ -30,84 +30,69 @@ Ingredient.propTypes = {
   name: PropTypes.string,
 };
 
-function Tabs() {
+function BurgerIngredients() {
   const [current, setCurrent] = React.useState("one");
 
-  return (
-    <div className={styles.tab}>
-      <Tab
-        value="Булки"
-        active={current === "Булки"}
-        onClick={
-          (setCurrent,
-          function () {
-            let type = document.getElementById("bun");
-            if (type) {
-              type.scrollIntoView({
-                block: "center",
-                behavior: "smooth",
-              });
-            }
-          })
-        }
-      >
-        Булки
-      </Tab>
-      <Tab
-        value="Соусы"
-        active={current === "Соусы"}
-        onClick={
-          (setCurrent,
-          function () {
-            let type = document.getElementById("sauce");
-            if (type) {
-              type.scrollIntoView({
-                block: "center",
-                behavior: "smooth",
-              });
-            }
-          })
-        }
-      >
-        Соусы
-      </Tab>
-      <Tab
-        value="Начинки"
-        active={current === "Начинки"}
-        onClick={
-          (setCurrent,
-          function () {
-            let type = document.getElementById("main");
-            if (type) {
-              type.scrollIntoView({
-                block: "center",
-                behavior: "smooth",
-              });
-            }
-          })
-        }
-      >
-        Начинки
-      </Tab>
-    </div>
-  );
-}
+  const bun = React.useRef(null);
+  const sause = React.useRef(null);
+  const main = React.useRef(null);
 
-function BurgerIngredients() {
   return (
     <div className={`${styles.burgerIngredients} mr-10`}>
       <div className="text text_type_main-large pt-10 pb-5">
         Соберите бургер
       </div>
-      <Tabs />
+      <div className={styles.tab}>
+        <Tab
+          value="Булки"
+          active={current === "Булки"}
+          onClick={
+            (setCurrent,
+            function () {
+              bun.current.scrollIntoView({
+                behavior: "smooth",
+              });
+            })
+          }
+        >
+          Булки
+        </Tab>
+        <Tab
+          value="Соусы"
+          active={current === "Соусы"}
+          onClick={
+            (setCurrent,
+            function () {
+              sause.current.scrollIntoView({
+                behavior: "smooth",
+              });
+            })
+          }
+        >
+          Соусы
+        </Tab>
+        <Tab
+          value="Начинки"
+          active={current === "Начинки"}
+          onClick={
+            (setCurrent,
+            function () {
+              main.current.scrollIntoView({
+                behavior: "smooth",
+              });
+            })
+          }
+        >
+          Начинки
+        </Tab>
+      </div>
       <div className={`${styles.menuIngredients} ml-4`}>
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          id="bun"
+          ref={bun}
         >
           Булки
         </div>
-
         <div className={styles.groupIngridents}>
           {data.map((obj) => {
             if (obj.type === "bun") {
@@ -125,11 +110,10 @@ function BurgerIngredients() {
 
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          id="sauce"
+          ref={sause}
         >
           Соусы
         </div>
-
         <div className={styles.groupIngridents}>
           {data.map((obj) => {
             if (obj.type === "sauce") {
@@ -144,14 +128,12 @@ function BurgerIngredients() {
             }
           })}
         </div>
-
         <div
           className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          id="main"
+          ref={main}
         >
           Начинки
         </div>
-
         <div className={styles.groupIngridents}>
           {data.map((obj) => {
             if (obj.type === "main") {
