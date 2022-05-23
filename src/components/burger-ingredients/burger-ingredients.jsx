@@ -1,16 +1,38 @@
-import React, { useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import styles from "./burger-ingredientsr.module.css";
+import styles from "./burger-ingredients.module.css";
 import {
   Tab,
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { data } from "../../utils/data.js";
+import Modal from "../modal-ingridient/modal-ingridient";
 
 const Ingredient = (props) => {
+  const [isVisible, setVisible] = React.useState({
+    visible: false,
+  });
+
+  function ON() {
+    console.log("TEST");
+    setVisible({ visible: true });
+  }
+
+  function OFF() {
+    console.log(setVisible);
+    setVisible({ visible: false });
+  }
+  const modal = (
+    <Modal header="Внимание!" onClick={OFF}>
+      <p>Спасибо за внимание!</p>
+      <p>Открывай меня, если станет скучно :)</p>
+    </Modal>
+  );
+
   return (
-    <div className={`${styles.item} pb-8`} key={props.id}>
+    <div className={`${styles.item} pb-8`} key={props.id} onClick={ON}>
+      {isVisible && modal}
       <Counter count={1} size="default" />
       <img className="pl-4 pb-1" src={props.image} alt="fff" />
       <div className={styles.itemPrice}>

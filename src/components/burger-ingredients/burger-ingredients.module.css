@@ -45,3 +45,12 @@
   display: grid;
   grid-template-columns: 200px 200px 200px;
 }
+
+.modal {
+  background-color: blueviolet;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50;
+  right: 50;
+}
