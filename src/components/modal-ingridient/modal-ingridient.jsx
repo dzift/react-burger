@@ -11,8 +11,10 @@ class Modal extends React.Component {
     // который поместит дочерние элементы в modalRoot
     return ReactDOM.createPortal(
       <>
-        <div className="Modal">
-          <div onClose={onClose}>{header}</div>
+        <div className={styles.modal}>
+          <div className={styles.modal_container} onClose={onClose}>
+            {header}
+          </div>
           {children}
         </div>
         <div onClose={onClose}></div>

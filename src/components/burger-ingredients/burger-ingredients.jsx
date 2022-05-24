@@ -6,8 +6,9 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { data } from "../../utils/data.js";
 import Modal from "../modal-ingridient/modal-ingridient";
+
+const url = "https://norma.nomoreparties.space/api/ingredients";
 
 const Ingredient = (props) => {
   const [isVisible, setVisible] = React.useState({
@@ -59,120 +60,144 @@ function BurgerIngredients() {
   const sause = React.useRef(null);
   const main = React.useRef(null);
 
-  return (
-    <div className={`${styles.burgerIngredients} mr-10`}>
-      <div className="text text_type_main-large pt-10 pb-5">
-        Соберите бургер
-      </div>
-      <div className={styles.tab}>
-        <Tab
-          value="Булки"
-          active={current === "Булки"}
-          onClick={
-            (setCurrent,
-            function () {
-              bun.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
-        >
-          Булки
-        </Tab>
-        <Tab
-          value="Соусы"
-          active={current === "Соусы"}
-          onClick={
-            (setCurrent,
-            function () {
-              sause.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
-        >
-          Соусы
-        </Tab>
-        <Tab
-          value="Начинки"
-          active={current === "Начинки"}
-          onClick={
-            (setCurrent,
-            function () {
-              main.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
-        >
-          Начинки
-        </Tab>
-      </div>
-      <div className={`${styles.menuIngredients} ml-4`}>
-        <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          ref={bun}
-        >
-          Булки
-        </div>
-        <div className={styles.groupIngridents}>
-          {data.map((obj) => {
-            if (obj.type === "bun") {
-              return (
-                <Ingredient
-                  key={obj._id}
-                  image={obj.image}
-                  price={obj.price}
-                  name={obj.name}
-                />
-              );
-            }
-          })}
-        </div>
+  const [error, setError] = React.useState(null);
+  const [items, setItems] = React.useState([]);
 
-        <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          ref={sause}
-        >
-          Соусы
+  React.useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setItems(result);
+        },
+        (error) => {
+          setError(error);
+        }
+      );
+  }, []);
+
+  console.log(items, items.length);
+
+  if (error) {
+    return <div>Ошибка: {error.message}</div>;
+  } else if (items.length === 0) {
+    return <div>Загрузка...</div>;
+  } else {
+    return (
+      <div className={`${styles.burgerIngredients} mr-10`}>
+        <div className="text text_type_main-large pt-10 pb-5">
+          Соберите бургер
         </div>
-        <div className={styles.groupIngridents}>
-          {data.map((obj) => {
-            if (obj.type === "sauce") {
-              return (
-                <Ingredient
-                  key={obj._id}
-                  image={obj.image}
-                  price={obj.price}
-                  name={obj.name}
-                />
-              );
+        <div className={styles.tab}>
+          <Tab
+            value="Булки"
+            active={current === "Булки"}
+            onClick={
+              (setCurrent,
+              function () {
+                bun.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              })
             }
-          })}
-        </div>
-        <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          ref={main}
-        >
-          Начинки
-        </div>
-        <div className={styles.groupIngridents}>
-          {data.map((obj) => {
-            if (obj.type === "main") {
-              return (
-                <Ingredient
-                  key={obj._id}
-                  image={obj.image}
-                  price={obj.price}
-                  name={obj.name}
-                />
-              );
+          >
+            Булки
+          </Tab>
+          <Tab
+            value="Соусы"
+            active={current === "Соусы"}
+            onClick={
+              (setCurrent,
+              function () {
+                sause.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              })
             }
-          })}
+          >
+            Соусы
+          </Tab>
+          <Tab
+            value="Начинки"
+            active={current === "Начинки"}
+            onClick={
+              (setCurrent,
+              function () {
+                main.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              })
+            }
+          >
+            Начинки
+          </Tab>
+        </div>
+        <div className={`${styles.menuIngredients} ml-4`}>
+          <div
+            className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+            ref={bun}
+          >
+            Булки
+          </div>
+          <div className={styles.groupIngridents}>
+            {items.data.map((obj) => {
+              if (obj.type === "bun") {
+                return (
+                  <Ingredient
+                    key={obj._id}
+                    image={obj.image}
+                    price={obj.price}
+                    name={obj.name}
+                  />
+                );
+              }
+            })}
+          </div>
+
+          <div
+            className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+            ref={sause}
+          >
+            Соусы
+          </div>
+          <div className={styles.groupIngridents}>
+            {items.data.map((obj) => {
+              if (obj.type === "sauce") {
+                return (
+                  <Ingredient
+                    key={obj._id}
+                    image={obj.image}
+                    price={obj.price}
+                    name={obj.name}
+                  />
+                );
+              }
+            })}
+          </div>
+          <div
+            className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+            ref={main}
+          >
+            Начинки
+          </div>
+          <div className={styles.groupIngridents}>
+            {items.data.map((obj) => {
+              if (obj.type === "main") {
+                return (
+                  <Ingredient
+                    key={obj._id}
+                    image={obj.image}
+                    price={obj.price}
+                    name={obj.name}
+                  />
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default BurgerIngredients;
