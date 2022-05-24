@@ -6,44 +6,44 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal-ingridient/modal-ingridient";
+import Modal from "../modal/modal.jsx";
 
 const url = "https://norma.nomoreparties.space/api/ingredients";
 
 const Ingredient = (props) => {
-  const [isVisible, setVisible] = React.useState({
-    visible: false,
-  });
-
+  const [isVisible, setVisible] = React.useState(false);
+  console.log(isVisible, "1");
   function ON() {
-    console.log("TEST");
-    setVisible({ visible: true });
+    console.log(isVisible);
+    setVisible(true);
   }
 
-  function OFF() {
-    console.log(setVisible);
-    setVisible({ visible: false });
-  }
+  const OFF = () => {
+    console.log(isVisible);
+    setVisible(false);
+  };
   const modal = (
-    <Modal header="Внимание!" onClick={OFF}>
+    <Modal header="Внимание!" onClose={OFF}>
       <p>Спасибо за внимание!</p>
       <p>Открывай меня, если станет скучно :)</p>
     </Modal>
   );
 
   return (
-    <div className={`${styles.item} pb-8`} key={props.id} onClick={ON}>
-      {isVisible && modal}
-      <Counter count={1} size="default" />
-      <img className="pl-4 pb-1" src={props.image} alt="fff" />
-      <div className={styles.itemPrice}>
-        <span className={`${styles.elementPrice} mr-2`}>{props.price}</span>
-        <CurrencyIcon type="primary" />
+    <>
+      <div>{isVisible && modal}</div>
+      <div className={`${styles.item} pb-8`} key={props.id} onClick={ON}>
+        <Counter count={1} size="default" />
+        <img className="pl-4 pb-1" src={props.image} alt="fff" />
+        <div className={styles.itemPrice}>
+          <span className={`${styles.elementPrice} mr-2`}>{props.price}</span>
+          <CurrencyIcon type="primary" />
+        </div>
+        <div className={`${styles.itemName} text text_type_main-small`}>
+          {props.name}
+        </div>
       </div>
-      <div className={`${styles.itemName} text text_type_main-small`}>
-        {props.name}
-      </div>
-    </div>
+    </>
   );
 };
 
@@ -76,12 +76,12 @@ function BurgerIngredients() {
       );
   }, []);
 
-  console.log(items, items.length);
-
   if (error) {
     return <div>Ошибка: {error.message}</div>;
   } else if (items.length === 0) {
-    return <div>Загрузка...</div>;
+    return (
+      <div className="text text_type_main-large pt-10 pb-5">Загрузка...</div>
+    );
   } else {
     return (
       <div className={`${styles.burgerIngredients} mr-10`}>
