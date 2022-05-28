@@ -7,27 +7,21 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal.jsx";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const url = "https://norma.nomoreparties.space/api/ingredients";
+const UrlApi = "https://norma.nomoreparties.space/api/ingredients";
 
 const Ingredient = (props) => {
   const [isVisible, setVisible] = React.useState(false);
-  console.log(isVisible, "1");
+
   function ON() {
-    console.log(isVisible);
     setVisible(true);
   }
 
-  const OFF = () => {
-    console.log(isVisible);
+  function OFF() {
     setVisible(false);
-  };
-  const modal = (
-    <Modal header="Внимание!" onClose={OFF}>
-      <p>Спасибо за внимание!</p>
-      <p>Открывай меня, если станет скучно :)</p>
-    </Modal>
-  );
+  }
+  const modal = <Modal onClose={OFF} data={props}></Modal>;
 
   return (
     <>
@@ -48,9 +42,15 @@ const Ingredient = (props) => {
 };
 
 Ingredient.propTypes = {
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  calories: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  image_large: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
 };
 
 function BurgerIngredients() {
@@ -64,7 +64,7 @@ function BurgerIngredients() {
   const [items, setItems] = React.useState([]);
 
   React.useEffect(() => {
-    fetch(url)
+    fetch(UrlApi)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -73,7 +73,8 @@ function BurgerIngredients() {
         (error) => {
           setError(error);
         }
-      );
+      )
+      .catch((e) => console.log(e));
   }, []);
 
   if (error) {
@@ -142,14 +143,7 @@ function BurgerIngredients() {
           <div className={styles.groupIngridents}>
             {items.data.map((obj) => {
               if (obj.type === "bun") {
-                return (
-                  <Ingredient
-                    key={obj._id}
-                    image={obj.image}
-                    price={obj.price}
-                    name={obj.name}
-                  />
-                );
+                return <Ingredient key={obj._id} {...obj} />;
               }
             })}
           </div>
@@ -163,14 +157,7 @@ function BurgerIngredients() {
           <div className={styles.groupIngridents}>
             {items.data.map((obj) => {
               if (obj.type === "sauce") {
-                return (
-                  <Ingredient
-                    key={obj._id}
-                    image={obj.image}
-                    price={obj.price}
-                    name={obj.name}
-                  />
-                );
+                return <Ingredient key={obj._id} {...obj} />;
               }
             })}
           </div>
@@ -183,14 +170,7 @@ function BurgerIngredients() {
           <div className={styles.groupIngridents}>
             {items.data.map((obj) => {
               if (obj.type === "main") {
-                return (
-                  <Ingredient
-                    key={obj._id}
-                    image={obj.image}
-                    price={obj.price}
-                    name={obj.name}
-                  />
-                );
+                return <Ingredient key={obj._id} {...obj} />;
               }
             })}
           </div>

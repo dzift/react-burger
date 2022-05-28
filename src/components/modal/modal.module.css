@@ -1,12 +1,11 @@
 .modal {
-  position: absolute;
+  background-color: black;
+  border: 1px solid #4c4cff;
+  border-radius: 40px;
   left: 50%;
+  position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-.modal_container {
-  padding: 20px;
-  background-color: #fff;
-  color: #000;
+  min-height: 539px;
+  z-index: 1000;
 }
