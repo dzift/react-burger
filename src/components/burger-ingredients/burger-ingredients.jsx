@@ -21,7 +21,11 @@ const Ingredient = (props) => {
   function OFF() {
     setVisible(false);
   }
-  const modal = <Modal onClose={OFF} data={props}></Modal>;
+  const modal = (
+    <Modal onClose={OFF}>
+      <IngredientDetails data={props} />
+    </Modal>
+  );
 
   return (
     <>

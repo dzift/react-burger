@@ -10,6 +10,7 @@ import {
 
 import { data } from "../../utils/data.js";
 import Modal from "../modal/modal.jsx";
+import OrderDetails from "../order-details/order-details";
 
 const Element = (props) => {
   return (
@@ -25,9 +26,9 @@ const Element = (props) => {
 };
 
 Element.propTypes = {
-  name: PropTypes.string,
-  price: PropTypes.number,
-  image_mobile: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image_mobile: PropTypes.string.isRequired,
 };
 
 function BurgerConstructor(props) {
@@ -40,7 +41,11 @@ function BurgerConstructor(props) {
   function OFF() {
     setVisible(false);
   }
-  const modal = <Modal onClose={OFF} data={props}></Modal>;
+  const modal = (
+    <Modal onClose={OFF} data={props}>
+      <OrderDetails />
+    </Modal>
+  );
   return (
     <div>
       <div>{isVisible && modal}</div>
