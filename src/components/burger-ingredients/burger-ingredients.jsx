@@ -12,13 +12,13 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 const Ingredient = (props) => {
   const [isVisible, setVisible] = React.useState(false);
 
-  function ModalVisible() {
+  function modalVisible() {
     setVisible(!isVisible);
   }
 
   const ModalWindow = (
-    <Modal onClose={ModalVisible}>
-      <IngredientDetails data={props} onClose={ModalVisible} />
+    <Modal onClose={modalVisible}>
+      <IngredientDetails data={props} onClose={modalVisible} />
     </Modal>
   );
 
@@ -28,7 +28,7 @@ const Ingredient = (props) => {
       <div
         className={`${styles.itemCard} pb-8`}
         key={props.id}
-        onClick={ModalVisible}
+        onClick={modalVisible}
       >
         <Counter count={1} size="default" />
         <img src={props.image} alt="fff" />

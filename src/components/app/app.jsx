@@ -6,14 +6,14 @@ import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
 
-const UrlForApi = "https://norma.nomoreparties.space/api/ingredients";
+const urlForApi = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
   const [error, setError] = React.useState(null);
   const [items, setItems] = React.useState([]);
 
   React.useEffect(() => {
-    fetch(UrlForApi)
+    fetch(urlForApi)
       .then((res) => res.json())
       .then(
         (result) => {

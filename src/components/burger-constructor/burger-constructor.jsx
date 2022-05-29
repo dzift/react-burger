@@ -27,13 +27,13 @@ const Element = (props) => {
 function BurgerConstructor(props) {
   const [isVisible, setVisible] = React.useState(false);
 
-  function ModalVisible() {
+  function modalVisible() {
     setVisible(!isVisible);
   }
 
   const ModalWindow = (
-    <Modal onClose={ModalVisible}>
-      <OrderDetails onClose={ModalVisible} />
+    <Modal onClose={modalVisible}>
+      <OrderDetails onClose={modalVisible} />
     </Modal>
   );
 
@@ -82,7 +82,7 @@ function BurgerConstructor(props) {
             <span className="text text_type_digits-medium mr-2">1000</span>{" "}
             <CurrencyIcon type="primary" />
           </span>
-          <Button type="primary" size="large" onClick={ModalVisible}>
+          <Button type="primary" size="large" onClick={modalVisible}>
             Оформить заказ
           </Button>
         </div>
