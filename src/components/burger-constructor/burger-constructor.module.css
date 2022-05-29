@@ -16,7 +16,7 @@
 .constructorItemFlex {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   overflow-y: auto;
   padding-left: 0;
 }
@@ -33,10 +33,4 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-}
-
-.constructorelementPrice {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
 }

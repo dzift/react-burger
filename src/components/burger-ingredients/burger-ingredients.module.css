@@ -1,3 +1,8 @@
+.tab {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+}
+
 .menuIngredients {
   width: auto;
   height: 696px;
@@ -5,11 +10,6 @@
   list-style-type: none;
   overflow-y: scroll;
 }
-.tab {
-  display: grid;
-  grid-template-columns: 200px 200px 200px;
-}
-
 .itemCard {
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   min-width: 257px;
 }
 
-.groupIngridents {
+.groupIngredients {
   display: flex;
   flex-wrap: wrap;
 }
@@ -31,4 +31,9 @@
 .itemName {
   max-width: 255px;
   text-align: center;
+}
+.elementPrice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
 }

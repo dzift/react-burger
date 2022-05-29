@@ -8,7 +8,7 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-function AppHeader() {
+const AppHeader = () => {
   return (
     <header className={styles.appHeader}>
       <div className={styles.contentHeader}>
@@ -35,6 +35,6 @@ function AppHeader() {
       </div>
     </header>
   );
-}
+};
 
 export default AppHeader;

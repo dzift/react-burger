@@ -1,34 +1,33 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
 
-const urlForApi = "https://norma.nomoreparties.space/api/ingredients";
+const URL_FOR_API = "https://norma.nomoreparties.space/api/ingredients";
+const checkReponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+};
 
-function App() {
+const App = () => {
   const [error, setError] = React.useState(null);
   const [items, setItems] = React.useState([]);
+  const [loading, setLoading] = React.useState([true]);
 
   React.useEffect(() => {
-    fetch(urlForApi)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          setItems(result);
-        },
-        (error) => {
-          setError(error);
-        }
-      )
-      .catch((e) => console.log(e));
+    fetch(URL_FOR_API)
+      .then(checkReponse)
+      .then((result) => {
+        setItems(result);
+        setLoading(false);
+      })
+      .catch((err) => setError(error));
   }, []);
 
   if (error) {
     return <div className={styles.preLoad}>Ошибка: {error.message}</div>;
-  } else if (items.length === 0) {
+  } else if (loading) {
     return (
       <div className={`${styles.preLoad} text text_type_main-large`}>
         Загрузка...
@@ -36,19 +35,17 @@ function App() {
     );
   } else {
     return (
-      <div className="App">
+      <div>
         <AppHeader />
-        <div className={styles.page}>
-          <main>
-            <div className={styles.content}>
-              <BurgerIngredients {...items} />
-              <BurgerConstructor {...items} />
-            </div>
-          </main>
-        </div>
+        <main className={styles.page}>
+          <div className={styles.content}>
+            <BurgerIngredients {...items} />
+            <BurgerConstructor {...items} />
+          </div>
+        </main>
       </div>
     );
   }
-}
+};
 
 export default App;

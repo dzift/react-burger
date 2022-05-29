@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-ingredients.module.css";
 import {
@@ -10,21 +10,19 @@ import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const Ingredient = (props) => {
-  const [isVisible, setVisible] = React.useState(false);
+  const [showModal, switchModal] = React.useState(false);
 
-  function modalVisible() {
-    setVisible(!isVisible);
-  }
-
-  const ModalWindow = (
-    <Modal onClose={modalVisible}>
-      <IngredientDetails data={props} onClose={modalVisible} />
-    </Modal>
-  );
+  const modalVisible = () => {
+    switchModal(!showModal);
+  };
 
   return (
     <>
-      <div>{isVisible && ModalWindow}</div>
+      {showModal && (
+        <Modal onClose={modalVisible}>
+          <IngredientDetails data={props} onClose={modalVisible} />
+        </Modal>
+      )}
       <div
         className={`${styles.itemCard} pb-8`}
         key={props.id}
@@ -46,67 +44,77 @@ const Ingredient = (props) => {
   );
 };
 
-function BurgerIngredients(props) {
-  const [current, setCurrent] = React.useState("one");
-  const bun = React.useRef(null);
-  const sause = React.useRef(null);
-  const main = React.useRef(null);
+const BurgerIngredients = (props) => {
+  const [typeItem, setTypeItem] = useState("one");
+  const bun = useRef(null);
+  const sauce = useRef(null);
+  const main = useRef(null);
 
   return (
     <div className="text text_type_main-large pt-10 pb-5 mr-10">
       Соберите бургер
       <div className={styles.tab}>
-        <Tab
-          value="Булки"
-          active={current === "Булки"}
-          onClick={
-            (setCurrent,
-            function () {
-              bun.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
+        <div
+          onClick={function () {
+            bun.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
         >
-          Булки
-        </Tab>
-        <Tab
-          value="Соусы"
-          active={current === "Соусы"}
-          onClick={
-            (setCurrent,
-            function () {
-              sause.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
+          <Tab
+            value="Булки"
+            active={typeItem === "Булки"}
+            onClick={setTypeItem}
+          >
+            Булки
+          </Tab>
+        </div>
+        <div
+          onClick={function () {
+            sauce.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
         >
-          Соусы
-        </Tab>
-        <Tab
-          value="Начинки"
-          active={current === "Начинки"}
-          onClick={
-            (setCurrent,
-            function () {
-              main.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            })
-          }
+          <Tab
+            value="Соусы"
+            active={typeItem === "Соусы"}
+            onClick={
+              (setTypeItem,
+              function () {
+                sauce.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              })
+            }
+          >
+            Соусы
+          </Tab>
+        </div>
+        <div
+          onClick={function () {
+            main.current.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
         >
-          Начинки
-        </Tab>
+          <Tab
+            value="Начинки"
+            active={typeItem === "Начинки"}
+            onClick={setTypeItem}
+          >
+            Начинки
+          </Tab>
+        </div>
       </div>
       <div className={`${styles.menuIngredients} custom-scroll ml-4`}>
         <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
           ref={bun}
         >
           Булки
         </div>
-        <div className={styles.groupIngridents}>
+        <div className={styles.groupIngredients}>
           {props.data.map((obj) => {
             if (obj.type === "bun") {
               return <Ingredient key={obj._id} {...obj} />;
@@ -115,12 +123,12 @@ function BurgerIngredients(props) {
         </div>
 
         <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
-          ref={sause}
+          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+          ref={sauce}
         >
           Соусы
         </div>
-        <div className={styles.groupIngridents}>
+        <div className={styles.groupIngredients}>
           {props.data.map((obj) => {
             if (obj.type === "sauce") {
               return <Ingredient key={obj._id} {...obj} />;
@@ -128,12 +136,12 @@ function BurgerIngredients(props) {
           })}
         </div>
         <div
-          className={`${styles.groupIngridents} text text_type_main-medium pb-6 pt-10`}
+          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
           ref={main}
         >
           Начинки
         </div>
-        <div className={styles.groupIngridents}>
+        <div className={styles.groupIngredients}>
           {props.data.map((obj) => {
             if (obj.type === "main") {
               return <Ingredient key={obj._id} {...obj} />;
@@ -143,7 +151,7 @@ function BurgerIngredients(props) {
       </div>
     </div>
   );
-}
+};
 
 Ingredient.propTypes = {
   image: PropTypes.string.isRequired,

@@ -11,35 +11,32 @@ import {
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details";
 
-const Element = (props) => {
-  return (
-    <li className={`${styles.constructorItem} pl-4`}>
-      <DragIcon type="primary" />
-      <ConstructorElement
-        text={`${props.name}`}
-        price={props.price}
-        thumbnail={props.image_mobile}
-      />
-    </li>
-  );
-};
+const Element = (props) => (
+  <li className={`${styles.constructorItem} pl-4`}>
+    <DragIcon type="primary" />
+    <div className="ml-2" />
+    <ConstructorElement
+      text={`${props.name}`}
+      price={props.price}
+      thumbnail={props.image_mobile}
+    />
+  </li>
+);
 
-function BurgerConstructor(props) {
-  const [isVisible, setVisible] = React.useState(false);
+const BurgerConstructor = (props) => {
+  const [showModal, switchModal] = React.useState(false);
 
-  function modalVisible() {
-    setVisible(!isVisible);
-  }
-
-  const ModalWindow = (
-    <Modal onClose={modalVisible}>
-      <OrderDetails onClose={modalVisible} />
-    </Modal>
-  );
+  const modalVisible = () => {
+    switchModal(!showModal);
+  };
 
   return (
-    <div>
-      <div>{isVisible && ModalWindow}</div>
+    <>
+      {showModal && (
+        <Modal onClose={modalVisible}>
+          <OrderDetails onClose={modalVisible} />
+        </Modal>
+      )}
       <div className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
           <div className="pl-8" id="constructorItemTop">
@@ -67,7 +64,6 @@ function BurgerConstructor(props) {
           </ul>
 
           <div className="pl-8" id="constructorItemBottom">
-            {" "}
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -78,18 +74,17 @@ function BurgerConstructor(props) {
           </div>
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
-          <span className={`${styles.constructorelementPrice} mr-10`}>
-            <span className="text text_type_digits-medium mr-2">1000</span>{" "}
-            <CurrencyIcon type="primary" />
-          </span>
+          <span className="text text_type_digits-medium mr-2">1000</span>
+          <CurrencyIcon type="primary" />
+          <div className="mr-10" />
           <Button type="primary" size="large" onClick={modalVisible}>
             Оформить заказ
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
-}
+};
 
 Element.propTypes = {
   name: PropTypes.string.isRequired,

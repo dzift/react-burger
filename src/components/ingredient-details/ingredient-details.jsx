@@ -7,7 +7,7 @@ const IngredientDetails = (props) => {
   return (
     <>
       <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>
-        <div className="text text_type_main-large">Детали ингридиента</div>
+        <div className="text text_type_main-large">Детали ингредиента</div>
         <button className={styles.modalButton} onClick={onClose}>
           <CloseIcon type="primary" />
         </button>

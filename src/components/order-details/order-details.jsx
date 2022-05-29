@@ -5,6 +5,7 @@ import Done from "../../images/done.gif";
 
 const OrderDetails = (props) => {
   const { onClose } = props;
+  console.log(onClose);
   return (
     <>
       <button className={styles.modalButtonOrder} onClick={onClose}>
