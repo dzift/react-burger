@@ -26,7 +26,11 @@ const App = () => {
   }, []);
 
   if (error) {
-    return <div className={styles.preLoad}>Ошибка: {error.message}</div>;
+    return (
+      <div className={styles.preLoad}>
+        Произошла ошибка загрузки: {error.message}
+      </div>
+    );
   } else if (loading) {
     return (
       <div className={`${styles.preLoad} text text_type_main-large`}>
