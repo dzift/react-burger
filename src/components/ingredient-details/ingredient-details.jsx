@@ -20,23 +20,23 @@ const IngredientDetails = (props) => {
         <div className={`text text_type_main-medium pb-8`}>{data.name}</div>
         <div className={`${styles.modalDetailRow} pb-15`}>
           <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Калории,ккал</span>{" "}
+            <span className="text text_type_main-default">Калории,ккал</span>
             <span className="text text_type_digits-default">
               {data.calories}
             </span>
           </div>
           <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Белки, г</span>{" "}
+            <span className="text text_type_main-default">Белки, г</span>
             <span className="text text_type_digits-default">
               {data.proteins}
             </span>
           </div>
           <div className={`${styles.modalInfo} `}>
-            <span className="text text_type_main-default">Жиры, г</span>{" "}
+            <span className="text text_type_main-default">Жиры, г</span>
             <span className="text text_type_digits-default">{data.fat}</span>
           </div>
           <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Углеводы, г</span>{" "}
+            <span className="text text_type_main-default">Углеводы, г</span>
             <span className="text text_type_digits-default">
               {data.carbohydrates}
             </span>

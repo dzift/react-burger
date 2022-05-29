@@ -32,8 +32,3 @@
   max-width: 255px;
   text-align: center;
 }
-.elementPrice {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-}

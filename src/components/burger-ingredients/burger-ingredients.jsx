@@ -79,14 +79,7 @@ const BurgerIngredients = (props) => {
           <Tab
             value="Соусы"
             active={typeItem === "Соусы"}
-            onClick={
-              (setTypeItem,
-              function () {
-                sauce.current.scrollIntoView({
-                  behavior: "smooth",
-                });
-              })
-            }
+            onClick={setTypeItem}
           >
             Соусы
           </Tab>

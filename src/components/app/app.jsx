@@ -19,10 +19,10 @@ const App = () => {
     fetch(URL_FOR_API)
       .then(checkReponse)
       .then((result) => {
-        setItems(result);
+        setItems(result.data);
         setLoading(false);
       })
-      .catch((err) => setError(error));
+      .catch((err) => setError(err));
   }, []);
 
   if (error) {
@@ -39,8 +39,8 @@ const App = () => {
         <AppHeader />
         <main className={styles.page}>
           <div className={styles.content}>
-            <BurgerIngredients {...items} />
-            <BurgerConstructor {...items} />
+            <BurgerIngredients data={items} />
+            <BurgerConstructor data={items} />
           </div>
         </main>
       </div>
