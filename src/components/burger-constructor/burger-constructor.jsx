@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./burger-constructor.module.css";
 import {
@@ -8,7 +8,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { data } from "../../utils/data.js";
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details";
 
@@ -25,36 +24,25 @@ const Element = (props) => {
   );
 };
 
-Element.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-};
-
 function BurgerConstructor(props) {
   const [isVisible, setVisible] = React.useState(false);
 
-  function ON() {
-    setVisible(true);
+  function ModalVisible() {
+    setVisible(!isVisible);
   }
 
-  function OFF() {
-    setVisible(false);
-  }
-  const modal = (
-    <Modal onClose={OFF} data={props}>
-      <OrderDetails />
+  const ModalWindow = (
+    <Modal onClose={ModalVisible}>
+      <OrderDetails onClose={ModalVisible} />
     </Modal>
   );
+
   return (
     <div>
-      <div>{isVisible && modal}</div>
-      <div className={`${styles.constructor} pt-25 pl-4 pb-10`}>
+      <div>{isVisible && ModalWindow}</div>
+      <div className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
-          <div
-            className={`${styles.constructorItemTop} pl-8`}
-            id="constructorItemTop"
-          >
+          <div className="pl-8" id="constructorItemTop">
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -63,8 +51,8 @@ function BurgerConstructor(props) {
               thumbnail="https://code.s3.yandex.net/react/code/bun-02-mobile.png"
             />
           </div>
-          <ul className={styles.constructorItemFlex}>
-            {data.map((obj) => {
+          <ul className={`${styles.constructorItemFlex} custom-scroll`}>
+            {props.data.map((obj) => {
               if (obj.type !== "bun") {
                 return (
                   <Element
@@ -78,10 +66,7 @@ function BurgerConstructor(props) {
             })}
           </ul>
 
-          <div
-            className={`${styles.constructorItemBottom} pl-8`}
-            id="constructorItemBottom"
-          >
+          <div className="pl-8" id="constructorItemBottom">
             {" "}
             <ConstructorElement
               type="bottom"
@@ -94,9 +79,10 @@ function BurgerConstructor(props) {
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
           <span className={`${styles.constructorelementPrice} mr-10`}>
-            1000 <CurrencyIcon type="primary" />
+            <span className="text text_type_digits-medium mr-2">1000</span>{" "}
+            <CurrencyIcon type="primary" />
           </span>
-          <Button type="primary" size="large" onClick={ON}>
+          <Button type="primary" size="large" onClick={ModalVisible}>
             Оформить заказ
           </Button>
         </div>
@@ -105,4 +91,19 @@ function BurgerConstructor(props) {
   );
 }
 
+Element.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 export default BurgerConstructor;

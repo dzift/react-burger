@@ -11,7 +11,6 @@
   background: transparent;
   border: 0;
 }
-
 .modalContent {
   display: flex;
   flex-direction: column;
@@ -21,7 +20,7 @@
   max-height: 240px;
   max-width: 520px;
 }
-.modalRow {
+.modalDetailRow {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -29,11 +28,11 @@
   gap: 20px;
   height: 56px;
 }
-
 .modalInfo {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  height: 24px;
+  height: 56px;
   color: #8585ad;
 }

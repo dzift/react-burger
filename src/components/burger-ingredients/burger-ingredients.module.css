@@ -1,6 +1,3 @@
-.burgerIngredients {
-}
-
 .menuIngredients {
   width: auto;
   height: 696px;
@@ -8,11 +5,17 @@
   list-style-type: none;
   overflow-y: scroll;
 }
-.item {
+.tab {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+}
+
+.itemCard {
   display: flex;
   flex-direction: column;
   align-content: center;
   position: relative;
+  min-width: 257px;
 }
 
 .groupIngridents {
@@ -28,29 +31,4 @@
 .itemName {
   max-width: 255px;
   text-align: center;
-}
-.elementPrice {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: right;
-  font-family: "Iceland";
-  font-style: normal;
-  font-weight: normal;
-  font-size: 28px;
-  line-height: 24px;
-}
-
-.tab {
-  display: grid;
-  grid-template-columns: 200px 200px 200px;
-}
-
-.modal {
-  background-color: blueviolet;
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  left: 50;
-  right: 50;
 }
