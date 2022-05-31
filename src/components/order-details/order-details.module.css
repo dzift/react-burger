@@ -1,0 +1,21 @@
+.modalButtonOrder {
+  position: absolute;
+  right: 40px;
+  top: 60px;
+  align-items: center;
+  background: transparent;
+  border: 0;
+}
+.modalOrder {
+  min-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalOrderImg {
+  max-width: 120px;
+  max-height: 120px;
+}
+.orderText {
+  color: #8585ad;
+}

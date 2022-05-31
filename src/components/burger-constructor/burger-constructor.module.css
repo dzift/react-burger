@@ -1,0 +1,36 @@
+.constructorCard {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.constructorMenu {
+  width: 100%;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.constructorItemFlex {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding-left: 0;
+}
+.constructorItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-type: none;
+  left: 0;
+}
+
+.constructorPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}

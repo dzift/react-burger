@@ -1,8 +1,28 @@
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 * {
   box-sizing: border-box;
+}
+
+@font-face {
+  font-weight: 400; /* Соответствует значению normal */
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Regular.woff2");
+}
+
+@font-face {
+  font-weight: 700; /* Соответствует значению bold */
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Bold.woff2");
+}
+
+@font-face {
+  font-weight: 300;
+  font-family: "JetBrains Mono";
+  src: url("./fonts/JetBrainsMono-Light.woff2");
+}
+
+body {
+  font-family: "JetBrains Mono";
+  background-color: #131316;
+  color: #8585ad;
+  min-height: 100vh;
 }

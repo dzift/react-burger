@@ -1,0 +1,38 @@
+.modalHeader {
+  display: flex;
+  height: 64px;
+  width: 640px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.modalButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+}
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modalImg {
+  max-height: 240px;
+  max-width: 520px;
+}
+.modalDetailRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 20px;
+  height: 56px;
+}
+.modalInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  color: #8585ad;
+}
