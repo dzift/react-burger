@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -11,50 +12,20 @@ import {
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details";
 
-const Element = (props) => (
+const Element = ({ name, price, image_mobile }) => (
   <li className={`${styles.constructorItem} pl-4`}>
     <DragIcon type="primary" />
     <div className="ml-2" />
     <ConstructorElement
-      text={`${props.name}`}
-      price={props.price}
-      thumbnail={props.image_mobile}
+      text={`${name}`}
+      price={price}
+      thumbnail={image_mobile}
     />
   </li>
 );
 
-const TopBun = (props) => {
-  const found = props.data.find(function (element) {
-    return element.type === "bun";
-  });
-  return (
-    <ConstructorElement
-      type="top"
-      isLocked={true}
-      text={`${found.name} (верх)`}
-      price={found.price}
-      thumbnail={found.image_mobile}
-    />
-  );
-};
-const BottomBun = (props) => {
-  const found = props.data.find(function (element) {
-    return element.type === "bun";
-  });
-  return (
-    <ConstructorElement
-      type="bottom"
-      isLocked={true}
-      text={`${found.name}(низ)`}
-      price={found.price}
-      thumbnail={found.image_mobile}
-    />
-  );
-};
-
-const BurgerConstructor = (props) => {
+const BurgerConstructor = ({ dataFromApi }) => {
   const [showModal, switchModal] = React.useState(false);
-
   const modalVisible = () => {
     switchModal(!showModal);
   };
@@ -68,11 +39,19 @@ const BurgerConstructor = (props) => {
       )}
       <div className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
-          <div className="pl-8">
-            <TopBun {...props} />
+          <div className={`${styles.constructorItemTop} pl-8`}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={"Краторная булка N-200i (верх)`"}
+              price={1255}
+              thumbnail={
+                "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
+              }
+            />
           </div>
           <ul className={`${styles.constructorItemFlex} custom-scroll`}>
-            {props.data.map((obj) => {
+            {dataFromApi.map((obj) => {
               if (obj.type !== "bun") {
                 return (
                   <Element
@@ -85,12 +64,20 @@ const BurgerConstructor = (props) => {
               }
             })}
           </ul>
-          <div className="pl-8">
-            <BottomBun {...props} />
+          <div className={`${styles.constructorItemBottom} pl-8`}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={"Краторная булка N-200i (верх)`"}
+              price={1255}
+              thumbnail={
+                "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
+              }
+            />
           </div>
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
-          <span className="text text_type_digits-medium mr-2">1000</span>
+          <span className="text text_type_digits-medium mr-2">{1255}</span>
           <CurrencyIcon type="primary" />
           <div className="mr-10" />
           <Button type="primary" size="large" onClick={modalVisible}>
@@ -102,40 +89,14 @@ const BurgerConstructor = (props) => {
   );
 };
 
+BurgerConstructor.propTypes = {
+  dataFromApi: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+};
+
 Element.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   image_mobile: PropTypes.string.isRequired,
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
-BottomBun.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
-TopBun.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default BurgerConstructor;

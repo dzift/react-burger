@@ -6,10 +6,10 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = (props) => {
+const Modal = ({ onClose, children }) => {
   const keyEsc = React.useCallback((event) => {
     if (event.keyCode === 27) {
-      props.onClose();
+      onClose();
     }
   }, []);
 
@@ -23,9 +23,9 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={props.onClose} />
-      <div className={styles.modal} onClick={props.onClose}>
-        {props.children}
+      <ModalOverlay onClose={onClose} />
+      <div className={styles.modal} onClick={onClose}>
+        {children}
       </div>
     </>,
     modalRoot

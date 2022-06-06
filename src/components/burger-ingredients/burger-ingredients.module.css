@@ -10,25 +10,8 @@
   list-style-type: none;
   overflow-y: scroll;
 }
-.itemCard {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  position: relative;
-  min-width: 257px;
-}
 
 .groupIngredients {
   display: flex;
   flex-wrap: wrap;
-}
-.itemPrice {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.itemName {
-  max-width: 255px;
-  text-align: center;
 }

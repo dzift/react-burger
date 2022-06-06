@@ -1,16 +1,27 @@
 .constructorCard {
-  height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-end;
+  box-sizing: border-box;
 }
 .constructorMenu {
   width: 100%;
   max-height: 600px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.constructorItemTop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.constructorItemBottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .constructorItemFlex {
@@ -20,6 +31,7 @@
   overflow-y: auto;
   padding-left: 0;
 }
+
 .constructorItem {
   display: flex;
   flex-direction: row;
