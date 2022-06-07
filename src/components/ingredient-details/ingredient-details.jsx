@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-details.module.css";
+import { useSelector } from "react-redux";
 
-const IngredientDetails = ({ onClose, data }) => {
+const IngredientDetails = ({ onClose }) => {
+  const data = useSelector((store) => store.BurgerIngredients.currentItem);
+
   return (
     <>
       <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>

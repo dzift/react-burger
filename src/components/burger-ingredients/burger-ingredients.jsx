@@ -1,34 +1,64 @@
-import React, { useState, useRef } from "react";
-import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
+import React, { useState, useRef, useEffect } from "react";
+import { getIngredients } from "../../utils/burger-api";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
-const BurgerIngredients = ({ dataFromApi }) => {
-  const [typeItem, setTypeItem] = useState("one");
-  const [dataInModal, switchModal] = React.useState();
+import { useSelector, useDispatch } from "react-redux";
+import {
+  GET_INGREDIENTS_FAILED,
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  CLOSE_MODAL,
+} from "../../services/actions/BurgerIngredients";
+
+const BurgerIngredients = () => {
+  const [typeItem, setTypeItem] = useState();
 
   const modalVisible = () => {
-    switchModal(null);
+    dispatch({
+      type: CLOSE_MODAL,
+    });
   };
+
+  const dataFromApi = useSelector((store) => store.BurgerIngredients);
+
+  const { items, currentItem, loading, error } = dataFromApi;
 
   const bun = useRef(null);
   const sauce = useRef(null);
   const main = useRef(null);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: GET_INGREDIENTS_REQUEST,
+    });
+    getIngredients()
+      .then((result) => {
+        dispatch({
+          type: GET_INGREDIENTS_SUCCESS,
+          items: result.data,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_INGREDIENTS_FAILED,
+        });
+      });
+  }, [dispatch]);
+
   return (
     <>
-      {dataInModal && (
+      {currentItem && (
         <Modal onClose={modalVisible}>
-          <IngredientDetails data={dataInModal} onClose={modalVisible} />
+          <IngredientDetails onClose={modalVisible} />
         </Modal>
       )}
 
-      <div className="text text_type_main-large pt-10 pb-5 mr-10">
+      <section className="text text_type_main-large pt-10 pb-5 mr-10">
         Соберите бургер
         <div className={styles.tab}>
           <div
@@ -77,75 +107,75 @@ const BurgerIngredients = ({ dataFromApi }) => {
             </Tab>
           </div>
         </div>
-        <div className={`${styles.menuIngredients} custom-scroll ml-4`}>
-          <div
-            className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-            ref={bun}
-          >
-            Булки
+        {error && alert("Запрос на сервер не удался!")}
+        {loading ? (
+          <div className={`${styles.preLoad} text text_type_main-large`}>
+            Загрузка...
           </div>
-          <div className={styles.groupIngredients}>
-            {dataFromApi.map((obj) => {
-              if (obj.type === "bun") {
-                return (
-                  <BurgerIngredient
-                    key={obj._id}
-                    dataIngredient={obj}
-                    count={1}
-                    dataInClick={switchModal}
-                  />
-                );
-              }
-            })}
+        ) : (
+          <div className={`${styles.menuIngredients} custom-scroll ml-4`}>
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={bun}
+            >
+              Булки
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "bun") {
+                  return (
+                    <BurgerIngredient
+                      key={obj._id}
+                      dataIngredient={obj}
+                      count={1}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={sauce}
+            >
+              Соусы
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "sauce") {
+                  return (
+                    <BurgerIngredient
+                      key={obj._id}
+                      dataIngredient={obj}
+                      count={1}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={main}
+            >
+              Начинки
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "main") {
+                  return (
+                    <BurgerIngredient
+                      key={obj._id}
+                      dataIngredient={obj}
+                      count={1}
+                    />
+                  );
+                }
+              })}
+            </div>
           </div>
-          <div
-            className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-            ref={sauce}
-          >
-            Соусы
-          </div>
-          <div className={styles.groupIngredients}>
-            {dataFromApi.map((obj) => {
-              if (obj.type === "sauce") {
-                return (
-                  <BurgerIngredient
-                    key={obj._id}
-                    dataIngredient={obj}
-                    count={1}
-                    dataInClick={switchModal}
-                  />
-                );
-              }
-            })}
-          </div>
-          <div
-            className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-            ref={main}
-          >
-            Начинки
-          </div>
-          <div className={styles.groupIngredients}>
-            {dataFromApi.map((obj) => {
-              if (obj.type === "main") {
-                return (
-                  <BurgerIngredient
-                    key={obj._id}
-                    dataIngredient={obj}
-                    dataInClick={switchModal}
-                    count={1}
-                  />
-                );
-              }
-            })}
-          </div>
-        </div>
-      </div>
+        )}
+      </section>
     </>
   );
-};
-
-BurgerIngredients.propTypes = {
-  dataFromApi: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 export default BurgerIngredients;

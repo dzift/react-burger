@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-ingredient.module.css";
@@ -6,12 +6,20 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector, useDispatch } from "react-redux";
 
-const BurgerIngredient = ({ dataIngredient, count, dataInClick }) => {
+import { GET_CURRENT_ITEM } from "../../services/actions/BurgerIngredients";
+
+const BurgerIngredient = ({ dataIngredient, count }) => {
+  const dispatch = useDispatch();
+
   const { id, image, name, price } = dataIngredient;
 
   const openModal = () => {
-    dataInClick(dataIngredient);
+    dispatch({
+      type: GET_CURRENT_ITEM,
+      currentItem: dataIngredient,
+    });
   };
 
   return (
@@ -39,4 +47,4 @@ BurgerIngredient.propTypes = {
   dataInClick: PropTypes.func.isRequired,
 };
 
-export default BurgerIngredient;
+export default React.memo(BurgerIngredient);

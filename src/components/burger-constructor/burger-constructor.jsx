@@ -8,6 +8,7 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector, useDispatch } from "react-redux";
 
 import Modal from "../modal/modal.jsx";
 import OrderDetails from "../order-details/order-details";
@@ -24,7 +25,9 @@ const Element = ({ name, price, image_mobile }) => (
   </li>
 );
 
-const BurgerConstructor = ({ dataFromApi }) => {
+const BurgerConstructor = () => {
+  const dataFromApi = useSelector((store) => store.BurgerIngredients.items);
+
   const [showModal, switchModal] = React.useState(false);
   const modalVisible = () => {
     switchModal(!showModal);
@@ -37,7 +40,7 @@ const BurgerConstructor = ({ dataFromApi }) => {
           <OrderDetails onClose={modalVisible} />
         </Modal>
       )}
-      <div className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
+      <section className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
           <div className={`${styles.constructorItemTop} pl-8`}>
             <ConstructorElement
@@ -84,13 +87,9 @@ const BurgerConstructor = ({ dataFromApi }) => {
             Оформить заказ
           </Button>
         </div>
-      </div>
+      </section>
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  dataFromApi: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 Element.propTypes = {
