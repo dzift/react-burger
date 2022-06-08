@@ -4,7 +4,7 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
-  const data = useSelector((store) => store.BurgerIngredients.currentItem);
+  const data = useSelector((store) => store.BurgerIngredient.currentItem);
 
   return (
     <>

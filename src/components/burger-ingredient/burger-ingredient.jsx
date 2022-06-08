@@ -7,14 +7,21 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
+import { useDrag } from "react-dnd";
 
-import {
-  GET_CURRENT_ITEM,
-  OPEN_MODAL,
-} from "../../services/actions/burger-Ingredients";
+import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
+import { OPEN_MODAL } from "../../services/actions/modal";
 
 const BurgerIngredient = ({ dataIngredient, count }) => {
   const dispatch = useDispatch();
+
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: dataIngredient,
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   const { id, image, name, price } = dataIngredient;
 
@@ -29,19 +36,26 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
   };
 
   return (
-    <>
-      <div className={`${styles.itemCard} pb-8`} key={id} onClick={openModal}>
-        <Counter count={count} size="default" />
-        <img src={image} alt="fff" />
-        <div className={styles.itemPrice}>
-          <span className="text text_type_digits-default mr-2">{price}</span>
-          <CurrencyIcon type="primary" />
+    !isDrag && (
+      <>
+        <div
+          ref={dragRef}
+          className={`${styles.itemCard} pb-8`}
+          key={id}
+          onClick={openModal}
+        >
+          <Counter count={count} size="default" />
+          <img src={image} alt="fff" />
+          <div className={styles.itemPrice}>
+            <span className="text text_type_digits-default mr-2">{price}</span>
+            <CurrencyIcon type="primary" />
+          </div>
+          <div className={`${styles.itemName} text text_type_main-small`}>
+            {name}
+          </div>
         </div>
-        <div className={`${styles.itemName} text text_type_main-small`}>
-          {name}
-        </div>
-      </div>
-    </>
+      </>
+    )
   );
 };
 

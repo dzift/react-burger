@@ -17,7 +17,9 @@ const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState();
 
   const dataFromApi = useSelector((store) => store.BurgerIngredients);
-  const { items, currentItem, loading, error, modalVisiable } = dataFromApi;
+  const { items, loading, error } = dataFromApi;
+  const { currentItem } = useSelector((store) => store.BurgerIngredient);
+  const { modalVisiable } = useSelector((store) => store.Modal);
 
   const bun = useRef(null);
   const sauce = useRef(null);

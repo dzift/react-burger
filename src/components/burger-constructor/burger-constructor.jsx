@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
+import { useDrop } from "react-dnd";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -9,10 +9,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {
-  GET_ORDER_REQUEST,
-  OPEN_MODAL,
-} from "../../services/actions/burger-Ingredients";
+import { GET_ORDER_REQUEST } from "../../services/actions/burger-constructor";
+import { OPEN_MODAL } from "../../services/actions/modal";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -31,16 +29,25 @@ const Element = ({ name, price, image_mobile }) => (
   </li>
 );
 
-const BurgerConstructor = () => {
-  const dataFromApi = useSelector((store) => store.BurgerIngredients.items);
-
-  const { items, currentItem, posting, modalVisiable } = useSelector(
-    (store) => store.BurgerIngredients
+const BurgerConstructor = ({ onDropHandler }) => {
+  const dataFromApi = useSelector(
+    (store) => store.BurgerConstructor.itemConstructor
   );
+
+  const [, dropRef] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      console.log("item", item);
+      onDropHandler(item);
+    },
+  });
+
+  const { posting } = useSelector((store) => store.BurgerConstructor);
+  const { modalVisiable } = useSelector((store) => store.Modal);
 
   const dispatch = useDispatch();
 
-  const modalVisible = () => {
+  const setModal = () => {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -69,8 +76,12 @@ const BurgerConstructor = () => {
               }
             />
           </div>
-          <ul className={`${styles.constructorItemFlex} custom-scroll`}>
-            {dataFromApi.map((obj) => {
+          <ul
+            ref={dropRef}
+            className={`${styles.constructorItemFlex} custom-scroll`}
+          >
+            {dataFromApi.ingredients.map((obj) => {
+              console.log(obj);
               if (obj.type !== "bun") {
                 return (
                   <Element
@@ -99,7 +110,7 @@ const BurgerConstructor = () => {
           <span className="text text_type_digits-medium mr-2">{1255}</span>
           <CurrencyIcon type="primary" />
           <div className="mr-10" />
-          <Button type="primary" size="large" onClick={modalVisible}>
+          <Button type="primary" size="large" onClick={setModal}>
             Оформить заказ
           </Button>
         </div>

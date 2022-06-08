@@ -30,6 +30,8 @@
   gap: 16px;
   overflow-y: auto;
   padding-left: 0;
+  height: 300px;
+  background-color: aqua;
 }
 
 .constructorItem {

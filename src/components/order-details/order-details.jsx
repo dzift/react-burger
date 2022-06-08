@@ -8,10 +8,11 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
-} from "../../services/actions/burger-Ingredients";
+} from "../../services/actions/burger-constructor";
 
 const OrderDetails = () => {
-  const { error, orderInfo } = useSelector((store) => store.BurgerIngredients);
+  const { error } = useSelector((store) => store.BurgerIngredients);
+  const { orderInfo } = useSelector((store) => store.BurgerConstructor);
 
   const dispatch = useDispatch();
 
@@ -67,4 +68,4 @@ OrderDetails.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default OrderDetails;
+export default React.memo(OrderDetails);

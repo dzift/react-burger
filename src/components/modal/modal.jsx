@@ -7,10 +7,8 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch } from "react-redux";
 
-import {
-  CLEAR_ITEM,
-  CLOSE_MODAL,
-} from "../../services/actions/burger-Ingredients";
+import { CLOSE_MODAL } from "../../services/actions/modal";
+import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
 
 const modalRoot = document.getElementById("react-modals");
 
