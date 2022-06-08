@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-constructor.module.css";
@@ -8,6 +8,12 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import {
+  GET_ORDER_REQUEST,
+  OPEN_MODAL,
+} from "../../services/actions/burgerIngredients";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import Modal from "../modal/modal.jsx";
@@ -28,16 +34,26 @@ const Element = ({ name, price, image_mobile }) => (
 const BurgerConstructor = () => {
   const dataFromApi = useSelector((store) => store.BurgerIngredients.items);
 
-  const [showModal, switchModal] = React.useState(false);
+  const { items, currentItem, posting, modalVisiable } = useSelector(
+    (store) => store.BurgerIngredients
+  );
+
+  const dispatch = useDispatch();
+
   const modalVisible = () => {
-    switchModal(!showModal);
+    dispatch({
+      type: GET_ORDER_REQUEST,
+    });
+    dispatch({
+      type: OPEN_MODAL,
+    });
   };
 
   return (
     <>
-      {showModal && (
-        <Modal onClose={modalVisible}>
-          <OrderDetails onClose={modalVisible} />
+      {modalVisiable && posting && (
+        <Modal>
+          <OrderDetails />
         </Modal>
       )}
       <section className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>

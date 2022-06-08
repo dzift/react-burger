@@ -1,18 +1,15 @@
 import PropTypes from "prop-types";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 
-const IngredientDetails = ({ onClose }) => {
+const IngredientDetails = () => {
   const data = useSelector((store) => store.BurgerIngredients.currentItem);
 
   return (
     <>
       <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>
         <div className="text text_type_main-large">Детали ингредиента</div>
-        <button className={styles.modalButton} onClick={onClose}>
-          <CloseIcon type="primary" />
-        </button>
       </div>
       <div className={`${styles.modalContent} pl-5 pr-5 pb-15`}>
         <div className={`${styles.modalImg} pl-5 pr-5 mb-4`}>
@@ -58,7 +55,6 @@ IngredientDetails.propTypes = {
     image_large: PropTypes.string.isRequired,
     proteins: PropTypes.number.isRequired,
   }),
-  onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;

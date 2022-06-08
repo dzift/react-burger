@@ -11,27 +11,20 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  CLOSE_MODAL,
-} from "../../services/actions/BurgerIngredients";
+} from "../../services/actions/burgerIngredients";
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState();
 
-  const modalVisible = () => {
-    dispatch({
-      type: CLOSE_MODAL,
-    });
-  };
-
   const dataFromApi = useSelector((store) => store.BurgerIngredients);
-
-  const { items, currentItem, loading, error } = dataFromApi;
+  const { items, currentItem, loading, error, modalVisiable } = dataFromApi;
 
   const bun = useRef(null);
   const sauce = useRef(null);
   const main = useRef(null);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
@@ -52,9 +45,9 @@ const BurgerIngredients = () => {
 
   return (
     <>
-      {currentItem && (
-        <Modal onClose={modalVisible}>
-          <IngredientDetails onClose={modalVisible} />
+      {currentItem && modalVisiable && (
+        <Modal>
+          <IngredientDetails />
         </Modal>
       )}
 

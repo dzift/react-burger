@@ -6,9 +6,12 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { GET_CURRENT_ITEM } from "../../services/actions/BurgerIngredients";
+import {
+  GET_CURRENT_ITEM,
+  OPEN_MODAL,
+} from "../../services/actions/burgerIngredients";
 
 const BurgerIngredient = ({ dataIngredient, count }) => {
   const dispatch = useDispatch();
@@ -19,6 +22,9 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
     dispatch({
       type: GET_CURRENT_ITEM,
       currentItem: dataIngredient,
+    });
+    dispatch({
+      type: OPEN_MODAL,
     });
   };
 
@@ -44,7 +50,6 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
 BurgerIngredient.propTypes = {
   dataIngredient: ingredientPropType.isRequired,
   count: PropTypes.number.isRequired,
-  dataInClick: PropTypes.func.isRequired,
 };
 
 export default React.memo(BurgerIngredient);

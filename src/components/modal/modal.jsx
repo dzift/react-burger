@@ -3,15 +3,36 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import { useDispatch } from "react-redux";
+
+import {
+  CLEAR_ITEM,
+  CLOSE_MODAL,
+} from "../../services/actions/burgerIngredients";
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({ children }) => {
+  const dispatch = useDispatch();
+
   const keyEsc = React.useCallback((event) => {
     if (event.keyCode === 27) {
-      onClose();
+      dispatch({
+        type: CLOSE_MODAL,
+      });
     }
   }, []);
+
+  const modalVisible = () => {
+    dispatch({
+      type: CLEAR_ITEM,
+    });
+    dispatch({
+      type: CLOSE_MODAL,
+    });
+  };
 
   React.useEffect(() => {
     document.addEventListener("keydown", keyEsc);
@@ -23,8 +44,14 @@ const Modal = ({ onClose, children }) => {
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={onClose} />
-      <div className={styles.modal} onClick={onClose}>
+      <ModalOverlay onClose={modalVisible} />
+      <div className={styles.modal} onClick={modalVisible}>
+        <button
+          className={`${styles.modalButton}  ml-10 mt-15 mr-10`}
+          onClick={modalVisible}
+        >
+          <CloseIcon type="primary" />
+        </button>
         {children}
       </div>
     </>,
@@ -34,7 +61,6 @@ const Modal = ({ onClose, children }) => {
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

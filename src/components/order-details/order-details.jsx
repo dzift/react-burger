@@ -1,38 +1,49 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
+import React, { useEffect } from "react";
+import { postIngredients } from "../../utils/burger-api";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 import Done from "../../images/done.gif";
-import { postIngredients } from "../../utils/burger-api";
+import { useSelector, useDispatch } from "react-redux";
 
-const OrderDetails = ({ onClose }) => {
-  const [load, setLoad] = React.useState(true);
-  const [orderNumber, setOrderNumber] = React.useState();
+import {
+  GET_ORDER_FAILED,
+  GET_ORDER_SUCCESS,
+} from "../../services/actions/burgerIngredients";
 
-  React.useEffect(() => {
+const OrderDetails = () => {
+  const { error, orderInfo } = useSelector((store) => store.BurgerIngredients);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
     postIngredients()
       .then((result) => {
-        setOrderNumber(result.order.number);
-        setLoad(false);
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          orderInfo: result,
+        });
       })
-      .catch(() =>
-        alert("Произошла ошибка во время загрузки данных с сервера")
-      );
+      .catch(() => {
+        dispatch({
+          type: GET_ORDER_FAILED,
+        });
+      });
   }, []);
 
+  console.log(orderInfo);
   return (
     <>
-      <button className={styles.modalButtonOrder} onClick={onClose}>
-        <CloseIcon type="primary" />
-      </button>
       <div className={`${styles.modalOrder} mt-30 mb-8`}>
-        {load ? (
+        {error && alert("Произошла ошибка во время загрузки данных с сервера!")}
+        {!orderInfo ? (
           <div className={`${styles.preLoad} text text_type_main-large`}>
             Загрузка...
           </div>
         ) : (
           <>
-            <p className="text text_type_digits-large mb-15">{orderNumber}</p>
+            <p className="text text_type_digits-large mb-15">
+              {orderInfo.order.number}
+            </p>
             <p className="text text_type_main-medium">идентификатор заказа</p>
             <div className="mt-15 mb-15">
               <img className={`${styles.modalOrderImg}`} src={Done} alt="fff" />
