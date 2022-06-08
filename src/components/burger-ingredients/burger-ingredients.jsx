@@ -11,7 +11,7 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-} from "../../services/actions/burgerIngredients";
+} from "../../services/actions/burger-Ingredients";
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState();

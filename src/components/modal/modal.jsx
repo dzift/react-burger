@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import {
   CLEAR_ITEM,
   CLOSE_MODAL,
-} from "../../services/actions/burgerIngredients";
+} from "../../services/actions/burger-Ingredients";
 
 const modalRoot = document.getElementById("react-modals");
 

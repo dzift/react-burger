@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
-} from "../../services/actions/burgerIngredients";
+} from "../../services/actions/burger-Ingredients";
 
 const OrderDetails = () => {
   const { error, orderInfo } = useSelector((store) => store.BurgerIngredients);

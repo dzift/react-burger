@@ -9,7 +9,7 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
-} from "../actions/burgerIngredients";
+} from "../actions/burger-Ingredients";
 
 const initialState = {
   items: [],

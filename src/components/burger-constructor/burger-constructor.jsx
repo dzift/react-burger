@@ -12,7 +12,7 @@ import {
 import {
   GET_ORDER_REQUEST,
   OPEN_MODAL,
-} from "../../services/actions/burgerIngredients";
+} from "../../services/actions/burger-Ingredients";
 
 import { useSelector, useDispatch } from "react-redux";
 

@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import {
   GET_CURRENT_ITEM,
   OPEN_MODAL,
-} from "../../services/actions/burgerIngredients";
+} from "../../services/actions/burger-Ingredients";
 
 const BurgerIngredient = ({ dataIngredient, count }) => {
   const dispatch = useDispatch();
