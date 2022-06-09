@@ -36,12 +36,22 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
         error: true,
       };
     case ADD_ITEM_FOR_CONSTRUCTOR:
-      const addItem = { ...action.item };
+      const bun = action.item;
+      if (bun.type === "bun") {
+        return {
+          ...state,
+          itemConstructor: {
+            ...state.itemConstructor,
+            bun: action.item,
+          },
+        };
+      }
+      const item = action.item;
       return {
         ...state,
         itemConstructor: {
           ...state.itemConstructor,
-          ingredients: [...state.itemConstructor.ingredients, addItem],
+          ingredients: [...state.itemConstructor.ingredients, item],
         },
       };
     default:

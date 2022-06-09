@@ -3,7 +3,7 @@ import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
 import { ADD_ITEM_FOR_CONSTRUCTOR } from "../../services/actions/burger-constructor";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const App = () => {
       item: item,
     });
   };
+
   return (
     <div>
       <AppHeader />

@@ -29,11 +29,31 @@ const Element = ({ name, price, image_mobile }) => (
   </li>
 );
 
+const ElementBunTop = ({ name, price, image_mobile }) => (
+  <ConstructorElement
+    type="top"
+    isLocked={true}
+    text={`${name} (верх)`}
+    price={price}
+    thumbnail={image_mobile}
+  />
+);
+
+const ElementBunBottom = ({ name, price, image_mobile }) => (
+  <ConstructorElement
+    type="bottom"
+    isLocked={true}
+    text={`${name} (низ)`}
+    price={price}
+    thumbnail={image_mobile}
+  />
+);
+
 const BurgerConstructor = ({ onDropHandler }) => {
   const dataFromApi = useSelector(
     (store) => store.BurgerConstructor.itemConstructor
   );
-
+  console.log(dataFromApi);
   const [, dropRef] = useDrop({
     accept: "ingredient",
     drop(item) {
@@ -63,23 +83,22 @@ const BurgerConstructor = ({ onDropHandler }) => {
           <OrderDetails />
         </Modal>
       )}
-      <section className={`${styles.constructorCard} pt-25 pl-4 pb-10`}>
+      <section
+        ref={dropRef}
+        className={`${styles.constructorCard} pt-25 pl-4 pb-10`}
+      >
         <div className={styles.constructorMenu}>
           <div className={`${styles.constructorItemTop} pl-8`}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={"Краторная булка N-200i (верх)`"}
-              price={1255}
-              thumbnail={
-                "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
-              }
-            />
+            {dataFromApi.bun && (
+              <ElementBunTop
+                key={dataFromApi.bun._id}
+                image_mobile={dataFromApi.bun.image_mobile}
+                price={dataFromApi.bun.price}
+                name={dataFromApi.bun.name}
+              />
+            )}
           </div>
-          <ul
-            ref={dropRef}
-            className={`${styles.constructorItemFlex} custom-scroll`}
-          >
+          <ul className={`${styles.constructorItemFlex} custom-scroll`}>
             {dataFromApi.ingredients.map((obj) => {
               console.log(obj);
               if (obj.type !== "bun") {
@@ -95,19 +114,18 @@ const BurgerConstructor = ({ onDropHandler }) => {
             })}
           </ul>
           <div className={`${styles.constructorItemBottom} pl-8`}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={"Краторная булка N-200i (верх)`"}
-              price={1255}
-              thumbnail={
-                "https://code.s3.yandex.net/react/code/bun-02-mobile.png"
-              }
-            />
+            {dataFromApi.bun && (
+              <ElementBunBottom
+                key={dataFromApi.bun._id}
+                image_mobile={dataFromApi.bun.image_mobile}
+                price={dataFromApi.bun.price}
+                name={dataFromApi.bun.name}
+              />
+            )}
           </div>
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
-          <span className="text text_type_digits-medium mr-2">{1255}</span>
+          <span className="text text_type_digits-medium mr-2">{0}</span>
           <CurrencyIcon type="primary" />
           <div className="mr-10" />
           <Button type="primary" size="large" onClick={setModal}>
