@@ -1,16 +1,21 @@
+import { v4 as uuidv4 } from "uuid";
+
 import {
   GET_ORDER_SUCCESS,
   GET_ORDER_REQUEST,
   GET_ORDER_FAILED,
-  ADD_ITEM_FOR_CONSTRUCTOR,
+  ADD_ITEM_IN_CONSTRUCTOR,
+  DEL_ITEM_IN_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 
 const initialState = {
   itemConstructor: {
-    bun: null,
     ingredients: [],
+    bun: null,
+    draggedIngredient: null,
   },
   orderInfo: false,
+  orderItems: [],
   posting: false,
 };
 
@@ -35,9 +40,9 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
         posting: true,
         error: true,
       };
-    case ADD_ITEM_FOR_CONSTRUCTOR:
-      const bun = action.item;
-      if (bun.type === "bun") {
+    case ADD_ITEM_IN_CONSTRUCTOR:
+      const addItem = { ...action.item, itemKey: uuidv4() };
+      if (addItem.type === "bun") {
         return {
           ...state,
           itemConstructor: {
@@ -45,15 +50,27 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
             bun: action.item,
           },
         };
+      } else {
+        return {
+          ...state,
+          itemConstructor: {
+            ...state.itemConstructor,
+            ingredients: [...state.itemConstructor.ingredients, addItem],
+          },
+        };
       }
-      const item = action.item;
+
+    case DEL_ITEM_IN_CONSTRUCTOR:
       return {
         ...state,
         itemConstructor: {
           ...state.itemConstructor,
-          ingredients: [...state.itemConstructor.ingredients, item],
+          ingredients: [...state.itemConstructor.ingredients].filter(
+            (item) => item.itemKey !== action.itemKey
+          ),
         },
       };
+
     default:
       return state;
   }

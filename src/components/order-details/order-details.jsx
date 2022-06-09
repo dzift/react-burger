@@ -13,11 +13,17 @@ import {
 const OrderDetails = () => {
   const { error } = useSelector((store) => store.BurgerIngredients);
   const { orderInfo } = useSelector((store) => store.BurgerConstructor);
+  const id = useSelector((store) => store.BurgerConstructor.itemConstructor);
+
+  const orderItems = [id.bun._id];
+  id.ingredients.map((obj) => {
+    orderItems.push(obj._id);
+  });
 
   const dispatch = useDispatch();
-
   useEffect(() => {
-    postIngredients()
+    console.log(orderItems);
+    postIngredients(orderItems)
       .then((result) => {
         dispatch({
           type: GET_ORDER_SUCCESS,
@@ -31,7 +37,6 @@ const OrderDetails = () => {
       });
   }, []);
 
-  console.log(orderInfo);
   return (
     <>
       <div className={`${styles.modalOrder} mt-30 mb-8`}>
@@ -65,7 +70,7 @@ const OrderDetails = () => {
 };
 
 OrderDetails.propTypes = {
-  onClose: PropTypes.func.isRequired,
+  // onClose: PropTypes.func.isRequired,
 };
 
 export default React.memo(OrderDetails);

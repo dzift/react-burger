@@ -15,8 +15,8 @@ import { OPEN_MODAL } from "../../services/actions/modal";
 const BurgerIngredient = ({ dataIngredient, count }) => {
   const dispatch = useDispatch();
 
-  const [{ isDrag }, dragRef] = useDrag({
-    type: "ingredient",
+  const [{ isDrag }, drag] = useDrag({
+    type: "NEW_INGREDIENT",
     item: dataIngredient,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
@@ -39,7 +39,7 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
     !isDrag && (
       <>
         <div
-          ref={dragRef}
+          ref={drag}
           className={`${styles.itemCard} pb-8`}
           key={id}
           onClick={openModal}

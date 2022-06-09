@@ -2,7 +2,7 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
-import { ADD_ITEM_FOR_CONSTRUCTOR } from "../../services/actions/burger-constructor";
+import { ADD_ITEM_IN_CONSTRUCTOR } from "../../services/actions/burger-constructor";
 import { useDispatch } from "react-redux";
 
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
 
   const functionDrop = (item) => {
     dispatch({
-      type: ADD_ITEM_FOR_CONSTRUCTOR,
+      type: ADD_ITEM_IN_CONSTRUCTOR,
       item: item,
     });
   };

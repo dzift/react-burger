@@ -6,14 +6,14 @@ export const getIngredients = () => {
   }).then((res) => checkReponse(res));
 };
 
-export const postIngredients = () => {
+export const postIngredients = (orderItems) => {
   return fetch(`${URL_FOR_API}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      ingredients: ["60d3b41abdacab0026a733c6", "609646e4dc916e00276b2870"],
+      ingredients: orderItems,
     }),
   }).then((res) => checkReponse(res));
 };
