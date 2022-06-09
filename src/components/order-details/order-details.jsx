@@ -22,7 +22,6 @@ const OrderDetails = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(orderItems);
     postIngredients(orderItems)
       .then((result) => {
         dispatch({
