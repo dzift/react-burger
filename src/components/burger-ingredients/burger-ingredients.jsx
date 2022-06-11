@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { getIngredients } from "../../utils/burger-api";
+import { useState, useRef, useEffect } from "react";
+import { getItem } from "../../services/actions/burger-Ingredients";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Preloader from "../preloader/preloader";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -14,35 +15,51 @@ import {
 } from "../../services/actions/burger-Ingredients";
 
 const BurgerIngredients = () => {
-  const [typeItem, setTypeItem] = useState();
+  const [typeItem, setTypeItem] = useState("Булки");
 
-  const dataFromApi = useSelector((store) => store.BurgerIngredients);
-  const { items, loading, error } = dataFromApi;
-  const { currentItem } = useSelector((store) => store.BurgerIngredient);
-  const { modalVisiable } = useSelector((store) => store.Modal);
-
+  const menu = useRef(null);
   const bun = useRef(null);
   const sauce = useRef(null);
   const main = useRef(null);
 
+  const { items, loading, error } = useSelector(
+    (store) => store.BurgerIngredients
+  );
+  const { currentItem } = useSelector((store) => store.BurgerIngredient);
+  const { modalVisiable } = useSelector((store) => store.Modal);
+
+  const handleScroll = () => {
+    const bunPosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        bun.current.getBoundingClientRect().top
+    );
+    const saucePosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        sauce.current.getBoundingClientRect().top
+    );
+    const mainPosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        main.current.getBoundingClientRect().top
+    );
+
+    const viewType = Math.min(bunPosition, saucePosition, mainPosition);
+
+    const activeType =
+      viewType === bunPosition
+        ? "Булки"
+        : viewType === saucePosition
+        ? "Соусы"
+        : "Начинки";
+
+    setTypeItem((prevState) =>
+      activeType === prevState.current ? prevState.current : activeType
+    );
+  };
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({
-      type: GET_INGREDIENTS_REQUEST,
-    });
-    getIngredients()
-      .then((result) => {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          items: result.data,
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: GET_INGREDIENTS_FAILED,
-        });
-      });
+    dispatch(getItem());
   }, [dispatch]);
 
   return (
@@ -104,11 +121,13 @@ const BurgerIngredients = () => {
         </div>
         {error && alert("Запрос на сервер не удался!")}
         {loading ? (
-          <div className={`${styles.preLoad} text text_type_main-large`}>
-            Загрузка...
-          </div>
+          <Preloader />
         ) : (
-          <div className={`${styles.menuIngredients} custom-scroll ml-4`}>
+          <div
+            className={`${styles.menuIngredients} custom-scroll ml-4`}
+            ref={menu}
+            onScroll={handleScroll}
+          >
             <div
               className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
               ref={bun}

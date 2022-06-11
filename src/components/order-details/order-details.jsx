@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
-import { postIngredients } from "../../utils/burger-api";
+import { postItems } from "../../services/actions/burger-constructor";
 import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 import Done from "../../images/done.gif";
 import { useSelector, useDispatch } from "react-redux";
-
-import {
-  GET_ORDER_FAILED,
-  GET_ORDER_SUCCESS,
-} from "../../services/actions/burger-constructor";
+import Preloader from "../preloader/preloader";
 
 const OrderDetails = () => {
   const { error } = useSelector((store) => store.BurgerIngredients);
@@ -21,19 +17,9 @@ const OrderDetails = () => {
   });
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    postIngredients(orderItems)
-      .then((result) => {
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          orderInfo: result,
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: GET_ORDER_FAILED,
-        });
-      });
+    dispatch(postItems(orderItems));
   }, []);
 
   return (
@@ -41,9 +27,7 @@ const OrderDetails = () => {
       <div className={`${styles.modalOrder} mt-30 mb-8`}>
         {error && alert("Произошла ошибка во время загрузки данных с сервера!")}
         {!orderInfo ? (
-          <div className={`${styles.preLoad} text text_type_main-large`}>
-            Загрузка...
-          </div>
+          <Preloader />
         ) : (
           <>
             <p className="text text_type_digits-large mb-15">

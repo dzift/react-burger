@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import { ingredientPropType } from "../../utils/prop-types";
+import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { useDrop } from "react-dnd";
 import styles from "./burger-constructor.module.css";
@@ -12,12 +15,13 @@ import {
 import {
   GET_ORDER_REQUEST,
   DEL_ITEM_IN_CONSTRUCTOR,
+  ADD_ITEM_IN_CONSTRUCTOR,
 } from "../../services/actions/burger-constructor";
+
 import { OPEN_MODAL } from "../../services/actions/modal";
 
-import { useSelector, useDispatch } from "react-redux";
-
 import Modal from "../modal/modal.jsx";
+
 import OrderDetails from "../order-details/order-details";
 
 const Element = ({ name, price, image_mobile, deleteItem }) => (
@@ -33,7 +37,7 @@ const Element = ({ name, price, image_mobile, deleteItem }) => (
   </li>
 );
 
-const ElementBunTop = ({ name, price, image_mobile, itemKey }) => (
+const ElementBunTop = ({ name, price, image_mobile }) => (
   <ConstructorElement
     type="top"
     isLocked={true}
@@ -63,7 +67,7 @@ const PriceElement = ({ getTotaPrice }) => {
   );
 };
 
-const BurgerConstructor = ({ onDropHandler }) => {
+const BurgerConstructor = () => {
   const dataFromApi = useSelector(
     (store) => store.BurgerConstructor.itemConstructor
   );
@@ -84,7 +88,10 @@ const BurgerConstructor = ({ onDropHandler }) => {
   const [{ handlerId }, dropRef] = useDrop({
     accept: "NEW_INGREDIENT",
     drop(item) {
-      onDropHandler(item);
+      dispatch({
+        type: ADD_ITEM_IN_CONSTRUCTOR,
+        item: { ...item, itemKey: uuidv4() },
+      });
     },
   });
 
@@ -171,9 +178,16 @@ const BurgerConstructor = ({ onDropHandler }) => {
 };
 
 Element.propTypes = {
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image_mobile: PropTypes.string.isRequired,
+  Element: ingredientPropType,
+  deleteItem: PropTypes.func.isRequired,
 };
-
+ElementBunTop.propTypes = {
+  ElementBunTop: ingredientPropType,
+};
+ElementBunBottom.propTypes = {
+  ElementBunBottom: ingredientPropType,
+};
+PriceElement.propTypes = {
+  PriceElement: ingredientPropType,
+};
 export default BurgerConstructor;

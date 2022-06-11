@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
-
 import {
   GET_ORDER_SUCCESS,
   GET_ORDER_REQUEST,
@@ -41,7 +39,7 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
         error: true,
       };
     case ADD_ITEM_IN_CONSTRUCTOR:
-      const addItem = { ...action.item, itemKey: uuidv4() };
+      const addItem = { ...action.item };
       if (addItem.type === "bun") {
         return {
           ...state,

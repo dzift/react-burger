@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
 export const ingredientPropType = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(["bun", "main", "sauce"]).isRequired,
+  _id: PropTypes.string,
+  type: PropTypes.oneOf(["bun", "main", "sauce"]),
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_large: PropTypes.string.isRequired,
+  calories: PropTypes.number,
+  carbohydrates: PropTypes.number,
+  fat: PropTypes.number,
+  image: PropTypes.string,
+  image_large: PropTypes.string,
   image_mobile: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
+  proteins: PropTypes.number,
 });

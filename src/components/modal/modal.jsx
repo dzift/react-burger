@@ -16,7 +16,7 @@ const Modal = ({ children }) => {
   const dispatch = useDispatch();
 
   const keyEsc = React.useCallback((event) => {
-    if (event.keyCode === 27) {
+    if (event.key === "Escape") {
       dispatch({
         type: CLOSE_MODAL,
       });
