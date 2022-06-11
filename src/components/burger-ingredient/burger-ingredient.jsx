@@ -27,11 +27,11 @@ const BurgerIngredient = ({ dataIngredient }) => {
 
   const { image, name, price, type, _id } = dataIngredient;
 
-  const count = () => {
+  const checkCount = () => {
     if (type === "bun") {
       return dataFromApi.bun ? (dataFromApi.bun._id === _id ? 2 : 0) : 0;
     } else {
-      if (dataFromApi.ingredients.lenght !== 0) {
+      if (dataFromApi.ingredients.length !== 0) {
         let itemsArr = dataFromApi.ingredients.reduce((acc, item) => {
           const { _id } = item;
           if (!Object.hasOwn(acc, _id)) {
@@ -41,7 +41,7 @@ const BurgerIngredient = ({ dataIngredient }) => {
           }
           return acc;
         }, {});
-        if (itemsArr !== 0) {
+        if (itemsArr[_id] !== undefined) {
           return itemsArr[_id];
         } else {
           return 0;
@@ -51,6 +51,8 @@ const BurgerIngredient = ({ dataIngredient }) => {
       }
     }
   };
+
+  const count = checkCount();
 
   const openModal = () => {
     dispatch({
@@ -68,7 +70,7 @@ const BurgerIngredient = ({ dataIngredient }) => {
           key={_id}
           onClick={openModal}
         >
-          <Counter count={count()} size="default" />
+          {count !== 0 && <Counter count={count} size="default" />}
           <img src={image} alt="fff" />
           <div className={styles.itemPrice}>
             <span className="text text_type_digits-default mr-2">{price}</span>

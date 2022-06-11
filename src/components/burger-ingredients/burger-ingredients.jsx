@@ -23,7 +23,6 @@ const BurgerIngredients = () => {
     (store) => store.BurgerIngredients
   );
   const { currentItem } = useSelector((store) => store.BurgerIngredient);
-  const { getCount } = useSelector((store) => store.BurgerIngredient);
 
   const dispatch = useDispatch();
 
@@ -73,59 +72,59 @@ const BurgerIngredients = () => {
         </Modal>
       )}
 
-      <section className="text text_type_main-large pt-10 pb-5 mr-10">
-        Соберите бургер
-        <div className={styles.tab}>
-          <div
-            onClick={function () {
-              bun.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-          >
-            <Tab
-              value="Булки"
-              active={typeItem === "Булки"}
-              onClick={setTypeItem}
+      {error && alert("Запрос на сервер не удался!")}
+      {loading ? (
+        <Preloader />
+      ) : (
+        <section className="text text_type_main-large pt-10 pb-5 mr-10">
+          Соберите бургер
+          <div className={styles.tab}>
+            <div
+              onClick={function () {
+                bun.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
             >
-              Булки
-            </Tab>
-          </div>
-          <div
-            onClick={function () {
-              sauce.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-          >
-            <Tab
-              value="Соусы"
-              active={typeItem === "Соусы"}
-              onClick={setTypeItem}
+              <Tab
+                value="Булки"
+                active={typeItem === "Булки"}
+                onClick={setTypeItem}
+              >
+                Булки
+              </Tab>
+            </div>
+            <div
+              onClick={function () {
+                sauce.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
             >
-              Соусы
-            </Tab>
-          </div>
-          <div
-            onClick={function () {
-              main.current.scrollIntoView({
-                behavior: "smooth",
-              });
-            }}
-          >
-            <Tab
-              value="Начинки"
-              active={typeItem === "Начинки"}
-              onClick={setTypeItem}
+              <Tab
+                value="Соусы"
+                active={typeItem === "Соусы"}
+                onClick={setTypeItem}
+              >
+                Соусы
+              </Tab>
+            </div>
+            <div
+              onClick={function () {
+                main.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
             >
-              Начинки
-            </Tab>
+              <Tab
+                value="Начинки"
+                active={typeItem === "Начинки"}
+                onClick={setTypeItem}
+              >
+                Начинки
+              </Tab>
+            </div>
           </div>
-        </div>
-        {error && alert("Запрос на сервер не удался!")}
-        {loading ? (
-          <Preloader />
-        ) : (
           <div
             className={`${styles.menuIngredients} custom-scroll ml-4`}
             ref={menu}
@@ -177,8 +176,8 @@ const BurgerIngredients = () => {
               })}
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
     </>
   );
 };
