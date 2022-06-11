@@ -5,6 +5,7 @@ import {
   ADD_ITEM_IN_CONSTRUCTOR,
   DEL_ITEM_IN_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
+  SORT_ITEM_IN_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 
 const initialState = {
@@ -78,6 +79,14 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
           draggedIngredient: null,
         },
         postingOrder: false,
+      };
+    case SORT_ITEM_IN_CONSTRUCTOR:
+      return {
+        ...state,
+        itemConstructor: {
+          ...state.itemConstructor,
+          ingredients: action.item,
+        },
       };
 
     default:

@@ -4,6 +4,13 @@
   align-items: flex-end;
   box-sizing: border-box;
 }
+.constructorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-sizing: border-box;
+  border: 5px solid #4c4cff;
+}
 .constructorMenu {
   width: 100%;
   min-height: 600px;
