@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-ingredient.module.css";
@@ -6,14 +6,16 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
 import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
-import { OPEN_MODAL } from "../../services/actions/modal";
 
-const BurgerIngredient = ({ dataIngredient, count }) => {
+const BurgerIngredient = ({ dataIngredient }) => {
   const dispatch = useDispatch();
+  const dataFromApi = useSelector(
+    (store) => store.BurgerConstructor.itemConstructor
+  );
 
   const [{ isDrag }, drag] = useDrag({
     type: "NEW_INGREDIENT",
@@ -23,15 +25,37 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
     }),
   });
 
-  const { id, image, name, price } = dataIngredient;
+  const { image, name, price, type, _id } = dataIngredient;
+
+  const count = () => {
+    if (type === "bun") {
+      return dataFromApi.bun ? (dataFromApi.bun._id === _id ? 2 : 0) : 0;
+    } else {
+      if (dataFromApi.ingredients.lenght !== 0) {
+        let itemsArr = dataFromApi.ingredients.reduce((acc, item) => {
+          const { _id } = item;
+          if (!Object.hasOwn(acc, _id)) {
+            acc[_id] = 1;
+          } else {
+            acc[_id] += 1;
+          }
+          return acc;
+        }, {});
+        if (itemsArr !== 0) {
+          return itemsArr[_id];
+        } else {
+          return 0;
+        }
+      } else {
+        return 0;
+      }
+    }
+  };
 
   const openModal = () => {
     dispatch({
       type: GET_CURRENT_ITEM,
       currentItem: dataIngredient,
-    });
-    dispatch({
-      type: OPEN_MODAL,
     });
   };
 
@@ -41,10 +65,10 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
         <div
           ref={drag}
           className={`${styles.itemCard} pb-8`}
-          key={id}
+          key={_id}
           onClick={openModal}
         >
-          <Counter count={count} size="default" />
+          <Counter count={count()} size="default" />
           <img src={image} alt="fff" />
           <div className={styles.itemPrice}>
             <span className="text text_type_digits-default mr-2">{price}</span>
@@ -59,11 +83,8 @@ const BurgerIngredient = ({ dataIngredient, count }) => {
   );
 };
 
-// console.log(dataIngredient)
-
 BurgerIngredient.propTypes = {
   dataIngredient: ingredientPropType.isRequired,
-  count: PropTypes.number.isRequired,
 };
 
 export default React.memo(BurgerIngredient);

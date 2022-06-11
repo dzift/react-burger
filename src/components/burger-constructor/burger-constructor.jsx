@@ -16,9 +16,8 @@ import {
   GET_ORDER_REQUEST,
   DEL_ITEM_IN_CONSTRUCTOR,
   ADD_ITEM_IN_CONSTRUCTOR,
+  CLEAR_CONSTRUCTOR,
 } from "../../services/actions/burger-constructor";
-
-import { OPEN_MODAL } from "../../services/actions/modal";
 
 import Modal from "../modal/modal.jsx";
 
@@ -95,24 +94,26 @@ const BurgerConstructor = () => {
     },
   });
 
-  const { posting } = useSelector((store) => store.BurgerConstructor);
-  const { modalVisiable } = useSelector((store) => store.Modal);
+  const { postingOrder } = useSelector((store) => store.BurgerConstructor);
 
   const dispatch = useDispatch();
 
-  const setModal = () => {
+  const openModal = () => {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
+  };
+
+  const closeModal = () => {
     dispatch({
-      type: OPEN_MODAL,
+      type: CLEAR_CONSTRUCTOR,
     });
   };
 
   return (
     <>
-      {modalVisiable && posting && (
-        <Modal>
+      {postingOrder && (
+        <Modal onClose={closeModal}>
           <OrderDetails />
         </Modal>
       )}
@@ -137,9 +138,6 @@ const BurgerConstructor = () => {
                 dispatch({
                   type: DEL_ITEM_IN_CONSTRUCTOR,
                   itemKey: obj.itemKey,
-                });
-                dispatch({
-                  type: OPEN_MODAL,
                 });
               };
               if (obj.type !== "bun") {
@@ -168,7 +166,7 @@ const BurgerConstructor = () => {
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
           <PriceElement getTotaPrice={getTotaPrice} />
-          <Button type="primary" size="large" onClick={setModal}>
+          <Button type="primary" size="large" onClick={openModal}>
             Оформить заказ
           </Button>
         </div>

@@ -8,11 +8,8 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Preloader from "../preloader/preloader";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  GET_INGREDIENTS_FAILED,
-  GET_INGREDIENTS_REQUEST,
-  GET_INGREDIENTS_SUCCESS,
-} from "../../services/actions/burger-Ingredients";
+
+import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState("Булки");
@@ -26,7 +23,9 @@ const BurgerIngredients = () => {
     (store) => store.BurgerIngredients
   );
   const { currentItem } = useSelector((store) => store.BurgerIngredient);
-  const { modalVisiable } = useSelector((store) => store.Modal);
+  const { getCount } = useSelector((store) => store.BurgerIngredient);
+
+  const dispatch = useDispatch();
 
   const handleScroll = () => {
     const bunPosition = Math.abs(
@@ -56,16 +55,20 @@ const BurgerIngredients = () => {
     );
   };
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getItem());
   }, [dispatch]);
 
+  const closeModal = () => {
+    dispatch({
+      type: CLEAR_ITEM,
+    });
+  };
+
   return (
     <>
-      {currentItem && modalVisiable && (
-        <Modal>
+      {currentItem && (
+        <Modal onClose={closeModal}>
           <IngredientDetails />
         </Modal>
       )}
@@ -138,11 +141,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "bun") {
                   return (
-                    <BurgerIngredient
-                      key={obj._id}
-                      dataIngredient={obj}
-                      count={1}
-                    />
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 }
               })}
@@ -157,11 +156,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "sauce") {
                   return (
-                    <BurgerIngredient
-                      key={obj._id}
-                      dataIngredient={obj}
-                      count={1}
-                    />
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 }
               })}
@@ -176,11 +171,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "main") {
                   return (
-                    <BurgerIngredient
-                      key={obj._id}
-                      dataIngredient={obj}
-                      count={1}
-                    />
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 }
               })}

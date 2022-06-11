@@ -4,6 +4,7 @@ import {
   GET_ORDER_FAILED,
   ADD_ITEM_IN_CONSTRUCTOR,
   DEL_ITEM_IN_CONSTRUCTOR,
+  CLEAR_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
   },
   orderInfo: false,
   orderItems: [],
-  posting: false,
+  postingOrder: false,
 };
 
 export const reducerBurgerConstructor = (state = initialState, action) => {
@@ -22,7 +23,7 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
     case GET_ORDER_REQUEST:
       return {
         ...state,
-        posting: true,
+        postingOrder: true,
         error: false,
       };
     case GET_ORDER_SUCCESS:
@@ -67,6 +68,16 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
             (item) => item.itemKey !== action.itemKey
           ),
         },
+      };
+    case CLEAR_CONSTRUCTOR:
+      return {
+        ...state,
+        itemConstructor: {
+          ingredients: [],
+          bun: null,
+          draggedIngredient: null,
+        },
+        postingOrder: false,
       };
 
     default:
