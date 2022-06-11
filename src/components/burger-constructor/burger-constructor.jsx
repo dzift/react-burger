@@ -253,6 +253,8 @@ const BurgerConstructor = () => {
 Element.propTypes = {
   Element: ingredientPropType,
   deleteItem: PropTypes.func.isRequired,
+  moveElement: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 ElementBunTop.propTypes = {
   ElementBunTop: ingredientPropType,
