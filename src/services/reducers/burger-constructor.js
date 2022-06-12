@@ -81,11 +81,15 @@ export const reducerBurgerConstructor = (state = initialState, action) => {
         postingOrder: false,
       };
     case SORT_ITEM_IN_CONSTRUCTOR:
+      const ingredients = [...state.itemConstructor.ingredients];
+      const dragItem = ingredients[action.moveIndex];
+      ingredients.splice(action.moveIndex, 1);
+      ingredients.splice(action.hoverIndex, 0, dragItem);
       return {
         ...state,
         itemConstructor: {
           ...state.itemConstructor,
-          ingredients: action.item,
+          ingredients: ingredients,
         },
       };
 

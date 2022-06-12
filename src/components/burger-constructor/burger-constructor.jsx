@@ -170,14 +170,10 @@ const BurgerConstructor = () => {
     : styles.constructorCardHover;
 
   const moveElement = (moveIndex, hoverIndex) => {
-    const dragItem = dataFromApi.ingredients[moveIndex];
-    const newArr = [...dataFromApi.ingredients];
-    newArr.splice(moveIndex, 1);
-    newArr.splice(hoverIndex, 0, dragItem);
-
     dispatch({
       type: SORT_ITEM_IN_CONSTRUCTOR,
-      item: newArr,
+      moveIndex: moveIndex,
+      hoverIndex: hoverIndex,
     });
   };
 
@@ -255,6 +251,6 @@ Element.propTypes = {
 ElementBunTop.propTypes = ingredientPropType.isRequired;
 ElementBunBottom.propTypes = ingredientPropType.isRequired;
 PriceElement.propTypes = {
-  getTotaPrice: PropTypes.string.isRequired,
+  getTotaPrice: PropTypes.number.isRequired,
 };
 export default BurgerConstructor;
