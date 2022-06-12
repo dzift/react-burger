@@ -155,7 +155,7 @@ const BurgerConstructor = () => {
         type: GET_ORDER_REQUEST,
       });
     } else {
-      alert("Выберите булку и ингредиента своего заказа");
+      alert("Выберите булку и ингредиенты для своего заказа");
     }
   };
 
