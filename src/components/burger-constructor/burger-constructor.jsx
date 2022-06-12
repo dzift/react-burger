@@ -24,27 +24,10 @@ import Modal from "../modal/modal.jsx";
 
 import OrderDetails from "../order-details/order-details";
 
-const Element = ({
-  name,
-  price,
-  image_mobile,
-  deleteItem,
-  moveElement,
-  index,
-}) => {
+const Element = ({ item, moveElement, index, deleteItem }) => {
+  const { name, price, image_mobile } = item;
   const ref = useRef(null);
-
-  const [{ isDrag }, drag] = useDrag({
-    type: "SORT_INGREDIENT",
-    item: () => {
-      return { index };
-    },
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
-    }),
-  });
-
-  const [{ isSorting }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "SORT_INGREDIENT",
     hover: (item, monitor) => {
       const moveIndex = item.index;
@@ -68,11 +51,21 @@ const Element = ({
     },
   });
 
+  const [{ isDrag }, drag] = useDrag({
+    type: "SORT_INGREDIENT",
+    item: () => {
+      return { index };
+    },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
   const opacity = isDrag ? 0 : 1;
   drag(drop(ref));
 
   return (
-    !isDrag && (
+    <>
       <li
         ref={ref}
         className={`${styles.constructorItem} pl-4`}
@@ -87,7 +80,7 @@ const Element = ({
           handleClose={deleteItem}
         />
       </li>
-    )
+    </>
   );
 };
 
@@ -157,9 +150,13 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const openModal = () => {
-    dispatch({
-      type: GET_ORDER_REQUEST,
-    });
+    if (dataFromApi.ingredients.length > 0 && dataFromApi.bun !== null) {
+      dispatch({
+        type: GET_ORDER_REQUEST,
+      });
+    } else {
+      alert("Выберите булку и ингредиента своего заказа");
+    }
   };
 
   const closeModal = () => {
@@ -177,6 +174,7 @@ const BurgerConstructor = () => {
     const newArr = [...dataFromApi.ingredients];
     newArr.splice(moveIndex, 1);
     newArr.splice(hoverIndex, 0, dragItem);
+
     dispatch({
       type: SORT_ITEM_IN_CONSTRUCTOR,
       item: newArr,
@@ -217,11 +215,9 @@ const BurgerConstructor = () => {
                 return (
                   <Element
                     index={index}
-                    moveElement={moveElement}
                     key={obj.itemKey}
-                    image_mobile={obj.image_mobile}
-                    price={obj.price}
-                    name={obj.name}
+                    item={obj}
+                    moveElement={moveElement}
                     deleteItem={deleteItem}
                   />
                 );
@@ -251,18 +247,14 @@ const BurgerConstructor = () => {
 };
 
 Element.propTypes = {
-  Element: ingredientPropType,
+  item: ingredientPropType,
   deleteItem: PropTypes.func.isRequired,
   moveElement: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
 };
-ElementBunTop.propTypes = {
-  ElementBunTop: ingredientPropType,
-};
-ElementBunBottom.propTypes = {
-  ElementBunBottom: ingredientPropType,
-};
+ElementBunTop.propTypes = ingredientPropType.isRequired;
+ElementBunBottom.propTypes = ingredientPropType.isRequired;
 PriceElement.propTypes = {
-  PriceElement: ingredientPropType,
+  getTotaPrice: PropTypes.string.isRequired,
 };
 export default BurgerConstructor;
