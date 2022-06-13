@@ -26,3 +26,7 @@ body {
   color: #8585ad;
   min-height: 100vh;
 }
+
+.constructor-element {
+  min-width: 530px;
+}

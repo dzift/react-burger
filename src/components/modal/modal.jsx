@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = (props) => {
-  const keyEsc = React.useCallback((event) => {
-    if (event.keyCode === 27) {
-      props.onClose();
+const Modal = ({ children, onClose }) => {
+  const keyEsc = useCallback((event) => {
+    if (event.key === "Escape") {
+      onClose();
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("keydown", keyEsc);
-
     return () => {
       document.removeEventListener("keydown", keyEsc);
     };
@@ -23,9 +23,15 @@ const Modal = (props) => {
 
   return ReactDOM.createPortal(
     <>
-      <ModalOverlay onClose={props.onClose} />
-      <div className={styles.modal} onClick={props.onClose}>
-        {props.children}
+      <ModalOverlay onClose={onClose} />
+      <div className={styles.modal}>
+        <button
+          className={`${styles.modalButton}  ml-10 mt-15 mr-10`}
+          onClick={onClose}
+        >
+          <CloseIcon type="primary" />
+        </button>
+        {children}
       </div>
     </>,
     modalRoot

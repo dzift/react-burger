@@ -1,177 +1,185 @@
-import React, { useState, useRef } from "react";
-import PropTypes from "prop-types";
+import { useState, useRef, useEffect } from "react";
+import { getItem } from "../../services/actions/burger-Ingredients";
 import styles from "./burger-ingredients.module.css";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Preloader from "../preloader/preloader";
 
-const Ingredient = (props) => {
-  const [showModal, switchModal] = React.useState(false);
+import { useSelector, useDispatch } from "react-redux";
 
-  const modalVisible = () => {
-    switchModal(!showModal);
-  };
+import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
 
-  return (
-    <>
-      {showModal && (
-        <Modal onClose={modalVisible}>
-          <IngredientDetails data={props} onClose={modalVisible} />
-        </Modal>
-      )}
-      <div
-        className={`${styles.itemCard} pb-8`}
-        key={props.id}
-        onClick={modalVisible}
-      >
-        <Counter count={1} size="default" />
-        <img src={props.image} alt="fff" />
-        <div className={styles.itemPrice}>
-          <span className="text text_type_digits-default mr-2">
-            {props.price}
-          </span>
-          <CurrencyIcon type="primary" />
-        </div>
-        <div className={`${styles.itemName} text text_type_main-small`}>
-          {props.name}
-        </div>
-      </div>
-    </>
-  );
-};
+const BurgerIngredients = () => {
+  const [typeItem, setTypeItem] = useState("Булки");
 
-const BurgerIngredients = (props) => {
-  const [typeItem, setTypeItem] = useState("one");
+  const menu = useRef(null);
   const bun = useRef(null);
   const sauce = useRef(null);
   const main = useRef(null);
 
-  return (
-    <div className="text text_type_main-large pt-10 pb-5 mr-10">
-      Соберите бургер
-      <div className={styles.tab}>
-        <div
-          onClick={function () {
-            bun.current.scrollIntoView({
-              behavior: "smooth",
-            });
-          }}
-        >
-          <Tab
-            value="Булки"
-            active={typeItem === "Булки"}
-            onClick={setTypeItem}
-          >
-            Булки
-          </Tab>
-        </div>
-        <div
-          onClick={function () {
-            sauce.current.scrollIntoView({
-              behavior: "smooth",
-            });
-          }}
-        >
-          <Tab
-            value="Соусы"
-            active={typeItem === "Соусы"}
-            onClick={setTypeItem}
-          >
-            Соусы
-          </Tab>
-        </div>
-        <div
-          onClick={function () {
-            main.current.scrollIntoView({
-              behavior: "smooth",
-            });
-          }}
-        >
-          <Tab
-            value="Начинки"
-            active={typeItem === "Начинки"}
-            onClick={setTypeItem}
-          >
-            Начинки
-          </Tab>
-        </div>
-      </div>
-      <div className={`${styles.menuIngredients} custom-scroll ml-4`}>
-        <div
-          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-          ref={bun}
-        >
-          Булки
-        </div>
-        <div className={styles.groupIngredients}>
-          {props.data.map((obj) => {
-            if (obj.type === "bun") {
-              return <Ingredient key={obj._id} {...obj} />;
-            }
-          })}
-        </div>
-
-        <div
-          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-          ref={sauce}
-        >
-          Соусы
-        </div>
-        <div className={styles.groupIngredients}>
-          {props.data.map((obj) => {
-            if (obj.type === "sauce") {
-              return <Ingredient key={obj._id} {...obj} />;
-            }
-          })}
-        </div>
-        <div
-          className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
-          ref={main}
-        >
-          Начинки
-        </div>
-        <div className={styles.groupIngredients}>
-          {props.data.map((obj) => {
-            if (obj.type === "main") {
-              return <Ingredient key={obj._id} {...obj} />;
-            }
-          })}
-        </div>
-      </div>
-    </div>
+  const { items, loading, error } = useSelector(
+    (store) => store.BurgerIngredients
   );
-};
+  const { currentItem } = useSelector((store) => store.BurgerIngredient);
 
-Ingredient.propTypes = {
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  image_large: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-};
+  const dispatch = useDispatch();
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      calories: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      image_large: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  const handleScroll = () => {
+    const bunPosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        bun.current.getBoundingClientRect().top
+    );
+    const saucePosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        sauce.current.getBoundingClientRect().top
+    );
+    const mainPosition = Math.abs(
+      menu.current.getBoundingClientRect().top -
+        main.current.getBoundingClientRect().top
+    );
+
+    const viewType = Math.min(bunPosition, saucePosition, mainPosition);
+
+    const activeType =
+      viewType === bunPosition
+        ? "Булки"
+        : viewType === saucePosition
+        ? "Соусы"
+        : "Начинки";
+
+    setTypeItem((prevState) =>
+      activeType === prevState.current ? prevState.current : activeType
+    );
+  };
+
+  useEffect(() => {
+    dispatch(getItem());
+  }, [dispatch]);
+
+  const closeModal = () => {
+    dispatch({
+      type: CLEAR_ITEM,
+    });
+  };
+
+  return (
+    <>
+      {currentItem && (
+        <Modal onClose={closeModal}>
+          <IngredientDetails />
+        </Modal>
+      )}
+
+      {error && alert("Запрос на сервер не удался!")}
+      {loading ? (
+        <Preloader />
+      ) : (
+        <section className="text text_type_main-large pt-10 pb-5 mr-10">
+          Соберите бургер
+          <div className={styles.tab}>
+            <div
+              onClick={function () {
+                bun.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <Tab
+                value="Булки"
+                active={typeItem === "Булки"}
+                onClick={setTypeItem}
+              >
+                Булки
+              </Tab>
+            </div>
+            <div
+              onClick={function () {
+                sauce.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <Tab
+                value="Соусы"
+                active={typeItem === "Соусы"}
+                onClick={setTypeItem}
+              >
+                Соусы
+              </Tab>
+            </div>
+            <div
+              onClick={function () {
+                main.current.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }}
+            >
+              <Tab
+                value="Начинки"
+                active={typeItem === "Начинки"}
+                onClick={setTypeItem}
+              >
+                Начинки
+              </Tab>
+            </div>
+          </div>
+          <div
+            className={`${styles.menuIngredients} custom-scroll ml-4`}
+            ref={menu}
+            onScroll={handleScroll}
+          >
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={bun}
+            >
+              Булки
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "bun") {
+                  return (
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                  );
+                }
+              })}
+            </div>
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={sauce}
+            >
+              Соусы
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "sauce") {
+                  return (
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                  );
+                }
+              })}
+            </div>
+            <div
+              className={`${styles.groupIngredients} text text_type_main-medium pb-6 pt-10`}
+              ref={main}
+            >
+              Начинки
+            </div>
+            <div className={styles.groupIngredients}>
+              {items.map((obj) => {
+                if (obj.type === "main") {
+                  return (
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                  );
+                }
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
+  );
 };
 
 export default BurgerIngredients;
