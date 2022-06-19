@@ -13,7 +13,10 @@ const AppHeader = () => {
     <header className={styles.appHeader}>
       <div className={styles.contentHeader}>
         <div className={styles.menu}>
-          <a href="/" className={`${styles.active} pr-5 mr-2 mt-4 mb-4 text  `}>
+          <a
+            href="/"
+            className={`${styles.active} pl-5 pr-5 mr-2 mt-4 mb-4 text  `}
+          >
             <BurgerIcon type="primary" />
             <span className="ml-2">Конструктор</span>
           </a>

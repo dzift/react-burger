@@ -1,0 +1,27 @@
+.container {
+  margin: 180px auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  width: 480px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.link {
+  color: #4c4cff;
+  text-decoration: none;
+}

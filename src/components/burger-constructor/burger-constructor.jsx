@@ -184,10 +184,7 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
-      <section
-        ref={dropRef}
-        className={`${dragingInProgress} pt-25 pl-4 pb-10`}
-      >
+      <section ref={dropRef} className={`pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
           <div className={`${styles.constructorItemTop} pl-8`}>
             {dataFromApi.bun && (
