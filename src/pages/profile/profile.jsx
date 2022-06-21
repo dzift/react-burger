@@ -21,8 +21,8 @@ const Profile = () => {
           </Route>
 
           <Route>
-            <div>
-              <h2>404</h2>
+            <div className={`${styles.error}`}>
+              <h2>404 ERROR</h2>
             </div>
           </Route>
         </Switch>

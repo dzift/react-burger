@@ -7,5 +7,10 @@
 .content {
   display: grid;
   grid-template-columns: 380px 860px;
-  align-items: center;
+  align-items: start;
+}
+.error {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }

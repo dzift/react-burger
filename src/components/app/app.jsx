@@ -39,6 +39,11 @@ const App = () => {
         <Route path="/profile">
           <Profile />
         </Route>
+        <Route>
+          <div className={`${styles.error} mt-30`}>
+            <h2>404 ERROR</h2>
+          </div>
+        </Route>
       </Switch>
     </>
   );
