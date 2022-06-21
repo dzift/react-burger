@@ -7,8 +7,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import styles from "./sign-in.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import Preloader from "../../components/preloader/preloader";
+
+import { loginInApp } from "../../services/actions/authorization";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { requestInProgress, requestError } = useSelector(
+    (store) => store.AuthorizationData
+  );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,32 +32,40 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const sendAuth = (e) => {
+  const loginUser = (e) => {
     e.preventDefault();
-    console.log("Done");
+    dispatch(loginInApp(password, email));
   };
 
   return (
     <div className={`${styles.container}`}>
       <p className={`${styles.title} text text_type_main-medium pb-6`}>Вход</p>
-      <form onSubmit={sendAuth} className={`${styles.form} pb-20`}>
-        <Input
-          type={"text"}
-          placeholder={"E-mail"}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          name={"email"}
-          error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
-          errorText={"Ошибка"}
-          size={"default"}
-        />
-        <PasswordInput onChange={onChange} value={password} name={"password"} />
-        <Button type="primary" size="large">
-          Войти
-        </Button>
-      </form>
+      {requestInProgress ? (
+        <Preloader />
+      ) : (
+        <form onSubmit={loginUser} className={`${styles.form} pb-20`}>
+          <Input
+            type={"text"}
+            placeholder={"E-mail"}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            name={"email"}
+            error={false}
+            ref={inputRef}
+            onIconClick={onIconClick}
+            errorText={"Ошибка"}
+            size={"default"}
+          />
+          <PasswordInput
+            onChange={onChange}
+            value={password}
+            name={"password"}
+          />
+          <Button type="primary" size="large">
+            Войти
+          </Button>
+        </form>
+      )}
 
       <div className={`${styles.loginOptions} pb-4`}>
         <span className={`text text_type_main-default text_color_inactive`}>

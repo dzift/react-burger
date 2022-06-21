@@ -57,6 +57,54 @@ export const createUser = (password, email, name) => {
   }).then((res) => checkReponse(res));
 };
 
+export const loginUser = (password, email) => {
+  return fetch(`${URL_FOR_API}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("token"),
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  }).then((res) => checkReponse(res));
+};
+
+export const setCookie = (name, value, props) => {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == "number" && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
+  }
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + "=" + value;
+  for (const propName in props) {
+    updatedCookie += "; " + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
+};
+
+export const getCookie = (name) => {
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
 const checkReponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };

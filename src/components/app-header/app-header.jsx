@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./app-header.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import {
   BurgerIcon,
@@ -10,6 +10,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const AppHeader = () => {
+  const location = useLocation();
+  console.log(location);
   return (
     <header className={styles.appHeader}>
       <div className={styles.contentHeader}>
@@ -20,7 +22,9 @@ const AppHeader = () => {
             activeClassName={styles.linkActive}
             className={`${styles.link} pl-5 pr-5 mr-2 mt-4 mb-4 `}
           >
-            <BurgerIcon type="primary" />
+            <BurgerIcon
+              type={location.pathname === "/" ? "primary" : "secondary"}
+            />
             <span className="ml-2">Конструктор</span>
           </NavLink>
           <NavLink
@@ -29,7 +33,9 @@ const AppHeader = () => {
             activeClassName={styles.linkActive}
             className={` ${styles.link} pl-5 pr-5 mt-4 mb-4 `}
           >
-            <ListIcon type="secondary" />
+            <ListIcon
+              type={location.pathname === "/orders" ? "primary" : "secondary"}
+            />
             <span className="ml-2">Лента заказов</span>
           </NavLink>
         </div>
@@ -38,11 +44,17 @@ const AppHeader = () => {
         </NavLink>
         <NavLink
           to="/profile"
-          exact
           activeClassName={styles.linkActive}
           className={`${styles.link} mt-4 mb-4 pr-5 `}
         >
-          <ProfileIcon type="secondary" />
+          <ProfileIcon
+            type={
+              location.pathname === "/profile" ||
+              location.pathname === "/profile/orders"
+                ? "primary"
+                : "secondary"
+            }
+          />
           <span className="ml-2">Личный кабинет</span>
         </NavLink>
       </div>

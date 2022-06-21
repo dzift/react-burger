@@ -5,14 +5,15 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileInfo = () => {
-  const [name, setName] = useState("Danila");
-  const [email, setEmail] = useState("test@mail.com");
-  const [password, setPassword] = useState("TNu<56CmeukU");
+  const { name, email, password } = useSelector(
+    (store) => store.AuthorizationData.user
+  );
 
   const onChange = (e) => {
-    setPassword(e.target.value);
+    // setPassword(e.target.value);
   };
 
   const inputRef = useRef(null);
@@ -27,7 +28,7 @@ const ProfileInfo = () => {
       <Input
         type={"text"}
         placeholder={"Имя"}
-        onChange={(e) => setName(e.target.value)}
+        // onChange={(e) => setName(e.target.value)}
         icon={"EditIcon"}
         value={name}
         name={"name"}
@@ -41,7 +42,7 @@ const ProfileInfo = () => {
         type={"text"}
         placeholder={"E-mail"}
         icon={"EditIcon"}
-        onChange={(e) => setEmail(e.target.value)}
+        // onChange={(e) => setEmail(e.target.value)}
         value={email}
         name={"email"}
         error={false}
