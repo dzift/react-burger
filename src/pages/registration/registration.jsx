@@ -1,24 +1,39 @@
-import React, { useState, useRef, memo, useCallback } from "react";
+import React, { useState, useRef, memo } from "react";
 
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { createUser } from "../../utils/burger-api";
 import { Link } from "react-router-dom";
 import styles from "./registration.module.css";
 
 const Register = () => {
-  const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const onChange = (e) => {
-    setValue(e.target.value);
+    setPassword(e.target.value);
   };
 
-  const [name, setName] = React.useState("");
-  const inputRef = React.useRef(null);
+  const inputRef = useRef(null);
+
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert("Icon Click Callback");
+  };
+
+  const sendNewUser = (e) => {
+    e.preventDefault();
+    createUser(password, email, name)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -26,7 +41,7 @@ const Register = () => {
       <p className={`${styles.title} text text_type_main-medium pb-6`}>
         Регистрация
       </p>
-      <form action="submit" className={`${styles.form} pb-20`}>
+      <form onSubmit={sendNewUser} className={`${styles.form} pb-20`}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -42,15 +57,15 @@ const Register = () => {
         <Input
           type={"text"}
           placeholder={"E-mail"}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           name={"email"}
           error={false}
           onIconClick={onIconClick}
           errorText={"Ошибка"}
           size={"default"}
         />
-        <PasswordInput onChange={onChange} value={value} name={"password"} />
+        <PasswordInput onChange={onChange} value={password} name={"password"} />
         <Button type="primary" size="large">
           Зарегистрироваться
         </Button>
@@ -60,10 +75,12 @@ const Register = () => {
         <span className={`text text_type_main-default text_color_inactive`}>
           Уже зарегистрированы?
         </span>
-        <Link className={`${styles.link} pl-2`}>Войти</Link>
+        <Link to="/login" className={`${styles.link} pl-2`}>
+          Войти
+        </Link>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default memo(Register);

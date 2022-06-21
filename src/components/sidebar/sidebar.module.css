@@ -1,0 +1,21 @@
+.navList {
+  border: 1px dodgerblue dotted;
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 64px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link_active {
+  color: #f2f2f3;
+}

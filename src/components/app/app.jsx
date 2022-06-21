@@ -1,13 +1,19 @@
-import styles from "./app.module.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
-import { Login, Register, ForgotPassword, ResetPassword } from "../../pages";
+import {
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+} from "../../pages";
+import styles from "./app.module.css";
 
 const App = () => {
   return (
-    <Router>
+    <>
       <AppHeader />
       <Switch>
         <Route path="/" exact={true}>
@@ -30,8 +36,11 @@ const App = () => {
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
         </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
       </Switch>
-    </Router>
+    </>
   );
 };
 

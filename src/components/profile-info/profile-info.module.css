@@ -1,0 +1,8 @@
+.containerInfo {
+  border: 1px dotted violet;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  height: 100%;
+}
