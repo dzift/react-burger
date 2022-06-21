@@ -11,7 +11,7 @@ const Sidebar = () => {
           <NavLink
             to="/profile"
             exact
-            activeClassName={styles.link_active}
+            activeClassName={styles.linkActive}
             className={`${styles.link} text text_type_main-medium text_color_inactive`}
           >
             Профиль
@@ -21,7 +21,7 @@ const Sidebar = () => {
           <NavLink
             to="/profile/orders"
             exact
-            activeClassName={styles.link_active}
+            activeClassName={styles.linkActive}
             className={`${styles.link} text text_type_main-medium text_color_inactive`}
           >
             История заказов
@@ -31,7 +31,7 @@ const Sidebar = () => {
           <NavLink
             to="/login"
             exact
-            activeClassName={styles.link_active}
+            activeClassName={styles.linkActive}
             className={`${styles.link} text text_type_main-medium text_color_inactive`}
           >
             Выход

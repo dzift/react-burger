@@ -17,7 +17,7 @@ const AppHeader = () => {
           <NavLink
             to="/"
             exact
-            activeClassName={styles.link_active}
+            activeClassName={styles.linkActive}
             className={`${styles.link} pl-5 pr-5 mr-2 mt-4 mb-4 `}
           >
             <BurgerIcon type="primary" />
@@ -26,7 +26,7 @@ const AppHeader = () => {
           <NavLink
             to="/orders"
             exact
-            activeClassName={styles.link_active}
+            activeClassName={styles.linkActive}
             className={` ${styles.link} pl-5 pr-5 mt-4 mb-4 `}
           >
             <ListIcon type="secondary" />
@@ -39,7 +39,7 @@ const AppHeader = () => {
         <NavLink
           to="/profile"
           exact
-          activeClassName={styles.link_active}
+          activeClassName={styles.linkActive}
           className={`${styles.link} mt-4 mb-4 pr-5 `}
         >
           <ProfileIcon type="secondary" />
