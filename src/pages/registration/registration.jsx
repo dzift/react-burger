@@ -31,6 +31,8 @@ const Register = () => {
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
+  const { items } = useSelector((store) => store.BurgerIngredients);
+  console.log(items);
 
   const inputRef = useRef(null);
 

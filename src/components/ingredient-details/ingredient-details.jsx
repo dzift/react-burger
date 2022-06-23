@@ -1,48 +1,73 @@
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
+import { getItem } from "../../services/actions/burger-Ingredients";
 
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getIngredients } from "../../utils/burger-api";
+import Preloader from "../preloader/preloader";
 
 const IngredientDetails = () => {
-  const data = useSelector((store) => store.BurgerIngredient.currentItem);
+  let { id } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getItem());
+  }, [dispatch]);
+
+  const { items, loading } = useSelector((store) => store.BurgerIngredients);
+
+  const data = useMemo(() => {
+    if (!!items) {
+      let ingredient = items.find((el) => el._id === id);
+      return ingredient;
+    } else {
+      return null;
+    }
+  }, [id, items]);
 
   return (
-    <>
+    <div className={`${styles.container} `}>
       <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>
         <div className="text text_type_main-large">Детали ингредиента</div>
       </div>
-      <div className={`${styles.modalContent} pl-5 pr-5 pb-15`}>
-        <div className={`${styles.modalImg} pl-5 pr-5 mb-4`}>
-          <img src={data.image_large} alt="fff" />
-        </div>
+      {!!data ? (
+        <div className={`${styles.modalContent} pl-5 pr-5 pb-15`}>
+          <div className={`${styles.modalImg} pl-5 pr-5 mb-4`}>
+            <img src={data.image_large} alt="fff" />
+          </div>
 
-        <div className={`text text_type_main-medium pb-8`}>{data.name}</div>
-        <div className={`${styles.modalDetailRow} pb-15`}>
-          <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Калории,ккал</span>
-            <span className="text text_type_digits-default">
-              {data.calories}
-            </span>
-          </div>
-          <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Белки, г</span>
-            <span className="text text_type_digits-default">
-              {data.proteins}
-            </span>
-          </div>
-          <div className={`${styles.modalInfo} `}>
-            <span className="text text_type_main-default">Жиры, г</span>
-            <span className="text text_type_digits-default">{data.fat}</span>
-          </div>
-          <div className={`${styles.modalInfo}`}>
-            <span className="text text_type_main-default">Углеводы, г</span>
-            <span className="text text_type_digits-default">
-              {data.carbohydrates}
-            </span>
+          <div className={`text text_type_main-medium pb-8`}>{data.name}</div>
+          <div className={`${styles.modalDetailRow} pb-15`}>
+            <div className={`${styles.modalInfo}`}>
+              <span className="text text_type_main-default">Калории,ккал</span>
+              <span className="text text_type_digits-default">
+                {data.calories}
+              </span>
+            </div>
+            <div className={`${styles.modalInfo}`}>
+              <span className="text text_type_main-default">Белки, г</span>
+              <span className="text text_type_digits-default">
+                {data.proteins}
+              </span>
+            </div>
+            <div className={`${styles.modalInfo} `}>
+              <span className="text text_type_main-default">Жиры, г</span>
+              <span className="text text_type_digits-default">{data.fat}</span>
+            </div>
+            <div className={`${styles.modalInfo}`}>
+              <span className="text text_type_main-default">Углеводы, г</span>
+              <span className="text text_type_digits-default">
+                {data.carbohydrates}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    </>
+      ) : (
+        <Preloader />
+      )}
+    </div>
   );
 };
 

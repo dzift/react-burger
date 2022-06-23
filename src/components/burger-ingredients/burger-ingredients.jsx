@@ -5,6 +5,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { Link, useLocation } from "react-router-dom";
 import Preloader from "../preloader/preloader";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +14,7 @@ import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState("Булки");
+  const location = useLocation();
 
   const menu = useRef(null);
   const bun = useRef(null);
@@ -22,7 +24,7 @@ const BurgerIngredients = () => {
   const { items, loading, error } = useSelector(
     (store) => store.BurgerIngredients
   );
-  const { currentItem } = useSelector((store) => store.BurgerIngredient);
+  // const { currentItem } = useSelector((store) => store.BurgerIngredient);
 
   const dispatch = useDispatch();
 
@@ -58,19 +60,19 @@ const BurgerIngredients = () => {
     dispatch(getItem());
   }, [dispatch]);
 
-  const closeModal = () => {
-    dispatch({
-      type: CLEAR_ITEM,
-    });
-  };
+  // const closeModal = () => {
+  //   dispatch({
+  //     type: CLEAR_ITEM,
+  //   });
+  // };
 
   return (
     <>
-      {currentItem && (
+      {/* {currentItem && (
         <Modal onClose={closeModal}>
           <IngredientDetails />
         </Modal>
-      )}
+      )} */}
 
       {error && alert("Запрос на сервер не удался!")}
       {loading ? (
@@ -140,7 +142,16 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "bun") {
                   return (
-                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    <Link
+                      key={obj._id}
+                      to={{
+                        pathname: `/ingredients/${obj._id}`,
+                        state: { background: location },
+                      }}
+                      className={styles.link}
+                    >
+                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    </Link>
                   );
                 }
               })}
@@ -155,7 +166,16 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "sauce") {
                   return (
-                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    <Link
+                      key={obj._id}
+                      to={{
+                        pathname: `/ingredients/${obj._id}`,
+                        state: { background: location },
+                      }}
+                      className={styles.link}
+                    >
+                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    </Link>
                   );
                 }
               })}
@@ -170,7 +190,16 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "main") {
                   return (
-                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    <Link
+                      key={obj._id}
+                      to={{
+                        pathname: `/ingredients/${obj._id}`,
+                        state: { background: location },
+                      }}
+                      className={styles.link}
+                    >
+                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
+                    </Link>
                   );
                 }
               })}

@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
         <Route
           {...rest}
           render={({ location }) =>
-            user.name ? (
+            !!user.name ? (
               children
             ) : (
               <Redirect

@@ -1,5 +1,4 @@
 .navList {
-  border: 1px dodgerblue dotted;
   display: flex;
   flex-direction: column;
 }

@@ -54,12 +54,12 @@ const BurgerIngredient = ({ dataIngredient }) => {
 
   const count = checkCount();
 
-  const openModal = () => {
-    dispatch({
-      type: GET_CURRENT_ITEM,
-      currentItem: dataIngredient,
-    });
-  };
+  // const openModal = () => {
+  //   dispatch({
+  //     type: GET_CURRENT_ITEM,
+  //     currentItem: dataIngredient,
+  //   });
+  // };
 
   return (
     !isDrag && (
@@ -68,7 +68,7 @@ const BurgerIngredient = ({ dataIngredient }) => {
           ref={drag}
           className={`${styles.itemCard} pb-8`}
           key={_id}
-          onClick={openModal}
+          // onClick={openModal}
         >
           {count !== 0 && <Counter count={count} size="default" />}
           <img src={image} alt="fff" />
