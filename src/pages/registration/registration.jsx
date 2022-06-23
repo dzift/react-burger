@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo } from "react";
+import React, { useState, useRef, memo, useEffect } from "react";
 
 import {
   Input,
@@ -6,16 +6,19 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createNewUser } from "../../services/actions/authorization";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styles from "./registration.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../services/actions/authorization";
 import Preloader from "../../components/preloader/preloader";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, requestError } = useSelector(
+  const { requestInProgress, requestError, user } = useSelector(
     (store) => store.AuthorizationData
   );
+
+  const auth = !!localStorage.getItem("refreshToken");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +27,10 @@ const Register = () => {
   const onChange = (e) => {
     setPassword(e.target.value);
   };
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   const inputRef = useRef(null);
 
@@ -36,6 +43,16 @@ const Register = () => {
     e.preventDefault();
     dispatch(createNewUser(password, email, name));
   };
+
+  if (!!user.name && auth) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
 
   return (
     <div className={`${styles.container}`}>

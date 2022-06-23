@@ -1,13 +1,17 @@
-import React, { useState, useRef, memo } from "react";
+import React, { useState, useRef, memo, useEffect } from "react";
 
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { postForgotPass } from "../../services/actions/authorization";
+import {
+  postForgotPass,
+  getUserData,
+} from "../../services/actions/authorization";
 import styles from "./forgot-password.module.css";
 import { useDispatch, useSelector } from "react-redux";
+
 import Preloader from "../../components/preloader/preloader";
 
 const ForgotPassword = () => {
@@ -16,6 +20,11 @@ const ForgotPassword = () => {
   const { requestInProgress, requestError, user } = useSelector(
     (store) => store.AuthorizationData
   );
+
+  const auth = !!localStorage.getItem("refreshToken");
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   const [email, setEmail] = useState("");
   const inputRef = useRef(null);
@@ -38,7 +47,15 @@ const ForgotPassword = () => {
       />
     );
   }
-
+  if (!!user.name && auth) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
   return (
     <div className={`${styles.container}`}>
       <p className={`${styles.title} text text_type_main-medium pb-6`}>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo } from "react";
+import React, { useState, useRef, memo, useEffect } from "react";
 
 import {
   Input,
@@ -8,6 +8,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import styles from "./sign-in.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../services/actions/authorization";
 import Preloader from "../../components/preloader/preloader";
 
 import { loginInApp } from "../../services/actions/authorization";
@@ -17,7 +18,10 @@ const Login = () => {
   const { requestInProgress, requestError, user } = useSelector(
     (store) => store.AuthorizationData
   );
-  console.log(user, "user");
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,9 +42,9 @@ const Login = () => {
     dispatch(loginInApp(password, email));
   };
 
-  const getToken = localStorage.getItem("refreshToken");
+  const auth = !!localStorage.getItem("refreshToken");
 
-  if (user.name && getToken) {
+  if (!!user.name && auth) {
     return (
       <Redirect
         to={{

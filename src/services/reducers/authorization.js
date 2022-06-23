@@ -20,6 +20,9 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_REQUEST,
   UPDATE_USER_FAILED,
+  LOGOUT_SUCCESS,
+  LOGOUT_REQUEST,
+  LOGOUT_FAILED,
 } from "../actions/authorization";
 
 const initialState = {
@@ -28,6 +31,7 @@ const initialState = {
     password: "",
     name: "",
   },
+  auth: false,
   requestInProgress: false,
   requestError: false,
 };
@@ -95,10 +99,38 @@ export const reducerAuthorization = (state = initialState, action) => {
     case TOKEN_SUCCESS:
       return {
         ...state,
+        auth: true,
         requestInProgress: false,
         requestError: false,
       };
     case TOKEN_FAILED:
+      return {
+        ...state,
+        requestInProgress: false,
+        requestError: true,
+      };
+    //обновление токена конец
+
+    //обновление токена начало
+    case LOGOUT_REQUEST:
+      return {
+        ...state,
+        requestInProgress: true,
+        requestError: false,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        user: {
+          email: "",
+          password: "",
+          name: "",
+        },
+        auth: false,
+        requestInProgress: false,
+        requestError: false,
+      };
+    case LOGOUT_FAILED:
       return {
         ...state,
         requestInProgress: false,
@@ -170,6 +202,7 @@ export const reducerAuthorization = (state = initialState, action) => {
     case GET_USER_SUCCESS:
       return {
         ...state,
+        auth: true,
         requestInProgress: false,
         requestError: false,
         user: {

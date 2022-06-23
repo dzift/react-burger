@@ -31,6 +31,10 @@ export const TOKEN_SUCCESS = "TOKEN_SUCCESS";
 export const TOKEN_REQUEST = "TOKEN_REQUEST";
 export const TOKEN_FAILED = "TOKEN_FAILED";
 
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_FAILED = "GET_USER_FAILED";
@@ -123,20 +127,20 @@ export const refreshUserToken = () => {
 export const logoutUserFromApp = () => {
   return function (dispatch) {
     dispatch({
-      type: TOKEN_REQUEST,
+      type: LOGOUT_REQUEST,
     });
     logoutUser()
       .then(() => {
         localStorage.removeItem("refreshToken");
         deleteCookie("accessToken");
         dispatch({
-          type: TOKEN_SUCCESS,
+          type: LOGOUT_SUCCESS,
         });
       })
       .catch((err) => {
         alert(err.message);
         dispatch({
-          type: TOKEN_FAILED,
+          type: LOGOUT_FAILED,
         });
       });
   };
@@ -149,7 +153,6 @@ export const postForgotPass = (email) => {
     });
     postForgotPassword(email)
       .then((result) => {
-        console.log(result);
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
           email: result.success,
@@ -165,14 +168,12 @@ export const postForgotPass = (email) => {
 };
 
 export const resetForgotPass = (password, token) => {
-  console.log(password, token);
   return function (dispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
     postResetPassword(password, token)
       .then((result) => {
-        console.log(result);
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
         });
@@ -220,7 +221,6 @@ export const getUserData = () => {
         });
       })
       .catch((err) => {
-        console.log(err.message);
         dispatch({
           type: GET_USER_FAILED,
         });

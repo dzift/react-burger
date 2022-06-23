@@ -1,5 +1,43 @@
-import { Route } from "react-router-dom";
+import React, { useState, useRef, memo } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { getUserData } from "../services/actions/authorization";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Preloader from "./preloader/preloader";
 
-export function ProtectedRoute({ children, ...rest }) {
-  return <Route {...rest} render={() => children} />;
-}
+const ProtectedRoute = ({ children, ...rest }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
+  const { requestInProgress, requestError, user, auth } = useSelector(
+    (store) => store.AuthorizationData
+  );
+
+  return (
+    <>
+      {requestInProgress ? (
+        <Preloader />
+      ) : (
+        <Route
+          {...rest}
+          render={({ location }) =>
+            user.name ? (
+              children
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: location },
+                }}
+              />
+            )
+          }
+        />
+      )}
+    </>
+  );
+};
+export default memo(ProtectedRoute);

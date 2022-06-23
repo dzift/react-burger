@@ -27,7 +27,7 @@ const AppHeader = () => {
             <span className="ml-2">Конструктор</span>
           </NavLink>
           <NavLink
-            to="/orders"
+            to="/feed"
             exact
             activeClassName={styles.linkActive}
             className={` ${styles.link} pl-5 pr-5 mt-4 mb-4 `}

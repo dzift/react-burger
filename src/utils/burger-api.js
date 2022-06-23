@@ -31,7 +31,6 @@ export const postForgotPassword = (email) => {
 };
 
 export const postResetPassword = (password, token) => {
-  console.log(password, token);
   return fetch(`${URL_FOR_API}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -178,7 +177,6 @@ const fetchWithRefresh = async (url, options) => {
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
-      console.log("refreshData", refreshData);
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", refreshData.accessToken);
       options.headers.authorization = refreshData.accessToken;
