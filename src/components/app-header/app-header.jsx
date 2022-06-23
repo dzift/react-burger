@@ -11,7 +11,6 @@ import {
 
 const AppHeader = () => {
   const location = useLocation();
-  console.log(location);
   return (
     <header className={styles.appHeader}>
       <div className={styles.contentHeader}>

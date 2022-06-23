@@ -42,43 +42,40 @@ const Register = () => {
       <p className={`${styles.title} text text_type_main-medium pb-6`}>
         Регистрация
       </p>
-      {requestInProgress ? (
-        <Preloader />
-      ) : (
-        <form onSubmit={sendNewUser} className={`${styles.form} pb-20`}>
-          <Input
-            type={"text"}
-            placeholder={"Имя"}
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            name={"name"}
-            error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={"Ошибка"}
-            size={"default"}
-          />
-          <Input
-            type={"text"}
-            placeholder={"E-mail"}
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name={"email"}
-            error={false}
-            onIconClick={onIconClick}
-            errorText={"Ошибка"}
-            size={"default"}
-          />
-          <PasswordInput
-            onChange={onChange}
-            value={password}
-            name={"password"}
-          />
+
+      <form onSubmit={sendNewUser} className={`${styles.form} pb-20`}>
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          name={"name"}
+          error={false}
+          ref={inputRef}
+          onIconClick={onIconClick}
+          errorText={"Ошибка"}
+          size={"default"}
+        />
+        <Input
+          type={"text"}
+          placeholder={"E-mail"}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          name={"email"}
+          error={false}
+          onIconClick={onIconClick}
+          errorText={"Ошибка"}
+          size={"default"}
+        />
+        <PasswordInput onChange={onChange} value={password} name={"password"} />
+        {requestInProgress ? (
+          <Preloader />
+        ) : (
           <Button type="primary" size="large">
             Зарегистрироваться
           </Button>
-        </form>
-      )}
+        )}
+      </form>
 
       <div className={`${styles.loginOptions} pb-4`}>
         <span className={`text text_type_main-default text_color_inactive`}>

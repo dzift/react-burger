@@ -1,21 +1,17 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import ProfileInfo from "../../components/profile-info/profile-info";
 import Sidebar from "../../components/sidebar/sidebar";
-import Preloader from "../../components/preloader/preloader";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserData } from "../../services/actions/authorization";
 
 const Profile = () => {
-  const isAuthChecked = true;
-  const location = useLocation();
-
-  if (!isAuthChecked)
-    return (
-      <div className={`mt-30`}>
-        <Preloader />
-      </div>
-    );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
 
   return (
     <div className={`${styles.container}`}>

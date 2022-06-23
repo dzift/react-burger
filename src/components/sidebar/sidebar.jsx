@@ -2,8 +2,15 @@ import React, { memo } from "react";
 import { NavLink } from "react-router-dom";
 
 import styles from "./sidebar.module.css";
+import { logoutUserFromApp } from "../../services/actions/authorization";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+
+  const logoutClick = () => {
+    dispatch(logoutUserFromApp());
+  };
   return (
     <section className={`mr-15`}>
       <div className={`${styles.navList}  mb-20`}>
@@ -34,7 +41,7 @@ const Sidebar = () => {
             activeClassName={styles.linkActive}
             className={`${styles.link} text text_type_main-medium text_color_inactive`}
           >
-            Выход
+            <span onClick={logoutClick}>Выход</span>
           </NavLink>
         </div>
       </div>

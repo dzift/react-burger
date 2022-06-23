@@ -5,7 +5,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styles from "./sign-in.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../../components/preloader/preloader";
@@ -14,9 +14,10 @@ import { loginInApp } from "../../services/actions/authorization";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, requestError } = useSelector(
+  const { requestInProgress, requestError, user } = useSelector(
     (store) => store.AuthorizationData
   );
+  console.log(user, "user");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +37,18 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginInApp(password, email));
   };
+
+  const getToken = localStorage.getItem("refreshToken");
+
+  if (user.name && getToken) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
 
   return (
     <div className={`${styles.container}`}>

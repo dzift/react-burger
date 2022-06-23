@@ -1,8 +1,17 @@
 .containerInfo {
   border: 1px dotted violet;
+  width: 480px;
+  height: 100%;
+}
+
+.form {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 100%;
-  height: 100%;
+}
+
+.containerButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }

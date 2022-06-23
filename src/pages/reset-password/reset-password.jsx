@@ -5,12 +5,20 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { postResetPassword } from "../../utils/burger-api";
+import { Link, Redirect } from "react-router-dom";
+import { resetForgotPass } from "../../services/actions/authorization";
 import styles from "./reset-password.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import Preloader from "../../components/preloader/preloader";
 
 const ResetPassword = () => {
-  const [code, setCode] = useState("");
+  const dispatch = useDispatch();
+
+  const { requestInProgress, requestError, user } = useSelector(
+    (store) => store.AuthorizationData
+  );
+
+  const [token, setToken] = useState("");
   const inputRef = useRef(null);
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
@@ -24,27 +32,31 @@ const ResetPassword = () => {
 
   const sendPassword = (e) => {
     e.preventDefault();
-    postResetPassword(password)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(resetForgotPass(password, token));
   };
+  if (user.password) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+  }
 
   return (
     <div className={`${styles.container}`}>
       <p className={`${styles.title} text text_type_main-medium pb-6`}>
         Восстановление пароля
       </p>
+
       <form onSubmit={sendPassword} className={`${styles.form} pb-20`}>
         <PasswordInput value={password} name={"password"} onChange={onChange} />
         <Input
           type={"text"}
           placeholder={"Введите код из письма"}
-          onChange={(e) => setCode(e.target.value)}
-          value={code}
+          onChange={(e) => setToken(e.target.value)}
+          value={token}
           name={"code"}
           error={false}
           ref={inputRef}
@@ -52,9 +64,13 @@ const ResetPassword = () => {
           errorText={"Ошибка"}
           size={"default"}
         />
-        <Button type="primary" size="large">
-          Сохранить
-        </Button>
+        {requestInProgress ? (
+          <Preloader />
+        ) : (
+          <Button type="primary" size="large">
+            Сохранить
+          </Button>
+        )}
       </form>
 
       <div className={`${styles.loginOptions} pb-4`}>
