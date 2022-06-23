@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo } from "react";
+import React, { memo } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { getUserData } from "../services/actions/authorization";
 import { useEffect } from "react";
@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
     dispatch(getUserData());
   }, [dispatch]);
 
-  const { requestInProgress, requestError, user, auth } = useSelector(
+  const { requestInProgress, user } = useSelector(
     (store) => store.AuthorizationData
   );
 

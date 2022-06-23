@@ -3,14 +3,14 @@ import { getItem } from "../../services/actions/burger-Ingredients";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import Modal from "../modal/modal.jsx";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+// import Modal from "../modal/modal.jsx";
+// import IngredientDetails from "../ingredient-details/ingredient-details";
 import { Link, useLocation } from "react-router-dom";
 import Preloader from "../preloader/preloader";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
+// import { CLEAR_ITEM } from "../../services/actions/burger-ingredient";
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState("Булки");

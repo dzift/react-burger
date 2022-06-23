@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { getItem } from "../../services/actions/burger-Ingredients";
 
 import styles from "./ingredient-details.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getIngredients } from "../../utils/burger-api";
+
 import Preloader from "../preloader/preloader";
 
 const IngredientDetails = () => {
@@ -16,7 +16,7 @@ const IngredientDetails = () => {
     dispatch(getItem());
   }, [dispatch]);
 
-  const { items, loading } = useSelector((store) => store.BurgerIngredients);
+  const { items } = useSelector((store) => store.BurgerIngredients);
 
   const data = useMemo(() => {
     if (!!items) {

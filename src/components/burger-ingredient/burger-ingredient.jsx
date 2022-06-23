@@ -1,18 +1,16 @@
-import React, { useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-ingredient.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
-import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
+// import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
 
 const BurgerIngredient = ({ dataIngredient }) => {
-  const dispatch = useDispatch();
   const dataFromApi = useSelector(
     (store) => store.BurgerConstructor.itemConstructor
   );

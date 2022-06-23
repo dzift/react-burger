@@ -14,7 +14,7 @@ import Preloader from "../../components/preloader/preloader";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, requestError, user } = useSelector(
+  const { requestInProgress, user } = useSelector(
     (store) => store.AuthorizationData
   );
 
