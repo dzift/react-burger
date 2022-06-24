@@ -32,6 +32,7 @@ const initialState = {
     name: "",
   },
   auth: false,
+  isLoggedIn: false,
   requestInProgress: false,
   requestError: false,
 };
@@ -75,6 +76,7 @@ export const reducerAuthorization = (state = initialState, action) => {
         ...state,
         requestInProgress: false,
         requestError: false,
+        isLoggedIn: true,
         user: {
           ...state.user,
           email: action.user.email,
@@ -84,6 +86,7 @@ export const reducerAuthorization = (state = initialState, action) => {
     case LOGIN_FAILED:
       return {
         ...state,
+        isLoggedIn: false,
         requestInProgress: false,
         requestError: true,
       };
@@ -100,18 +103,20 @@ export const reducerAuthorization = (state = initialState, action) => {
       return {
         ...state,
         auth: true,
+        isLoggedIn: true,
         requestInProgress: false,
         requestError: false,
       };
     case TOKEN_FAILED:
       return {
         ...state,
+        isLoggedIn: false,
         requestInProgress: false,
         requestError: true,
       };
     //обновление токена конец
 
-    //обновление токена начало
+    //выход начало
     case LOGOUT_REQUEST:
       return {
         ...state,
@@ -127,16 +132,18 @@ export const reducerAuthorization = (state = initialState, action) => {
           name: "",
         },
         auth: false,
+        isLoggedIn: false,
         requestInProgress: false,
         requestError: false,
       };
     case LOGOUT_FAILED:
       return {
         ...state,
+        isLoggedIn: false,
         requestInProgress: false,
         requestError: true,
       };
-    //обновление токена конец
+    //выход конец
 
     //запрос кода для забытого пароля начало
     case FORGOT_PASSWORD_REQUEST:
@@ -203,6 +210,7 @@ export const reducerAuthorization = (state = initialState, action) => {
       return {
         ...state,
         auth: true,
+        isLoggedIn: true,
         requestInProgress: false,
         requestError: false,
         user: {
@@ -213,6 +221,7 @@ export const reducerAuthorization = (state = initialState, action) => {
     case GET_USER_FAILED:
       return {
         ...state,
+        isLoggedIn: false,
         requestInProgress: false,
         requestError: true,
       };

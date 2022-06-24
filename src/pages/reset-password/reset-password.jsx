@@ -17,18 +17,17 @@ import Preloader from "../../components/preloader/preloader";
 const ResetPassword = () => {
   const dispatch = useDispatch();
 
-  const { requestInProgress, requestError, user } = useSelector(
+  const { requestInProgress, user, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
-
-  const auth = !!localStorage.getItem("refreshToken");
-
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
 
   const [token, setToken] = useState("");
+
   const inputRef = useRef(null);
+
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
     alert("Icon Click Callback");
@@ -53,7 +52,7 @@ const ResetPassword = () => {
     );
   }
 
-  if (!!user.name && auth) {
+  if (isLoggedIn || !user.email) {
     return (
       <Redirect
         to={{

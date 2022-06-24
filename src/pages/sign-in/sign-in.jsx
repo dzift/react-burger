@@ -5,7 +5,7 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./sign-in.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData } from "../../services/actions/authorization";
@@ -15,9 +15,11 @@ import { loginInApp } from "../../services/actions/authorization";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, requestError, user } = useSelector(
+  const { requestInProgress, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
+
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getUserData());
@@ -42,16 +44,9 @@ const Login = () => {
     dispatch(loginInApp(password, email));
   };
 
-  const auth = !!localStorage.getItem("refreshToken");
-
-  if (!!user.name && auth) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/",
-        }}
-      />
-    );
+  if (isLoggedIn) {
+    const { from } = location.state || { from: { pathname: "/" } };
+    return <Redirect to={from} />;
   }
 
   return (

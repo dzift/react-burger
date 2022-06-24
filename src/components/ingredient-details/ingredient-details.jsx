@@ -1,20 +1,13 @@
-import React, { useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { getItem } from "../../services/actions/burger-Ingredients";
 
 import styles from "./ingredient-details.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Preloader from "../preloader/preloader";
 
 const IngredientDetails = () => {
   let { id } = useParams();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getItem());
-  }, [dispatch]);
 
   const { items } = useSelector((store) => store.BurgerIngredients);
 
@@ -69,17 +62,6 @@ const IngredientDetails = () => {
       )}
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image_large: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-  }),
 };
 
 export default IngredientDetails;

@@ -17,11 +17,10 @@ import Preloader from "../../components/preloader/preloader";
 const ForgotPassword = () => {
   const dispatch = useDispatch();
 
-  const { requestInProgress, requestError, user } = useSelector(
+  const { requestInProgress, user, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
 
-  const auth = !!localStorage.getItem("refreshToken");
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
@@ -47,7 +46,7 @@ const ForgotPassword = () => {
       />
     );
   }
-  if (!!user.name && auth) {
+  if (isLoggedIn) {
     return (
       <Redirect
         to={{

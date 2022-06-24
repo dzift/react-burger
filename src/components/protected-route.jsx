@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
     dispatch(getUserData());
   }, [dispatch]);
 
-  const { requestInProgress, user } = useSelector(
+  const { requestInProgress, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
 
@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
         <Route
           {...rest}
           render={({ location }) =>
-            !!user.name ? (
+            isLoggedIn ? (
               children
             ) : (
               <Redirect

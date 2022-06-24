@@ -50,8 +50,8 @@ export const createNewUser = (password, email, name) => {
     });
     createUser(password, email, name)
       .then((result) => {
-        let authToken = result.accessToken.split("Bearer ")[1];
-        let refreshToken = result.refreshToken;
+        const authToken = result.accessToken.split("Bearer ")[1];
+        const refreshToken = result.refreshToken;
         if (authToken) {
           setCookie("token", authToken);
           localStorage.setItem("refreshToken", refreshToken);
@@ -77,8 +77,8 @@ export const loginInApp = (password, email) => {
     });
     loginUser(password, email)
       .then((result) => {
-        let accessToken = result.accessToken.split("Bearer ")[1];
-        let refreshToken = result.refreshToken;
+        const accessToken = result.accessToken.split("Bearer ")[1];
+        const refreshToken = result.refreshToken;
         if (accessToken) {
           setCookie("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
@@ -104,8 +104,8 @@ export const refreshUserToken = () => {
     });
     refreshToken()
       .then((result) => {
-        let accessToken = result.accessToken.split("Bearer ")[1];
-        let refreshToken = result.refreshToken;
+        const accessToken = result.accessToken.split("Bearer ")[1];
+        const refreshToken = result.refreshToken;
         if (accessToken) {
           setCookie("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);

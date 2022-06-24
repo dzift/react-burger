@@ -14,11 +14,9 @@ import Preloader from "../../components/preloader/preloader";
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, user } = useSelector(
+  const { requestInProgress, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
-
-  const auth = !!localStorage.getItem("refreshToken");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,8 +29,6 @@ const Register = () => {
   useEffect(() => {
     dispatch(getUserData());
   }, [dispatch]);
-  const { items } = useSelector((store) => store.BurgerIngredients);
-  console.log(items);
 
   const inputRef = useRef(null);
 
@@ -46,7 +42,7 @@ const Register = () => {
     dispatch(createNewUser(password, email, name));
   };
 
-  if (!!user.name && auth) {
+  if (isLoggedIn) {
     return (
       <Redirect
         to={{

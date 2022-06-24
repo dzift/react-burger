@@ -1,4 +1,5 @@
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
@@ -11,14 +12,21 @@ import {
 } from "../../pages";
 import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route.jsx";
-
+import { getItem } from "../../services/actions/burger-Ingredients.js";
+import { useDispatch } from "react-redux";
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
 
 const App = () => {
+  const dispatch = useDispatch();
+
   const location = useLocation();
   const history = useHistory();
   let background = location.state && location.state.background;
+
+  useEffect(() => {
+    dispatch(getItem());
+  }, [dispatch]);
 
   return (
     <>
