@@ -1,0 +1,15 @@
+.container {
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 380px 860px;
+  align-items: start;
+}
+.error {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}

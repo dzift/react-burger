@@ -30,3 +30,7 @@ body {
 .constructor-element {
   min-width: 530px;
 }
+
+.input__container .input_size_default {
+  width: 480px;
+}

@@ -1,0 +1,20 @@
+.navList {
+  display: flex;
+  flex-direction: column;
+}
+
+.navItem {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 64px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.linkActive {
+  color: #f2f2f3;
+}

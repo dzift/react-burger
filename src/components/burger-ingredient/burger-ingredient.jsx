@@ -1,18 +1,16 @@
-import React, { useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import { ingredientPropType } from "../../utils/prop-types";
 import styles from "./burger-ingredient.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 
-import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
+// import { GET_CURRENT_ITEM } from "../../services/actions/burger-ingredient";
 
 const BurgerIngredient = ({ dataIngredient }) => {
-  const dispatch = useDispatch();
   const dataFromApi = useSelector(
     (store) => store.BurgerConstructor.itemConstructor
   );
@@ -54,12 +52,12 @@ const BurgerIngredient = ({ dataIngredient }) => {
 
   const count = checkCount();
 
-  const openModal = () => {
-    dispatch({
-      type: GET_CURRENT_ITEM,
-      currentItem: dataIngredient,
-    });
-  };
+  // const openModal = () => {
+  //   dispatch({
+  //     type: GET_CURRENT_ITEM,
+  //     currentItem: dataIngredient,
+  //   });
+  // };
 
   return (
     !isDrag && (
@@ -68,7 +66,7 @@ const BurgerIngredient = ({ dataIngredient }) => {
           ref={drag}
           className={`${styles.itemCard} pb-8`}
           key={_id}
-          onClick={openModal}
+          // onClick={openModal}
         >
           {count !== 0 && <Counter count={count} size="default" />}
           <img src={image} alt="fff" />

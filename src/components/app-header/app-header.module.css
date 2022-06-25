@@ -24,6 +24,11 @@
   left: -100px;
 }
 
-.active {
+.link {
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.linkActive {
   color: #f2f2f3;
 }

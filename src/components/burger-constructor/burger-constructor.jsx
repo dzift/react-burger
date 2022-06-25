@@ -3,7 +3,9 @@ import { ingredientPropType } from "../../utils/prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { useLocation, useHistory } from "react-router-dom";
 import { useDrag, useDrop } from "react-dnd";
+import { Route, Redirect } from "react-router-dom";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -115,6 +117,11 @@ const PriceElement = ({ getTotaPrice }) => {
 };
 
 const BurgerConstructor = () => {
+  const { auth } = useSelector((store) => store.AuthorizationData);
+
+  const location = useLocation();
+  const history = useHistory();
+
   const dataFromApi = useSelector(
     (store) => store.BurgerConstructor.itemConstructor
   );
@@ -150,12 +157,16 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const openModal = () => {
-    if (dataFromApi.ingredients.length > 0 && dataFromApi.bun !== null) {
-      dispatch({
-        type: GET_ORDER_REQUEST,
-      });
+    if (auth) {
+      if (dataFromApi.ingredients.length > 0 && dataFromApi.bun !== null) {
+        dispatch({
+          type: GET_ORDER_REQUEST,
+        });
+      } else {
+        alert("Выберите булку и ингредиенты для своего заказа");
+      }
     } else {
-      alert("Выберите булку и ингредиенты для своего заказа");
+      history.replace("/login");
     }
   };
 
@@ -164,10 +175,6 @@ const BurgerConstructor = () => {
       type: CLEAR_CONSTRUCTOR,
     });
   };
-
-  const dragingInProgress = isOver
-    ? styles.constructorCard
-    : styles.constructorCardHover;
 
   const moveElement = (moveIndex, hoverIndex) => {
     dispatch({
@@ -184,10 +191,7 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
-      <section
-        ref={dropRef}
-        className={`${dragingInProgress} pt-25 pl-4 pb-10`}
-      >
+      <section ref={dropRef} className={`pt-25 pl-4 pb-10`}>
         <div className={styles.constructorMenu}>
           <div className={`${styles.constructorItemTop} pl-8`}>
             {dataFromApi.bun && (

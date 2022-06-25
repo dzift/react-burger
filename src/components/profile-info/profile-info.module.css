@@ -1,0 +1,16 @@
+.containerInfo {
+  width: 480px;
+  height: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.containerButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
