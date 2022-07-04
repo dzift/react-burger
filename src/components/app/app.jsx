@@ -13,6 +13,7 @@ import {
 import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route.jsx";
 import { getItem } from "../../services/actions/burger-Ingredients.js";
+import { getUserData } from "../../services/actions/authorization.js";
 import { useDispatch } from "react-redux";
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
@@ -26,6 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getItem());
+    dispatch(getUserData());
   }, [dispatch]);
 
   return (

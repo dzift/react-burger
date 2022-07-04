@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo, useEffect } from "react";
+import { useState, useRef, memo, useEffect } from "react";
 
 import {
   Input,
@@ -16,6 +16,7 @@ const ProfileInfo = () => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     setName(user.name);
@@ -23,6 +24,7 @@ const ProfileInfo = () => {
   }, [user]);
 
   const onChange = (e) => {
+    setShowButton(true);
     setPassword(e.target.value);
   };
 
@@ -34,6 +36,7 @@ const ProfileInfo = () => {
   };
 
   const cancelChanges = () => {
+    setShowButton(false);
     setName(user.name);
     setEmail(user.email);
   };
@@ -49,7 +52,10 @@ const ProfileInfo = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+            setShowButton(true);
+          }}
           icon={"EditIcon"}
           value={name}
           name={"name"}
@@ -63,7 +69,10 @@ const ProfileInfo = () => {
           type={"text"}
           placeholder={"E-mail"}
           icon={"EditIcon"}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setShowButton(true);
+          }}
           value={email}
           name={"email"}
           error={false}
@@ -73,14 +82,16 @@ const ProfileInfo = () => {
         />
         <PasswordInput onChange={onChange} value={password} name={"password"} />
 
-        <div className={`${styles.containerButton}`}>
-          <Button type="primary" size="large" onClick={cancelChanges}>
-            Отмена
-          </Button>
-          <Button type="primary" size="large">
-            Сохранить
-          </Button>
-        </div>
+        {showButton && (
+          <div className={`${styles.containerButton}`}>
+            <Button type="secondary" size="medium" onClick={cancelChanges}>
+              Отмена
+            </Button>
+            <Button type="primary" size="large">
+              Сохранить
+            </Button>
+          </div>
+        )}
       </form>
     </div>
   );

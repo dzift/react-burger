@@ -1,9 +1,9 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
 import styles from "./sidebar.module.css";
 import { logoutUserFromApp } from "../../services/actions/authorization";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
   const dispatch = useDispatch();

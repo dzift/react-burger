@@ -1,14 +1,11 @@
-import React, { useState, useRef, memo, useEffect } from "react";
+import { useState, useRef, memo } from "react";
 
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import {
-  postForgotPass,
-  getUserData,
-} from "../../services/actions/authorization";
+import { postForgotPass } from "../../services/actions/authorization";
 import styles from "./forgot-password.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -20,10 +17,6 @@ const ForgotPassword = () => {
   const { requestInProgress, user, isLoggedIn } = useSelector(
     (store) => store.AuthorizationData
   );
-
-  useEffect(() => {
-    dispatch(getUserData());
-  }, [dispatch]);
 
   const [email, setEmail] = useState("");
   const inputRef = useRef(null);
@@ -56,41 +49,44 @@ const ForgotPassword = () => {
     );
   }
   return (
-    <div className={`${styles.container}`}>
-      <p className={`${styles.title} text text_type_main-medium pb-6`}>
-        Восстановление пароля
-      </p>
+    <>
       {requestInProgress ? (
-        <Preloader />
+        <div className={`pt-30`}>
+          <Preloader />
+        </div>
       ) : (
-        <form onSubmit={sendMail} className={`${styles.form} pb-20`}>
-          <Input
-            type={"text"}
-            placeholder={"Укажите e-mail"}
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name={"name"}
-            error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={"Ошибка"}
-            size={"default"}
-          />
-          <Button type="primary" size="large">
-            Восстановить
-          </Button>
-        </form>
+        <div className={`${styles.container}`}>
+          <p className={`${styles.title} text text_type_main-medium pb-6`}>
+            Восстановление пароля
+          </p>
+          <form onSubmit={sendMail} className={`${styles.form} pb-20`}>
+            <Input
+              type={"text"}
+              placeholder={"Укажите e-mail"}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              name={"name"}
+              error={false}
+              ref={inputRef}
+              onIconClick={onIconClick}
+              errorText={"Ошибка"}
+              size={"default"}
+            />
+            <Button type="primary" size="large">
+              Восстановить
+            </Button>
+          </form>
+          <div className={`${styles.loginOptions} pb-4`}>
+            <span className={`text text_type_main-default text_color_inactive`}>
+              Вспомнили пароль?
+            </span>
+            <Link to="/login" className={`${styles.link} pl-2`}>
+              Войти
+            </Link>
+          </div>
+        </div>
       )}
-
-      <div className={`${styles.loginOptions} pb-4`}>
-        <span className={`text text_type_main-default text_color_inactive`}>
-          Вспомнили пароль?
-        </span>
-        <Link to="/login" className={`${styles.link} pl-2`}>
-          Войти
-        </Link>
-      </div>
-    </div>
+    </>
   );
 };
 

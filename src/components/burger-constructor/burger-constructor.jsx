@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { ingredientPropType } from "../../utils/prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDrag, useDrop } from "react-dnd";
-import { Route, Redirect } from "react-router-dom";
+
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
@@ -119,7 +119,6 @@ const PriceElement = ({ getTotaPrice }) => {
 const BurgerConstructor = () => {
   const { auth } = useSelector((store) => store.AuthorizationData);
 
-  const location = useLocation();
   const history = useHistory();
 
   const dataFromApi = useSelector(
@@ -139,7 +138,7 @@ const BurgerConstructor = () => {
     );
   });
 
-  const [{ isOver }, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "NEW_INGREDIENT",
     drop(item) {
       dispatch({
@@ -155,9 +154,11 @@ const BurgerConstructor = () => {
   const { postingOrder } = useSelector((store) => store.BurgerConstructor);
 
   const dispatch = useDispatch();
+  console.log(dataFromApi.ingredients.length, auth, "auth");
 
   const openModal = () => {
     if (auth) {
+      console.log(dataFromApi.ingredients.length, auth, "auth");
       if (dataFromApi.ingredients.length > 0 && dataFromApi.bun !== null) {
         dispatch({
           type: GET_ORDER_REQUEST,
@@ -221,6 +222,8 @@ const BurgerConstructor = () => {
                     deleteItem={deleteItem}
                   />
                 );
+              } else {
+                return null;
               }
             })}
           </ul>

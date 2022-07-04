@@ -142,6 +142,8 @@ const BurgerIngredients = () => {
                       <BurgerIngredient key={obj._id} dataIngredient={obj} />
                     </Link>
                   );
+                } else {
+                  return null;
                 }
               })}
             </div>
@@ -166,6 +168,8 @@ const BurgerIngredients = () => {
                       <BurgerIngredient key={obj._id} dataIngredient={obj} />
                     </Link>
                   );
+                } else {
+                  return null;
                 }
               })}
             </div>
@@ -190,6 +194,8 @@ const BurgerIngredients = () => {
                       <BurgerIngredient key={obj._id} dataIngredient={obj} />
                     </Link>
                   );
+                } else {
+                  return null;
                 }
               })}
             </div>

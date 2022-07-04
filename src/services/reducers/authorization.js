@@ -77,6 +77,7 @@ export const reducerAuthorization = (state = initialState, action) => {
         requestInProgress: false,
         requestError: false,
         isLoggedIn: true,
+        auth: true,
         user: {
           ...state.user,
           email: action.user.email,

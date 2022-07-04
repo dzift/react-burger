@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo, useEffect } from "react";
+import { useState, useRef, memo } from "react";
 
 import {
   Input,
@@ -8,7 +8,7 @@ import {
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./sign-in.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData } from "../../services/actions/authorization";
+
 import Preloader from "../../components/preloader/preloader";
 
 import { loginInApp } from "../../services/actions/authorization";
@@ -20,10 +20,6 @@ const Login = () => {
   );
 
   const location = useLocation();
-
-  useEffect(() => {
-    dispatch(getUserData());
-  }, [dispatch]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,53 +46,60 @@ const Login = () => {
   }
 
   return (
-    <div className={`${styles.container}`}>
-      <p className={`${styles.title} text text_type_main-medium pb-6`}>Вход</p>
+    <>
       {requestInProgress ? (
-        <Preloader />
+        <div className={`pt-30`}>
+          <Preloader />
+        </div>
       ) : (
-        <form onSubmit={loginUser} className={`${styles.form} pb-20`}>
-          <Input
-            type={"text"}
-            placeholder={"E-mail"}
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            name={"email"}
-            error={false}
-            ref={inputRef}
-            onIconClick={onIconClick}
-            errorText={"Ошибка"}
-            size={"default"}
-          />
-          <PasswordInput
-            onChange={onChange}
-            value={password}
-            name={"password"}
-          />
-          <Button type="primary" size="large">
-            Войти
-          </Button>
-        </form>
+        <div className={`${styles.container}`}>
+          <p className={`${styles.title} text text_type_main-medium pb-6`}>
+            Вход
+          </p>
+
+          <form onSubmit={loginUser} className={`${styles.form} pb-20`}>
+            <Input
+              type={"text"}
+              placeholder={"E-mail"}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              name={"email"}
+              error={false}
+              ref={inputRef}
+              onIconClick={onIconClick}
+              errorText={"Ошибка"}
+              size={"default"}
+            />
+            <PasswordInput
+              onChange={onChange}
+              value={password}
+              name={"password"}
+            />
+            <Button type="primary" size="large">
+              Войти
+            </Button>
+          </form>
+
+          <div className={`${styles.loginOptions} pb-4`}>
+            <span className={`text text_type_main-default text_color_inactive`}>
+              Вы - новый пользователь?
+            </span>
+            <Link to="/register" className={`${styles.link} pl-2`}>
+              Зарегистрироваться
+            </Link>
+          </div>
+
+          <div className={`${styles.loginOptions}`}>
+            <span className={`text text_type_main-default text_color_inactive`}>
+              Забыли пароль?
+            </span>
+            <Link to="/forgot-password" className={`${styles.link} pl-2`}>
+              Восстановить пароль
+            </Link>
+          </div>
+        </div>
       )}
-
-      <div className={`${styles.loginOptions} pb-4`}>
-        <span className={`text text_type_main-default text_color_inactive`}>
-          Вы - новый пользователь?
-        </span>
-        <Link to="/register" className={`${styles.link} pl-2`}>
-          Зарегистрироваться
-        </Link>
-      </div>
-
-      <div className={`${styles.loginOptions}`}>
-        <span className={`text text_type_main-default text_color_inactive`}>
-          Забыли пароль?
-        </span>
-        <Link to="/forgot-password" className={`${styles.link} pl-2`}>
-          Восстановить пароль
-        </Link>
-      </div>
-    </div>
+    </>
   );
 };
 

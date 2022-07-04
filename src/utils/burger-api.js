@@ -150,6 +150,7 @@ export const getCookie = (name) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
+        // eslint-disable-next-line
         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
         "=([^;]*)"
     )
