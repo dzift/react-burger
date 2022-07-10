@@ -1,43 +1,44 @@
-import { useState, useRef, memo } from "react";
+import { useState, useRef, memo, SyntheticEvent } from "react";
 
 import {
   Input,
-  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createNewUser } from "../../services/actions/authorization";
 import { Link, Redirect } from "react-router-dom";
-import styles from "./registration.module.css";
+import { postForgotPass } from "../../services/actions/authorization";
+import styles from "./forgot-password.module.css";
 import { useDispatch, useSelector } from "react-redux";
 
 import Preloader from "../../components/preloader/preloader";
 
-const Register = () => {
+const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const { requestInProgress, isLoggedIn } = useSelector(
-    (store) => store.AuthorizationData
+
+  const { requestInProgress, user, isLoggedIn } = useSelector(
+    (store: any) => store.AuthorizationData
   );
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  const sendNewUser = (e) => {
+  const sendMail = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(createNewUser(password, email, name));
+    dispatch(postForgotPass(email) as any);
   };
-
+  if (user.email) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/reset-password",
+        }}
+      />
+    );
+  }
   if (isLoggedIn) {
     return (
       <Redirect
@@ -47,7 +48,6 @@ const Register = () => {
       />
     );
   }
-
   return (
     <>
       {requestInProgress ? (
@@ -57,15 +57,14 @@ const Register = () => {
       ) : (
         <div className={`${styles.container}`}>
           <p className={`${styles.title} text text_type_main-medium pb-6`}>
-            Регистрация
+            Восстановление пароля
           </p>
-
-          <form onSubmit={sendNewUser} className={`${styles.form} pb-20`}>
+          <form onSubmit={sendMail} className={`${styles.form} pb-20`}>
             <Input
               type={"text"}
-              placeholder={"Имя"}
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              placeholder={"Укажите e-mail"}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               name={"name"}
               error={false}
               ref={inputRef}
@@ -73,31 +72,13 @@ const Register = () => {
               errorText={"Ошибка"}
               size={"default"}
             />
-            <Input
-              type={"text"}
-              placeholder={"E-mail"}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              name={"email"}
-              error={false}
-              onIconClick={onIconClick}
-              errorText={"Ошибка"}
-              size={"default"}
-            />
-            <PasswordInput
-              onChange={onChange}
-              value={password}
-              name={"password"}
-            />
-
             <Button type="primary" size="large">
-              Зарегистрироваться
+              Восстановить
             </Button>
           </form>
-
           <div className={`${styles.loginOptions} pb-4`}>
             <span className={`text text_type_main-default text_color_inactive`}>
-              Уже зарегистрированы?
+              Вспомнили пароль?
             </span>
             <Link to="/login" className={`${styles.link} pl-2`}>
               Войти
@@ -109,4 +90,4 @@ const Register = () => {
   );
 };
 
-export default memo(Register);
+export default memo(ForgotPassword);

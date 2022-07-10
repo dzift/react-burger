@@ -8,7 +8,9 @@ import Preloader from "../../components/preloader/preloader";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const { requestInProgress } = useSelector((store) => store.AuthorizationData);
+  const { requestInProgress } = useSelector(
+    (store: any) => store.AuthorizationData
+  );
 
   if (requestInProgress) {
     return (

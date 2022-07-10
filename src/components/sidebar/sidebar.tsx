@@ -9,7 +9,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
 
   const logoutClick = () => {
-    dispatch(logoutUserFromApp());
+    dispatch(logoutUserFromApp() as any);
   };
   return (
     <section className={`mr-15`}>

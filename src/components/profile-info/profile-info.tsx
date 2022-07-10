@@ -1,4 +1,4 @@
-import { useState, useRef, memo, useEffect } from "react";
+import { useState, useRef, useEffect, SyntheticEvent } from "react";
 
 import {
   Input,
@@ -11,27 +11,27 @@ import { updateUserData } from "../../services/actions/authorization";
 
 const ProfileInfo = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((store) => store.AuthorizationData);
+  const { user } = useSelector((store: any) => store.AuthorizationData);
 
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState("");
-  const [showButton, setShowButton] = useState(false);
+  const [name, setName] = useState<string>(user.name);
+  const [email, setEmail] = useState<string>(user.email);
+  const [password, setPassword] = useState<string>("");
+  const [showButton, setShowButton] = useState<boolean>(false);
 
   useEffect(() => {
     setName(user.name);
     setEmail(user.email);
   }, [user]);
 
-  const onChange = (e) => {
+  const onChange = (e: SyntheticEvent) => {
     setShowButton(true);
-    setPassword(e.target.value);
+    setPassword((e.target as HTMLInputElement).value);
   };
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
     alert("Icon Click Callback");
   };
 
@@ -41,9 +41,9 @@ const ProfileInfo = () => {
     setEmail(user.email);
   };
 
-  const updateUser = (e) => {
+  const updateUser = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(updateUserData(password, email, name));
+    dispatch(updateUserData(password, email, name) as any);
   };
 
   return (
@@ -97,4 +97,4 @@ const ProfileInfo = () => {
   );
 };
 
-export default memo(ProfileInfo);
+export default ProfileInfo;

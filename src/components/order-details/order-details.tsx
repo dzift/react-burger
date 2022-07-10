@@ -1,26 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { postItems } from "../../services/actions/burger-constructor";
-import PropTypes from "prop-types";
 import styles from "./order-details.module.css";
 import Done from "../../images/done.gif";
 import { useSelector, useDispatch } from "react-redux";
 import Preloader from "../preloader/preloader";
+import { TItemObject } from "../../utils/types";
 
 const OrderDetails = () => {
-  const { error } = useSelector((store) => store.BurgerIngredients);
-  const { orderInfo } = useSelector((store) => store.BurgerConstructor);
-  const id = useSelector((store) => store.BurgerConstructor.itemConstructor);
+  const { error } = useSelector((store: any) => store.BurgerIngredients);
+  const { orderInfo } = useSelector((store: any) => store.BurgerConstructor);
+  const id = useSelector(
+    (store: any) => store.BurgerConstructor.itemConstructor
+  );
 
-  const orderItems = [id.bun._id];
-  id.ingredients.map((obj) => {
-    orderItems.push(obj._id);
-  });
+  const orderItems = useMemo(() => [id.bun._id], [id.bun._id]);
+  id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
+  console.log(orderItems, "orderItems");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(postItems(orderItems));
-  }, []);
+    dispatch(postItems(orderItems) as any);
+  }, [dispatch, orderItems]);
 
   return (
     <>
@@ -52,8 +53,4 @@ const OrderDetails = () => {
   );
 };
 
-OrderDetails.propTypes = {
-  // onClose: PropTypes.func.isRequired,
-};
-
-export default React.memo(OrderDetails);
+export default OrderDetails;

@@ -1,11 +1,12 @@
-import { memo } from "react";
+import { FC } from "react";
+import { RouteProps } from "react-router";
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Preloader from "./preloader/preloader";
 
-const ProtectedRoute = ({ children, ...rest }) => {
+const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { requestInProgress, isLoggedIn } = useSelector(
-    (store) => store.AuthorizationData
+    (store: any) => store.AuthorizationData
   );
 
   return (
@@ -17,6 +18,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
       ) : (
         <Route
           {...rest}
+          // @ts-ignore
           render={({ location }) =>
             isLoggedIn ? (
               children
@@ -34,4 +36,5 @@ const ProtectedRoute = ({ children, ...rest }) => {
     </>
   );
 };
-export default memo(ProtectedRoute);
+
+export default ProtectedRoute;

@@ -1,45 +1,52 @@
-import { useState, useRef, memo } from "react";
+import { useState, useRef, memo, SyntheticEvent } from "react";
 
 import {
   Input,
+  PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { postForgotPass } from "../../services/actions/authorization";
-import styles from "./forgot-password.module.css";
+import { resetForgotPass } from "../../services/actions/authorization";
+import styles from "./reset-password.module.css";
 import { useDispatch, useSelector } from "react-redux";
-
 import Preloader from "../../components/preloader/preloader";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const dispatch = useDispatch();
 
   const { requestInProgress, user, isLoggedIn } = useSelector(
-    (store) => store.AuthorizationData
+    (store: any) => store.AuthorizationData
   );
 
-  const [email, setEmail] = useState("");
-  const inputRef = useRef(null);
+  const [token, setToken] = useState("");
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  const sendMail = (e) => {
-    e.preventDefault();
-    dispatch(postForgotPass(email));
+  const [password, setPassword] = useState("");
+  const onChange = (e: SyntheticEvent) => {
+    setPassword((e.target as HTMLInputElement).value);
   };
-  if (user.email) {
+
+  const sendPassword = (e: SyntheticEvent) => {
+    e.preventDefault();
+    dispatch(resetForgotPass(password, token) as any);
+  };
+  if (user.password) {
     return (
       <Redirect
         to={{
-          pathname: "/reset-password",
+          pathname: "/login",
         }}
       />
     );
   }
-  if (isLoggedIn) {
+
+  if (isLoggedIn || !user.email) {
     return (
       <Redirect
         to={{
@@ -48,6 +55,7 @@ const ForgotPassword = () => {
       />
     );
   }
+
   return (
     <>
       {requestInProgress ? (
@@ -59,13 +67,19 @@ const ForgotPassword = () => {
           <p className={`${styles.title} text text_type_main-medium pb-6`}>
             Восстановление пароля
           </p>
-          <form onSubmit={sendMail} className={`${styles.form} pb-20`}>
+
+          <form onSubmit={sendPassword} className={`${styles.form} pb-20`}>
+            <PasswordInput
+              value={password}
+              name={"password"}
+              onChange={onChange}
+            />
             <Input
               type={"text"}
-              placeholder={"Укажите e-mail"}
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              name={"name"}
+              placeholder={"Введите код из письма"}
+              onChange={(e) => setToken(e.target.value)}
+              value={token}
+              name={"code"}
               error={false}
               ref={inputRef}
               onIconClick={onIconClick}
@@ -73,9 +87,10 @@ const ForgotPassword = () => {
               size={"default"}
             />
             <Button type="primary" size="large">
-              Восстановить
+              Сохранить
             </Button>
           </form>
+
           <div className={`${styles.loginOptions} pb-4`}>
             <span className={`text text_type_main-default text_color_inactive`}>
               Вспомнили пароль?
@@ -90,4 +105,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default memo(ForgotPassword);
+export default memo(ResetPassword);

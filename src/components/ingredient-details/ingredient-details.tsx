@@ -5,15 +5,15 @@ import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
 
 import Preloader from "../preloader/preloader";
+import { TItemObject } from "../../utils/types";
 
 const IngredientDetails = () => {
-  let { id } = useParams();
-
-  const { items } = useSelector((store) => store.BurgerIngredients);
+  let { id }: any = useParams();
+  const { items } = useSelector((store: any) => store.BurgerIngredients);
 
   const data = useMemo(() => {
     if (!!items) {
-      let ingredient = items.find((el) => el._id === id);
+      let ingredient = items.find((el: TItemObject) => el._id === id);
       return ingredient;
     } else {
       return null;
