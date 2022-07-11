@@ -8,32 +8,28 @@ const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { requestInProgress, isLoggedIn } = useSelector(
     (store: any) => store.AuthorizationData
   );
-
+  if (requestInProgress) {
+    <div className={`pt-30`}>
+      <Preloader />
+    </div>;
+  }
   return (
-    <>
-      {requestInProgress ? (
-        <div className={`pt-30`}>
-          <Preloader />
-        </div>
-      ) : (
-        <Route
-          {...rest}
-          // @ts-ignore
-          render={({ location }) =>
-            isLoggedIn ? (
-              children
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: location },
-                }}
-              />
-            )
-          }
-        />
-      )}
-    </>
+    <Route
+      {...rest}
+      // @ts-ignore не могу понять в чем проблема render, буду благодарен если укажешь на ошибку.
+      render={({ location }) =>
+        isLoggedIn ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
   );
 };
 
