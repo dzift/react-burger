@@ -38,8 +38,6 @@ const Element = ({ item, moveElement, index, deleteItem }: TElementProps) => {
   const [, drop] = useDrop({
     accept: "SORT_INGREDIENT",
     hover: (item: TItemObject, monitor) => {
-      console.log(item, "item");
-
       const moveIndex = item.index;
       const hoverIndex = index;
       if (moveIndex === hoverIndex) {

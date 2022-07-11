@@ -6,8 +6,8 @@ export type TLocataionState = {
 };
 
 export type TItemObject = {
-  itemKey: any;
-  index: any;
+  itemKey?: any;
+  index?: any;
   readonly calories: number;
   readonly carbohydrates: number;
   readonly fat: number;
@@ -27,3 +27,31 @@ export type TItemMobile = {
   readonly name: string;
   readonly price: number;
 };
+
+export type TIngredientsData = {
+  success: boolean;
+  data: TItemObject[];
+};
+
+export type TUserData = {
+  user: { email: string; name: string };
+  accessToken: string;
+  refreshToken: string;
+  success: boolean;
+};
+
+export type TOrderData = {
+  name: string;
+  success: boolean;
+  order: { number: number };
+};
+
+export type TApiData = {
+  message: string;
+  success: boolean;
+};
+
+export type TCookieProps = {
+  expires?: number | string;
+  path?: string;
+} & { [extraParams: string]: string | number | boolean };

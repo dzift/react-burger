@@ -15,7 +15,6 @@ const OrderDetails = () => {
 
   const orderItems = useMemo(() => [id.bun._id], [id.bun._id]);
   id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
-  console.log(orderItems, "orderItems");
 
   const dispatch = useDispatch();
 
