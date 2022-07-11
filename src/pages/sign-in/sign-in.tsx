@@ -1,4 +1,4 @@
-import { useState, useRef, memo } from "react";
+import { useState, useRef, memo, SyntheticEvent } from "react";
 
 import {
   Input,
@@ -12,32 +12,33 @@ import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../../components/preloader/preloader";
 
 import { loginInApp } from "../../services/actions/authorization";
+import { TLocataionState } from "../../utils/types";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { requestInProgress, isLoggedIn } = useSelector(
-    (store) => store.AuthorizationData
+    (store: any) => store.AuthorizationData
   );
 
-  const location = useLocation();
+  const location = useLocation<TLocataionState>();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
+    setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  const onChange = (e) => {
-    setPassword(e.target.value);
+  const onChange = (e: SyntheticEvent) => {
+    setPassword((e.target as HTMLInputElement).value);
   };
 
-  const loginUser = (e) => {
+  const loginUser = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(loginInApp(password, email));
+    dispatch(loginInApp(password, email) as any);
   };
 
   if (isLoggedIn) {

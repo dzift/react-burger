@@ -8,9 +8,11 @@ import {
   ProfileIcon,
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { TLocataionState } from "../../utils/types";
 
 const AppHeader = () => {
-  const location = useLocation();
+  const location = useLocation<TLocataionState>();
+
   return (
     <header className={styles.appHeader}>
       <div className={styles.contentHeader}>

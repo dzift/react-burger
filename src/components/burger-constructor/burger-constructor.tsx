@@ -1,8 +1,6 @@
 import { useRef } from "react";
-import { ingredientPropType } from "../../utils/prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { useDrag, useDrop } from "react-dnd";
 
@@ -22,16 +20,24 @@ import {
   SORT_ITEM_IN_CONSTRUCTOR,
 } from "../../services/actions/burger-constructor";
 
-import Modal from "../modal/modal.jsx";
+import Modal from "../modal/modal";
 
 import OrderDetails from "../order-details/order-details";
+import { TItemObject, TItemMobile } from "../../utils/types";
 
-const Element = ({ item, moveElement, index, deleteItem }) => {
-  const { name, price, image_mobile } = item;
-  const ref = useRef(null);
+type TElementProps = {
+  item: TItemObject;
+  moveElement: (moveIndex: number, hoverIndex: number) => void;
+  index: number;
+  deleteItem: () => void;
+};
+const Element = ({ item, moveElement, index, deleteItem }: TElementProps) => {
+  const { name, price, image_mobile }: TItemObject = item;
+  const ref = useRef<HTMLInputElement>(null);
+
   const [, drop] = useDrop({
     accept: "SORT_INGREDIENT",
-    hover: (item, monitor) => {
+    hover: (item: TItemObject, monitor) => {
       const moveIndex = item.index;
       const hoverIndex = index;
       if (moveIndex === hoverIndex) {
@@ -39,9 +45,12 @@ const Element = ({ item, moveElement, index, deleteItem }) => {
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
+        // @ts-ignore
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      // @ts-ignore
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+
       if (moveIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -69,6 +78,7 @@ const Element = ({ item, moveElement, index, deleteItem }) => {
   return (
     <>
       <li
+        // @ts-ignore
         ref={ref}
         className={`${styles.constructorItem} pl-4`}
         style={{ opacity }}
@@ -86,7 +96,7 @@ const Element = ({ item, moveElement, index, deleteItem }) => {
   );
 };
 
-const ElementBunTop = ({ name, price, image_mobile }) => (
+const ElementBunTop = ({ name, price, image_mobile }: TItemMobile) => (
   <ConstructorElement
     type="top"
     isLocked={true}
@@ -96,7 +106,7 @@ const ElementBunTop = ({ name, price, image_mobile }) => (
   />
 );
 
-const ElementBunBottom = ({ name, price, image_mobile }) => (
+const ElementBunBottom = ({ name, price, image_mobile }: TItemMobile) => (
   <ConstructorElement
     type="bottom"
     isLocked={true}
@@ -106,33 +116,23 @@ const ElementBunBottom = ({ name, price, image_mobile }) => (
   />
 );
 
-const PriceElement = ({ getTotaPrice }) => {
-  return (
-    <>
-      <span className="text text_type_digits-medium mr-2">{getTotaPrice}</span>
-      <CurrencyIcon type="primary" />
-      <div className="mr-10" />
-    </>
-  );
-};
-
 const BurgerConstructor = () => {
-  const { auth } = useSelector((store) => store.AuthorizationData);
+  const { auth } = useSelector((store: any) => store.AuthorizationData);
 
   const history = useHistory();
 
   const dataFromApi = useSelector(
-    (store) => store.BurgerConstructor.itemConstructor
+    (store: any) => store.BurgerConstructor.itemConstructor
   );
 
-  const getTotaPrice = useSelector((store) => {
+  const getTotaPrice = useSelector((store: any): number => {
     const bun = store.BurgerConstructor.itemConstructor.bun
       ? store.BurgerConstructor.itemConstructor.bun.price
       : 0;
     return (
       bun * 2 +
       store.BurgerConstructor.itemConstructor.ingredients.reduce(
-        (acc, item) => acc + item.price,
+        (acc: any, item: { price: any }) => acc + item.price,
         0
       )
     );
@@ -143,7 +143,7 @@ const BurgerConstructor = () => {
     drop(item) {
       dispatch({
         type: ADD_ITEM_IN_CONSTRUCTOR,
-        item: { ...item, itemKey: uuidv4() },
+        item: { ...(item as object), itemKey: uuidv4() },
       });
     },
     collect: (monitor) => ({
@@ -151,14 +151,12 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const { postingOrder } = useSelector((store) => store.BurgerConstructor);
+  const { postingOrder } = useSelector((store: any) => store.BurgerConstructor);
 
   const dispatch = useDispatch();
-  console.log(dataFromApi.ingredients.length, auth, "auth");
 
   const openModal = () => {
     if (auth) {
-      console.log(dataFromApi.ingredients.length, auth, "auth");
       if (dataFromApi.ingredients.length > 0 && dataFromApi.bun !== null) {
         dispatch({
           type: GET_ORDER_REQUEST,
@@ -177,7 +175,7 @@ const BurgerConstructor = () => {
     });
   };
 
-  const moveElement = (moveIndex, hoverIndex) => {
+  const moveElement = (moveIndex: number, hoverIndex: number) => {
     dispatch({
       type: SORT_ITEM_IN_CONSTRUCTOR,
       moveIndex: moveIndex,
@@ -205,7 +203,7 @@ const BurgerConstructor = () => {
             )}
           </div>
           <ul className={`${styles.constructorItemFlex} custom-scroll`}>
-            {dataFromApi.ingredients.map((obj, index) => {
+            {dataFromApi.ingredients.map((obj: TItemObject, index: number) => {
               const deleteItem = () => {
                 dispatch({
                   type: DEL_ITEM_IN_CONSTRUCTOR,
@@ -239,7 +237,11 @@ const BurgerConstructor = () => {
           </div>
         </div>
         <div className={`${styles.constructorPrice} pt-10 pr-4`}>
-          <PriceElement getTotaPrice={getTotaPrice} />
+          <span className="text text_type_digits-medium mr-2">
+            {getTotaPrice}
+          </span>
+          <CurrencyIcon type="primary" />
+          <div className="mr-10" />
           <Button type="primary" size="large" onClick={openModal}>
             Оформить заказ
           </Button>
@@ -249,15 +251,4 @@ const BurgerConstructor = () => {
   );
 };
 
-Element.propTypes = {
-  item: ingredientPropType,
-  deleteItem: PropTypes.func.isRequired,
-  moveElement: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-};
-ElementBunTop.propTypes = ingredientPropType.isRequired;
-ElementBunBottom.propTypes = ingredientPropType.isRequired;
-PriceElement.propTypes = {
-  getTotaPrice: PropTypes.number.isRequired,
-};
 export default BurgerConstructor;

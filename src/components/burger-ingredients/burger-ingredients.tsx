@@ -1,68 +1,65 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Link, useLocation } from "react-router-dom";
 import Preloader from "../preloader/preloader";
-
+import { TLocataionState } from "../../utils/types";
 import { useSelector } from "react-redux";
+import { TItemObject } from "../../utils/types";
+
+declare module "react" {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 const BurgerIngredients = () => {
-  const [typeItem, setTypeItem] = useState("Булки");
-  const location = useLocation();
+  const [typeItem, setTypeItem] = useState<string>("Булки");
+  const location = useLocation<TLocataionState>();
 
-  const menu = useRef(null);
-  const bun = useRef(null);
-  const sauce = useRef(null);
-  const main = useRef(null);
+  const menu = useRef<HTMLHeadingElement>(null);
+  const bun = useRef<HTMLHeadingElement>(null);
+  const sauce = useRef<HTMLHeadingElement>(null);
+  const main = useRef<HTMLHeadingElement>(null);
 
   const { items, loading, error } = useSelector(
-    (store) => store.BurgerIngredients
+    (store: any) => store.BurgerIngredients
   );
 
   const handleScroll = () => {
-    const bunPosition = Math.abs(
-      menu.current.getBoundingClientRect().top -
-        bun.current.getBoundingClientRect().top
-    );
-    const saucePosition = Math.abs(
-      menu.current.getBoundingClientRect().top -
-        sauce.current.getBoundingClientRect().top
-    );
-    const mainPosition = Math.abs(
-      menu.current.getBoundingClientRect().top -
-        main.current.getBoundingClientRect().top
-    );
+    if (menu.current && bun.current && sauce.current && main.current) {
+      const bunPosition = Math.abs(
+        menu.current.getBoundingClientRect().top -
+          bun.current.getBoundingClientRect().top
+      );
+      const saucePosition = Math.abs(
+        menu.current.getBoundingClientRect().top -
+          sauce.current.getBoundingClientRect().top
+      );
+      const mainPosition = Math.abs(
+        menu.current.getBoundingClientRect().top -
+          main.current.getBoundingClientRect().top
+      );
 
-    const viewType = Math.min(bunPosition, saucePosition, mainPosition);
+      const viewType = Math.min(bunPosition, saucePosition, mainPosition);
 
-    const activeType =
-      viewType === bunPosition
-        ? "Булки"
-        : viewType === saucePosition
-        ? "Соусы"
-        : "Начинки";
+      const activeType =
+        viewType === bunPosition
+          ? "Булки"
+          : viewType === saucePosition
+          ? "Соусы"
+          : "Начинки";
 
-    setTypeItem((prevState) =>
-      activeType === prevState.current ? prevState.current : activeType
-    );
+      setTypeItem((prevState: any) =>
+        activeType === prevState.current ? prevState.current : activeType
+      );
+    }
   };
-
-  // const closeModal = () => {
-  //   dispatch({
-  //     type: CLEAR_ITEM,
-  //   });
-  // };
 
   return (
     <>
-      {/* {currentItem && (
-        <Modal onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )} */}
-
       {error && alert("Запрос на сервер не удался!")}
       {loading ? (
         <Preloader />
@@ -72,9 +69,11 @@ const BurgerIngredients = () => {
           <div className={styles.tab}>
             <div
               onClick={function () {
-                bun.current.scrollIntoView({
-                  behavior: "smooth",
-                });
+                if (bun.current) {
+                  bun.current.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }
               }}
             >
               <Tab
@@ -87,9 +86,11 @@ const BurgerIngredients = () => {
             </div>
             <div
               onClick={function () {
-                sauce.current.scrollIntoView({
-                  behavior: "smooth",
-                });
+                if (sauce.current) {
+                  sauce.current.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }
               }}
             >
               <Tab
@@ -102,9 +103,11 @@ const BurgerIngredients = () => {
             </div>
             <div
               onClick={function () {
-                main.current.scrollIntoView({
-                  behavior: "smooth",
-                });
+                if (main.current) {
+                  main.current.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }
               }}
             >
               <Tab
@@ -128,7 +131,7 @@ const BurgerIngredients = () => {
               Булки
             </div>
             <div className={styles.groupIngredients}>
-              {items.map((obj) => {
+              {items.map((obj: TItemObject) => {
                 if (obj.type === "bun") {
                   return (
                     <Link
@@ -154,7 +157,7 @@ const BurgerIngredients = () => {
               Соусы
             </div>
             <div className={styles.groupIngredients}>
-              {items.map((obj) => {
+              {items.map((obj: TItemObject) => {
                 if (obj.type === "sauce") {
                   return (
                     <Link
@@ -180,7 +183,7 @@ const BurgerIngredients = () => {
               Начинки
             </div>
             <div className={styles.groupIngredients}>
-              {items.map((obj) => {
+              {items.map((obj: TItemObject) => {
                 if (obj.type === "main") {
                   return (
                     <Link

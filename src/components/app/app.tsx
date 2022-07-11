@@ -1,8 +1,8 @@
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import AppHeader from "../app-header/app-header.jsx";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
-import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
+import AppHeader from "../app-header/app-header";
+import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import BurgerConstructor from "../burger-constructor/burger-constructor";
 import {
   Login,
   Register,
@@ -11,23 +11,25 @@ import {
   Profile,
 } from "../../pages";
 import styles from "./app.module.css";
-import ProtectedRoute from "../protected-route.jsx";
+import ProtectedRoute from "../protected-route";
 import { getItem } from "../../services/actions/burger-Ingredients.js";
 import { getUserData } from "../../services/actions/authorization.js";
 import { useDispatch } from "react-redux";
-import Modal from "../modal/modal.jsx";
-import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+
+import { TLocataionState } from "../../utils/types";
 
 const App = () => {
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location = useLocation<TLocataionState>();
   const history = useHistory();
   let background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getItem());
-    dispatch(getUserData());
+    dispatch(getItem() as any);
+    dispatch(getUserData() as any);
   }, [dispatch]);
 
   return (
@@ -37,7 +39,7 @@ const App = () => {
         <Route path="/" exact={true}>
           <main className={styles.page}>
             <div className={styles.content}>
-              <BurgerIngredients location={location} />
+              <BurgerIngredients />
               <BurgerConstructor />
             </div>
           </main>
@@ -71,7 +73,7 @@ const App = () => {
         <Route
           path="/ingredients/:id"
           children={
-            <Modal onClose={(e) => history.goBack()}>
+            <Modal onClose={() => history.goBack()}>
               <IngredientDetails />
             </Modal>
           }

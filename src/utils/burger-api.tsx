@@ -1,12 +1,19 @@
+import {
+  TIngredientsData,
+  TOrderData,
+  TApiData,
+  TUserData,
+  TCookieProps,
+} from "./types";
 const URL_FOR_API = "https://norma.nomoreparties.space/api";
 
 export const getIngredients = () => {
   return fetch(`${URL_FOR_API}/ingredients`, {
     method: "GET",
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TIngredientsData>(res));
 };
 
-export const postIngredients = (orderItems) => {
+export const postIngredients = (orderItems: string[]) => {
   return fetch(`${URL_FOR_API}/orders`, {
     method: "POST",
     headers: {
@@ -15,10 +22,10 @@ export const postIngredients = (orderItems) => {
     body: JSON.stringify({
       ingredients: orderItems,
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TOrderData>(res));
 };
 
-export const postForgotPassword = (email) => {
+export const postForgotPassword = (email: string) => {
   return fetch(`${URL_FOR_API}/password-reset`, {
     method: "POST",
     headers: {
@@ -27,10 +34,10 @@ export const postForgotPassword = (email) => {
     body: JSON.stringify({
       email: email,
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TApiData>(res));
 };
 
-export const postResetPassword = (password, token) => {
+export const postResetPassword = (password: string, token: string) => {
   return fetch(`${URL_FOR_API}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -40,10 +47,10 @@ export const postResetPassword = (password, token) => {
       password: password,
       token: token,
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TApiData>(res));
 };
 
-export const createUser = (password, email, name) => {
+export const createUser = (password: string, email: string, name: string) => {
   return fetch(`${URL_FOR_API}/auth/register`, {
     method: "POST",
     headers: {
@@ -54,10 +61,10 @@ export const createUser = (password, email, name) => {
       password: password,
       name: name,
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TUserData>(res));
 };
 
-export const loginUser = (password, email) => {
+export const loginUser = (password: string, email: string) => {
   return fetch(`${URL_FOR_API}/auth/login`, {
     method: "POST",
     headers: {
@@ -68,7 +75,7 @@ export const loginUser = (password, email) => {
       email: email,
       password: password,
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TUserData>(res));
 };
 
 export const getUser = () => {
@@ -81,7 +88,7 @@ export const getUser = () => {
   });
 };
 
-export const updateUser = (password, email, name) => {
+export const updateUser = (password: string, email: string, name: string) => {
   return fetchWithRefresh(`${URL_FOR_API}/auth/user`, {
     method: "PATCH",
     headers: {
@@ -105,7 +112,7 @@ export const refreshToken = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TUserData>(res));
 };
 
 export const logoutUser = () => {
@@ -117,23 +124,29 @@ export const logoutUser = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse(res));
+  }).then((res) => checkReponse<TApiData>(res));
 };
 
-export const setCookie = (name, value, props) => {
+export const setCookie = (
+  name: string,
+  value: string | number | boolean,
+  props?: TCookieProps
+) => {
   props = {
     path: "/",
     ...props,
   };
   let exp = props.expires;
+  const d = new Date();
   if (typeof exp == "number" && exp) {
-    const d = new Date();
     d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
+    exp = props.expires = Number(d);
   }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
+
+  if (exp && d.toUTCString) {
+    props.expires = d.toUTCString();
   }
+
   value = encodeURIComponent(value);
   let updatedCookie = name + "=" + value;
   for (const propName in props) {
@@ -146,7 +159,7 @@ export const setCookie = (name, value, props) => {
   document.cookie = updatedCookie;
 };
 
-export const getCookie = (name) => {
+export const getCookie = (name: string) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -158,28 +171,32 @@ export const getCookie = (name) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export const deleteCookie = (name) => {
+export const deleteCookie = (name: string) => {
   setCookie(name, "", {
     "max-age": -1,
   });
 };
 
-const checkReponse = (res) => {
+const checkReponse = <T,>(res: Response): Promise<T> => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
-const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async (url: string, options: any) => {
   try {
     const res = await fetch(url, options);
     return await checkReponse(res);
-  } catch (err) {
+  } catch (err: any) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken(); //обновляем токен
+
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
+
       localStorage.setItem("refreshToken", refreshData.refreshToken);
+
       setCookie("accessToken", refreshData.accessToken);
+
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options); //повторяем запрос
       return await checkReponse(res);
