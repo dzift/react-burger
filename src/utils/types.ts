@@ -8,24 +8,24 @@ export type TLocataionState = {
 export type TItemObject = {
   itemKey?: any;
   index?: any;
-  readonly calories: number;
-  readonly carbohydrates: number;
-  readonly fat: number;
-  readonly image: string;
-  readonly image_large: string;
-  readonly image_mobile: string;
-  readonly name: string;
-  readonly price: number;
-  readonly proteins: number;
-  readonly type: string;
-  readonly __v: number;
-  readonly _id: string;
+  calories: number;
+  carbohydrates: number;
+  fat: number;
+  image: string;
+  image_large: string;
+  image_mobile: string;
+  name: string;
+  price: number;
+  proteins: number;
+  type: string;
+  __v: number;
+  _id: string;
 };
 
 export type TItemMobile = {
-  readonly image_mobile: string;
-  readonly name: string;
-  readonly price: number;
+  image_mobile: string;
+  name: string;
+  price: number;
 };
 
 export type TIngredientsData = {
