@@ -3,12 +3,14 @@ import { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+
 import {
   Login,
   Register,
   ForgotPassword,
   ResetPassword,
   Profile,
+  Feed,
 } from "../../pages";
 import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route";
@@ -49,6 +51,9 @@ const App = () => {
         </Route>
         <Route path="/register" exact={true}>
           <Register />
+        </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
         </Route>
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />

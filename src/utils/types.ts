@@ -55,3 +55,19 @@ export type TCookieProps = {
   expires?: number | string;
   path?: string;
 } & { [extraParams: string]: string | number | boolean };
+
+export type TOrder = {
+  createdAt: string;
+  ingredients: Array<string>;
+  name: string;
+  number: number;
+  status?: string;
+  updatedAt: string;
+  _id: string;
+};
+
+export type TOrders = {
+  orders: Array<TOrder>;
+  total: number;
+  totalToday: number;
+};
