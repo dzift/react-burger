@@ -1,4 +1,4 @@
-import React, { memo, FC } from "react";
+import React, { FC } from "react";
 import styles from "./order-card.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOrder } from "../../utils/types";
@@ -12,6 +12,15 @@ const OrderCard: FC<TOrder> = ({
   status,
 }) => {
   const { items } = useSelector((store: any) => store.BurgerIngredients);
+  const imgArray: any = [];
+
+  ingredients.forEach((id) => {
+    items.forEach((obj: any) => {
+      if (obj._id === id) {
+        imgArray.push(obj.image_mobile);
+      }
+    });
+  });
 
   return (
     <div className={`${styles.orderCard} p-6`}>
@@ -24,26 +33,40 @@ const OrderCard: FC<TOrder> = ({
       <div className={`${styles.name} text text_type_main-medium pb-6`}>
         {name}
       </div>
-      {status ? (
+      {/* {status ? (
         <span className={`${styles.timestamp} text text_type_main-default`}>
           {status}
         </span>
-      ) : null}
+      ) : null} */}
       <div className={`${styles.cardBottom}`}>
         <div className={`${styles.ingredientImg}`}>
-          {ingredients.map((id: string, index: number) => {
-            return items.map((obj: any) => {
-              if (obj._id === id) {
-                console.log("done");
-                return (
-                  <div className={`${styles.icon}`} key={index}>
-                    <img src={obj.image_mobile} alt="fff" />
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            });
+          {imgArray.map((srt: string, index: number) => {
+            if (index <= 4) {
+              return (
+                <div
+                  className={`${styles.icon}`}
+                  style={{ zIndex: imgArray.length - index }}
+                  key={index}
+                >
+                  <img src={srt} alt="fff" />
+                </div>
+              );
+            } else if (index === 5) {
+              return (
+                <div
+                  style={{ zIndex: imgArray.length - index }}
+                  className={`${styles.icon} ${styles.iconLast}`}
+                  key={index}
+                >
+                  <img src={srt} className={`${styles.imgLast}`} alt="fff" />
+                  <span className={`${styles.iconNumber}`}>{`+${
+                    imgArray.length - 5
+                  }`}</span>
+                </div>
+              );
+            } else {
+              return null;
+            }
           })}
         </div>
         <span className="text text_type_digits-medium mr-2">480</span>

@@ -2,10 +2,18 @@ export const dataFeed = {
   success: true,
   orders: [
     {
-      ingredients: ["60d3b41abdacab0026a733ca", "60d3b41abdacab0026a733cf"],
+      ingredients: [
+        "60d3b41abdacab0026a733c6",
+        "60d3b41abdacab0026a733cf",
+        "60d3b41abdacab0026a733cf",
+        "60d3b41abdacab0026a733cf",
+        "60d3b41abdacab0026a733cf",
+        "60666c42cc7b410027a1a9b6",
+      ],
       _id: "1",
       status: "done",
       number: 0,
+      name: "Black Hole Singularity острый бургер",
       createdAt: "2021-06-23T14:43:22.587Z",
       updatedAt: "2021-06-23T14:43:22.603Z",
     },
@@ -14,6 +22,7 @@ export const dataFeed = {
       _id: "2",
       status: "done",
       number: 0,
+      name: "Black Hole Singularity острый бургер",
       createdAt: "2021-06-23T14:43:22.587Z",
       updatedAt: "2021-06-23T14:43:22.603Z",
     },
@@ -21,6 +30,40 @@ export const dataFeed = {
   total: 1,
   totalToday: 1,
 };
+
+export const orderCompound: any[] = [
+  {
+    _id: "60d3b41abdacab0026a733c6",
+    name: "Краторная булка N-200i",
+    type: "bun",
+    proteins: 80,
+    fat: 24,
+    carbohydrates: 53,
+    calories: 420,
+    price: 1255,
+    image: "https://code.s3.yandex.net/react/code/bun-02.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
+    __v: 0,
+    count: 2,
+  },
+  {
+    _id: "60d3b41abdacab0026a733cf",
+    name: "Соус с шипами Антарианского плоскоходца",
+    type: "sauce",
+    proteins: 101,
+    fat: 99,
+    carbohydrates: 100,
+    calories: 100,
+    price: 88,
+    image: "https://code.s3.yandex.net/react/code/sauce-01.png",
+    image_mobile: "https://code.s3.yandex.net/react/code/sauce-01-mobile.png",
+    image_large: "https://code.s3.yandex.net/react/code/sauce-01-large.png",
+    __v: 0,
+    count: 4,
+  },
+];
+
 export const data = [
   {
     _id: "60666c42cc7b410027a1a9b1",

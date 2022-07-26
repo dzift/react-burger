@@ -11,6 +11,7 @@ import {
   ResetPassword,
   Profile,
   Feed,
+  Order,
 } from "../../pages";
 import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route";
@@ -54,6 +55,9 @@ const App = () => {
         </Route>
         <Route path="/feed" exact={true}>
           <Feed />
+        </Route>
+        <Route path="/feed/:id">
+          <Order />
         </Route>
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />
