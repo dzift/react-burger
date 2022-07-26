@@ -68,6 +68,9 @@ const App = () => {
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id" exact={true}>
+          <Order />
+        </ProtectedRoute>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
         </Route>
@@ -79,14 +82,32 @@ const App = () => {
       </Switch>
 
       {background && (
-        <Route
-          path="/ingredients/:id"
-          children={
-            <Modal onClose={() => history.goBack()}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+        <>
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <Order />
+              </Modal>
+            }
+          />
+          <ProtectedRoute
+            path="/profile/orders/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <Order />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

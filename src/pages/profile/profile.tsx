@@ -6,6 +6,7 @@ import ProfileInfo from "../../components/profile-info/profile-info";
 import Sidebar from "../../components/sidebar/sidebar";
 import Preloader from "../../components/preloader/preloader";
 import { useSelector } from "react-redux";
+import OrdersFeed from "../../components/orders-feed/orders-feed";
 
 const Profile = () => {
   const { requestInProgress } = useSelector(
@@ -29,9 +30,7 @@ const Profile = () => {
             <ProfileInfo />
           </Route>
           <Route path="/profile/orders" exact={true}>
-            <div>
-              <h2>ORDERS</h2>
-            </div>
+            <OrdersFeed />
           </Route>
           <Route>
             <div className={`${styles.error}`}>

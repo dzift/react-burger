@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { memo } from "react";
 import styles from "./order.module.css";
 import { dataFeed } from "../../utils/data";
 import { useSelector } from "react-redux";
@@ -8,43 +8,38 @@ import { orderCompound } from "../../utils/data";
 import Preloader from "../../components/preloader/preloader";
 
 const Order = () => {
-  const { items } = useSelector((store: any) => store.BurgerIngredients);
+  // const { items } = useSelector((store: any) => store.BurgerIngredients);
   const { requestInProgress } = useSelector(
     (store: any) => store.AuthorizationData
   );
 
   const item = dataFeed.orders[0];
+  // const arr: any[] = [];
 
-  const getOrderCompound = (item: any, items: any) => {
-    const arr: any[] = [];
-    item.ingredients.map((id: string) => {
-      items.map((obj: any) => {
-        if (obj._id === id && obj.type !== "bun") {
-          let count = 0;
+  // useEffect(() => {
+  //   item.ingredients.map((id: string) => {
+  //     items.map((obj: any) => {
+  //       if (obj._id === id && obj.type === "bun") {
+  //         obj.count = 2;
+  //         arr.push(obj);
+  //       } else if (obj._id === id && obj.type !== "bun") {
+  //         let count = 0;
 
-          item.ingredients.forEach((el: string) => {
-            if (id === el) {
-              count += 1;
-            }
-          });
+  //         item.ingredients.forEach((el: string) => {
+  //           if (id === el) {
+  //             count += 1;
+  //           }
+  //         });
 
-          if (obj.count === undefined) {
-            obj.count = count;
-            arr.push(obj);
-          }
-        } else if (obj._id === id && obj.type === "bun") {
-          obj.count = 2;
-          arr.push(obj);
-        }
-      });
-    });
-    console.info(arr, "arr");
-    return arr;
-  };
-
-  useEffect(() => {
-    getOrderCompound(item, items);
-  }, []);
+  //         if (obj.count === undefined) {
+  //           obj.count = count;
+  //           arr.push(obj);
+  //         }
+  //       }
+  //     });
+  //   });
+  // }, []);
+  // console.log(arr);
 
   const getPrice = (arr: any) => {
     return arr.reduce((acc: any, { price, count }: any) => {
@@ -64,11 +59,10 @@ const Order = () => {
   }
 
   return (
-    <div className={`${styles.container}`}>
+    <div className={`${styles.container} mt-10 mb-10 mr-10 ml-10`}>
       <div className={`${styles.id} text text_type_digits-default `}>
         #{dataFeed.orders[0]._id}
       </div>
-
       <div className={` text text_type_main-medium mt-10 mb-3`}>
         {dataFeed.orders[0].name}
       </div>

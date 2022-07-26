@@ -22,11 +22,11 @@ const IngredientDetails = () => {
 
   return (
     <div className={`${styles.container} `}>
-      <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>
+      <div className={`${styles.modalHeader} mt-10`}>
         <div className="text text_type_main-large">Детали ингредиента</div>
       </div>
       {!!data ? (
-        <div className={`${styles.modalContent} pl-5 pr-5 pb-15`}>
+        <div className={`${styles.modalContent} `}>
           <div className={`${styles.modalImg} pl-5 pr-5 mb-4`}>
             <img src={data.image_large} alt="fff" />
           </div>
