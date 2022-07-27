@@ -7,8 +7,24 @@ import {
   CLEAR_CONSTRUCTOR,
   SORT_ITEM_IN_CONSTRUCTOR,
 } from "../constants/burger-constructor";
+import { TItemObject, TOrderData } from "../../utils/types";
 
-const initialState = {
+import { TConstructorActions } from "../actions/burger-constructor";
+
+export type TConstructorState = {
+  itemConstructor: {
+    ingredients: TItemObject[],
+    bun: boolean | null | TItemObject,
+    draggedIngredient: null,
+  },
+  orderInfo: TOrderData | boolean,
+  orderItems: [],
+  posting: boolean,
+  postingOrder: boolean,
+  error: boolean,
+};
+
+const initialState: TConstructorState = {
   itemConstructor: {
     ingredients: [],
     bun: null,
@@ -16,10 +32,15 @@ const initialState = {
   },
   orderInfo: false,
   orderItems: [],
+  posting: true,
   postingOrder: false,
+  error: false,
 };
 
-export const reducerBurgerConstructor = (state = initialState, action) => {
+export const reducerBurgerConstructor = (
+  state = initialState,
+  action: TConstructorActions
+): TConstructorState => {
   switch (action.type) {
     case GET_ORDER_REQUEST:
       return {

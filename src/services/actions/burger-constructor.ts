@@ -8,7 +8,7 @@ import {
   SORT_ITEM_IN_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
 } from "../constants/burger-constructor";
-import { TOrderData } from "../../utils/types";
+import { TOrderData, TItemObject } from "../../utils/types";
 
 // Типизация экшенов
 export interface IGetOrderRequestActions {
@@ -17,7 +17,7 @@ export interface IGetOrderRequestActions {
 
 export interface IGetOrderSuccessActions {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly orderInfo: Array<TOrderData>;
+  readonly orderInfo: TOrderData;
 }
 
 export interface IGetOrderFailedActions {
@@ -26,13 +26,18 @@ export interface IGetOrderFailedActions {
 
 export interface IAddItemInConstructorActions {
   readonly type: typeof ADD_ITEM_IN_CONSTRUCTOR;
+  readonly item: TItemObject;
 }
 
 export interface IDelItemInConstructorActions {
   readonly type: typeof DEL_ITEM_IN_CONSTRUCTOR;
+  readonly item: TItemObject;
+  itemKey: string;
 }
 export interface ISortItemInConstructorActions {
   readonly type: typeof SORT_ITEM_IN_CONSTRUCTOR;
+  moveIndex: number;
+  hoverIndex: number;
 }
 
 export interface IClearConstructorActions {

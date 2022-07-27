@@ -24,6 +24,7 @@ export interface IGetIngredientsFailedActions {
 }
 
 export interface IGetCurrentItemActions {
+  currentItem: boolean;
   readonly type: typeof GET_CURRENT_ITEM;
 }
 export interface IClearItemActions {
