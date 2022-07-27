@@ -9,6 +9,7 @@ import { TItemObject } from "../../utils/types";
 const OrderDetails = () => {
   const { error } = useSelector((store: any) => store.BurgerIngredients);
   const { orderInfo } = useSelector((store: any) => store.BurgerConstructor);
+
   const id = useSelector(
     (store: any) => store.BurgerConstructor.itemConstructor
   );
@@ -17,7 +18,7 @@ const OrderDetails = () => {
   id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
 
   const dispatch = useDispatch();
-
+  console.log(orderItems, "orderItems");
   useEffect(() => {
     dispatch(postItems(orderItems) as any);
   }, [dispatch, orderItems]);

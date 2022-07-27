@@ -18,7 +18,7 @@ import {
   ADD_ITEM_IN_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
   SORT_ITEM_IN_CONSTRUCTOR,
-} from "../../services/actions/burger-constructor";
+} from "../../services/constants/burger-constructor";
 
 import Modal from "../modal/modal";
 

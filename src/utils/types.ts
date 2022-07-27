@@ -39,6 +39,11 @@ export type TUserData = {
   refreshToken: string;
   success: boolean;
 };
+export type TUser = {
+  name: string;
+  email: string;
+  password?: string | undefined;
+};
 
 export type TOrderData = {
   name: string;

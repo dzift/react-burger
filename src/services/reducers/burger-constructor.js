@@ -6,7 +6,7 @@ import {
   DEL_ITEM_IN_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
   SORT_ITEM_IN_CONSTRUCTOR,
-} from "../actions/burger-constructor";
+} from "../constants/burger-constructor";
 
 const initialState = {
   itemConstructor: {

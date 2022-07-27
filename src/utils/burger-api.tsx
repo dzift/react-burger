@@ -1,16 +1,10 @@
-import {
-  TIngredientsData,
-  TOrderData,
-  TApiData,
-  TUserData,
-  TCookieProps,
-} from "./types";
+import { TCookieProps } from "./types";
 const URL_FOR_API = "https://norma.nomoreparties.space/api";
 
 export const getIngredients = () => {
   return fetch(`${URL_FOR_API}/ingredients`, {
     method: "GET",
-  }).then((res) => checkReponse<TIngredientsData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postIngredients = (orderItems: string[]) => {
@@ -22,7 +16,7 @@ export const postIngredients = (orderItems: string[]) => {
     body: JSON.stringify({
       ingredients: orderItems,
     }),
-  }).then((res) => checkReponse<TOrderData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postForgotPassword = (email: string) => {
@@ -34,7 +28,7 @@ export const postForgotPassword = (email: string) => {
     body: JSON.stringify({
       email: email,
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postResetPassword = (password: string, token: string) => {
@@ -47,7 +41,7 @@ export const postResetPassword = (password: string, token: string) => {
       password: password,
       token: token,
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const createUser = (password: string, email: string, name: string) => {
@@ -61,7 +55,7 @@ export const createUser = (password: string, email: string, name: string) => {
       password: password,
       name: name,
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const loginUser = (password: string, email: string) => {
@@ -75,7 +69,7 @@ export const loginUser = (password: string, email: string) => {
       email: email,
       password: password,
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const getUser = () => {
@@ -100,7 +94,7 @@ export const updateUser = (password: string, email: string, name: string) => {
       password: password,
       name: name,
     }),
-  });
+  }).then((res) => checkReponse(res));
 };
 
 export const refreshToken = () => {
@@ -112,7 +106,7 @@ export const refreshToken = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const logoutUser = () => {
@@ -124,7 +118,7 @@ export const logoutUser = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const setCookie = (
@@ -177,7 +171,7 @@ export const deleteCookie = (name: string) => {
   });
 };
 
-const checkReponse = <T,>(res: Response): Promise<T> => {
+const checkReponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 

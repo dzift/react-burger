@@ -2,7 +2,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-} from "../actions/burger-Ingredients";
+} from "../constants/burger-Ingredients";
 
 const initialState = {
   items: [],

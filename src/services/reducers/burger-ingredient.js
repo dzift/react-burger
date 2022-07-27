@@ -1,4 +1,4 @@
-import { GET_CURRENT_ITEM, CLEAR_ITEM } from "../actions/burger-ingredient";
+import { GET_CURRENT_ITEM, CLEAR_ITEM } from "../constants/burger-Ingredients";
 
 const initialState = {
   currentItem: false,
