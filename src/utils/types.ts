@@ -1,4 +1,29 @@
 import { Location } from "history";
+import { ThunkAction } from "redux-thunk";
+
+import { TConstructorActions } from "../services/actions/burger-constructor";
+import { TIngredientsActions } from "../services/actions//burger-Ingredients";
+import { TAuthorizationActions } from "../services/actions/authorization";
+
+import { store } from "../services/store";
+
+export type RootState = ReturnType<typeof store.getState>;
+
+type TApplicationActions =
+  | TAuthorizationActions
+  | TConstructorActions
+  | TIngredientsActions;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  TApplicationActions
+>;
+
+export type AppDispatch<TReturnType = void> = (
+  action: TApplicationActions | AppThunk
+) => TReturnType;
 
 export type TLocataionState = {
   background: Location;
