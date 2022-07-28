@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 
 import styles from "./sidebar.module.css";
 import { logoutUserFromApp } from "../../services/actions/authorization";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
 
   const logoutClick = () => {
-    dispatch(logoutUserFromApp() as any);
+    dispatch(logoutUserFromApp());
   };
   return (
     <section className={`mr-15`}>

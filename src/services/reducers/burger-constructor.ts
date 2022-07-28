@@ -13,15 +13,15 @@ import { TConstructorActions } from "../actions/burger-constructor";
 
 export type TConstructorState = {
   itemConstructor: {
-    ingredients: TItemObject[],
-    bun: boolean | null | TItemObject,
-    draggedIngredient: null,
-  },
-  orderInfo: TOrderData | boolean,
-  orderItems: [],
-  posting: boolean,
-  postingOrder: boolean,
-  error: boolean,
+    ingredients: TItemObject[];
+    bun: TItemObject | null;
+    draggedIngredient: null;
+  };
+  orderInfo: TOrderData | false;
+  orderItems: [];
+  posting: boolean;
+  postingOrder: boolean;
+  error: boolean;
 };
 
 const initialState: TConstructorState = {

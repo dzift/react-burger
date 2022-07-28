@@ -6,12 +6,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile-info.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { updateUserData } from "../../services/actions/authorization";
 
 const ProfileInfo = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((store: any) => store.AuthorizationData);
+  const { user } = useSelector((store) => store.AuthorizationData);
 
   const [name, setName] = useState<string>(user.name);
   const [email, setEmail] = useState<string>(user.email);

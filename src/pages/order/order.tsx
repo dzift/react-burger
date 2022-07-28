@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import styles from "./order.module.css";
 import { dataFeed } from "../../utils/data";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { getTrueDate } from "../../utils/burger-api";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { orderCompound } from "../../utils/data";
@@ -9,9 +9,7 @@ import Preloader from "../../components/preloader/preloader";
 
 const Order = () => {
   // const { items } = useSelector((store: any) => store.BurgerIngredients);
-  const { requestInProgress } = useSelector(
-    (store: any) => store.AuthorizationData
-  );
+  const { requestInProgress } = useSelector((store) => store.AuthorizationData);
 
   const item = dataFeed.orders[0];
   // const arr: any[] = [];

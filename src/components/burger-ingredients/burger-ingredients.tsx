@@ -6,7 +6,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Link, useLocation } from "react-router-dom";
 import Preloader from "../preloader/preloader";
 import { TLocataionState } from "../../utils/types";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { TItemObject } from "../../utils/types";
 
 declare module "react" {
@@ -25,7 +25,7 @@ const BurgerIngredients = () => {
   const main = useRef<HTMLHeadingElement>(null);
 
   const { items, loading, error } = useSelector(
-    (store: any) => store.BurgerIngredients
+    (store) => store.BurgerIngredients
   );
 
   const handleScroll = () => {

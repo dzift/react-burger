@@ -8,14 +8,14 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { resetForgotPass } from "../../services/actions/authorization";
 import styles from "./reset-password.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import Preloader from "../../components/preloader/preloader";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
 
   const { requestInProgress, user, isLoggedIn } = useSelector(
-    (store: any) => store.AuthorizationData
+    (store) => store.AuthorizationData
   );
 
   const [token, setToken] = useState("");
@@ -34,7 +34,7 @@ const ResetPassword = () => {
 
   const sendPassword = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(resetForgotPass(password, token) as any);
+    dispatch(resetForgotPass(password, token));
   };
   if (user.password) {
     return (

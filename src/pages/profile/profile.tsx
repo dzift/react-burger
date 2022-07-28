@@ -5,13 +5,11 @@ import styles from "./profile.module.css";
 import ProfileInfo from "../../components/profile-info/profile-info";
 import Sidebar from "../../components/sidebar/sidebar";
 import Preloader from "../../components/preloader/preloader";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import OrdersFeed from "../../components/orders-feed/orders-feed";
 
 const Profile = () => {
-  const { requestInProgress } = useSelector(
-    (store: any) => store.AuthorizationData
-  );
+  const { requestInProgress } = useSelector((store) => store.AuthorizationData);
 
   if (requestInProgress) {
     return (

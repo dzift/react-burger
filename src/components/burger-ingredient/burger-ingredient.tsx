@@ -4,7 +4,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useDrag } from "react-dnd";
 import { TItemObject } from "../../utils/types";
 interface IBurgerIngredientProps {
@@ -13,7 +13,7 @@ interface IBurgerIngredientProps {
 
 const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
   const dataFromApi = useSelector(
-    (store: any) => store.BurgerConstructor.itemConstructor
+    (store) => store.BurgerConstructor.itemConstructor
   );
 
   const [{ isDrag }, drag] = useDrag({
@@ -31,7 +31,7 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
       return dataFromApi.bun ? (dataFromApi.bun._id === _id ? 2 : 0) : 0;
     } else {
       if (dataFromApi.ingredients.length !== 0) {
-        let itemsArr = dataFromApi.ingredients.reduce((acc: any, item: any) => {
+        let itemsArr = dataFromApi.ingredients.reduce((acc: any, item) => {
           const { _id } = item;
           if (!Object.hasOwn(acc, _id)) {
             acc[_id] = 1;

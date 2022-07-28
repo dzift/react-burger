@@ -36,7 +36,6 @@ export interface IAddItemInConstructorActions {
 
 export interface IDelItemInConstructorActions {
   readonly type: typeof DEL_ITEM_IN_CONSTRUCTOR;
-  readonly item: TItemObject;
   itemKey: string;
 }
 export interface ISortItemInConstructorActions {

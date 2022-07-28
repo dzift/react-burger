@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./order-card.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TOrder } from "../../utils/types";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 
 const OrderCard: FC<TOrder> = ({
   number,
@@ -11,7 +11,7 @@ const OrderCard: FC<TOrder> = ({
   createdAt,
   status,
 }) => {
-  const { items } = useSelector((store: any) => store.BurgerIngredients);
+  const { items } = useSelector((store) => store.BurgerIngredients);
   const imgArray: any = [];
 
   ingredients.forEach((id) => {

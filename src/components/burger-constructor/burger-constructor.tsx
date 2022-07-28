@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import { useHistory } from "react-router-dom";
 import { useDrag, useDrop } from "react-dnd";
 
@@ -117,7 +117,7 @@ const ElementBunBottom = ({ name, price, image_mobile }: TItemMobile) => (
 );
 
 const BurgerConstructor = () => {
-  const { auth } = useSelector((store: any) => store.AuthorizationData);
+  const { auth } = useSelector((store) => store.AuthorizationData);
 
   const history = useHistory();
 
@@ -125,14 +125,14 @@ const BurgerConstructor = () => {
     (store: any) => store.BurgerConstructor.itemConstructor
   );
 
-  const getTotaPrice = useSelector((store: any): number => {
+  const getTotaPrice = useSelector((store) => {
     const bun = store.BurgerConstructor.itemConstructor.bun
       ? store.BurgerConstructor.itemConstructor.bun.price
       : 0;
     return (
       bun * 2 +
       store.BurgerConstructor.itemConstructor.ingredients.reduce(
-        (acc: any, item: { price: any }) => acc + item.price,
+        (acc, item: { price: number }) => acc + item.price,
         0
       )
     );
@@ -140,10 +140,10 @@ const BurgerConstructor = () => {
 
   const [, dropRef] = useDrop({
     accept: "NEW_INGREDIENT",
-    drop(item) {
+    drop(item: TItemObject) {
       dispatch({
         type: ADD_ITEM_IN_CONSTRUCTOR,
-        item: { ...(item as object), itemKey: uuidv4() },
+        item: { ...item, itemKey: uuidv4() },
       });
     },
     collect: (monitor) => ({
@@ -151,7 +151,7 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const { postingOrder } = useSelector((store: any) => store.BurgerConstructor);
+  const { postingOrder } = useSelector((store) => store.BurgerConstructor);
 
   const dispatch = useDispatch();
 
