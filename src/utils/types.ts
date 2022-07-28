@@ -1,5 +1,6 @@
 import { Location } from "history";
 import { ThunkAction } from "redux-thunk";
+import { Action, ActionCreator } from "redux";
 
 import { TConstructorActions } from "../services/actions/burger-constructor";
 import { TIngredientsActions } from "../services/actions//burger-Ingredients";
@@ -14,16 +15,11 @@ type TApplicationActions =
   | TConstructorActions
   | TIngredientsActions;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  TApplicationActions
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;
 
-export type AppDispatch<TReturnType = void> = (
-  action: TApplicationActions | AppThunk
-) => TReturnType;
+export type AppDispatch = typeof store.dispatch;
 
 export type TLocataionState = {
   background: Location;

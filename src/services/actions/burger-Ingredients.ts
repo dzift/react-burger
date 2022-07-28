@@ -7,7 +7,7 @@ import {
   GET_CURRENT_ITEM,
   CLEAR_ITEM,
 } from "../constants/burger-Ingredients";
-import { TItemObject } from "../../utils/types";
+import { TItemObject, AppDispatch, AppThunk } from "../../utils/types";
 
 // Типизация экшенов
 export interface IGetIngredientsRequestActions {
@@ -38,8 +38,8 @@ export type TIngredientsActions =
   | IGetCurrentItemActions
   | IClearItemActions;
 
-export const getItem: any = () => {
-  return function (dispatch: any) {
+export const getItem: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });

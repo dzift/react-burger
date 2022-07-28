@@ -8,7 +8,12 @@ import {
   SORT_ITEM_IN_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR,
 } from "../constants/burger-constructor";
-import { TOrderData, TItemObject } from "../../utils/types";
+import {
+  TOrderData,
+  TItemObject,
+  AppDispatch,
+  AppThunk,
+} from "../../utils/types";
 
 // Типизация экшенов
 export interface IGetOrderRequestActions {
@@ -53,8 +58,8 @@ export type TConstructorActions =
   | ISortItemInConstructorActions
   | IClearConstructorActions;
 
-export const postItems: any = (orderItems: Array<string>) => {
-  return function (dispatch: any) {
+export const postItems: AppThunk = (orderItems: Array<string>) => {
+  return function (dispatch: AppDispatch) {
     postIngredients(orderItems)
       .then((result) => {
         dispatch({

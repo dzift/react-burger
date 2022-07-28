@@ -10,7 +10,7 @@ import {
   updateUser,
   getUser,
 } from "../../utils/burger-api";
-import { TUserData, TUser } from "../../utils/types";
+import { TUserData, TUser, AppThunk, AppDispatch } from "../../utils/types";
 
 import {
   REGISTER_SUCCESS,
@@ -68,7 +68,6 @@ export interface IResetPasswordFailedActions {
 export interface IForgotPasswordSuccessActions {
   email: string;
   readonly type: typeof FORGOT_PASSWORD_SUCCESS;
-  readonly user: TUser;
 }
 
 export interface IForgotPasswordRequestActions {
@@ -168,12 +167,12 @@ export type TAuthorizationActions =
   | IUpdateUserRequestActions
   | IUpdateUserFailedActions;
 
-export const createNewUser = (
+export const createNewUser: AppThunk = (
   password: string,
   email: string,
   name: string
 ) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST,
     });
@@ -199,8 +198,8 @@ export const createNewUser = (
   };
 };
 
-export const loginInApp = (password: string, email: string) => {
-  return function (dispatch: any) {
+export const loginInApp: AppThunk = (password: string, email: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -226,8 +225,8 @@ export const loginInApp = (password: string, email: string) => {
   };
 };
 
-export const refreshUserToken = () => {
-  return function (dispatch: any) {
+export const refreshUserToken: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: TOKEN_REQUEST,
     });
@@ -253,8 +252,8 @@ export const refreshUserToken = () => {
   };
 };
 
-export const logoutUserFromApp = () => {
-  return function (dispatch: any) {
+export const logoutUserFromApp: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -275,8 +274,8 @@ export const logoutUserFromApp = () => {
   };
 };
 
-export const postForgotPass = (email: string) => {
-  return function (dispatch: any) {
+export const postForgotPass: AppThunk = (email: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
     });
@@ -296,8 +295,8 @@ export const postForgotPass = (email: string) => {
   };
 };
 
-export const resetForgotPass = (password: string, token: string) => {
-  return function (dispatch: any) {
+export const resetForgotPass: AppThunk = (password: string, token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
     });
@@ -316,12 +315,12 @@ export const resetForgotPass = (password: string, token: string) => {
   };
 };
 
-export const updateUserData = (
+export const updateUserData: AppThunk = (
   password: string,
   email: string,
   name: string
 ) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
@@ -341,8 +340,8 @@ export const updateUserData = (
   };
 };
 
-export const getUserData = () => {
-  return function (dispatch: any) {
+export const getUserData: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });

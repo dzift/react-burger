@@ -17,7 +17,8 @@ import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route";
 import { getItem } from "../../services/actions/burger-Ingredients";
 import { getUserData } from "../../services/actions/authorization";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
@@ -31,8 +32,8 @@ const App = () => {
   let background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getItem() as any);
-    dispatch(getUserData() as any);
+    dispatch(getItem());
+    dispatch(getUserData());
   }, [dispatch]);
 
   return (
