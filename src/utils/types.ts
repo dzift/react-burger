@@ -83,17 +83,26 @@ export type TCookieProps = {
 } & { [extraParams: string]: string | number | boolean };
 
 export type TOrder = {
-  createdAt: string;
-  ingredients: Array<string>;
-  name: string;
-  number: number;
-  status?: string;
-  updatedAt: string;
-  _id: string;
-};
-
-export type TOrders = {
-  orders: Array<TOrder>;
+  success: boolean;
+  orders: [
+    {
+      ingredients: string[];
+      _id: string;
+      name: string;
+      status: string;
+      number: number;
+      createdAt: Date;
+      updatedAt: Date;
+      price: number;
+      __v: number;
+    }
+  ];
   total: number;
   totalToday: number;
 };
+
+export enum WebSocketStatus {
+  CONNECTING = "CONNECTING...",
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+}
