@@ -17,7 +17,7 @@ import {
   disconnect as OrderWsDisconnect,
 } from "../../services/actions/ws-orders";
 import { WSS } from "../../utils/burger-api";
-
+import { TOrderItem } from "../../utils/types";
 let WS_URL = WSS;
 
 const Order = () => {
@@ -47,17 +47,18 @@ const Order = () => {
   }
 
   const currentOrder = getCurrentOrder(id, data);
-  const item = currentOrder[0];
+  const item: TOrderItem = currentOrder[0];
+  console.log(item, "item");
   const orderCompound = getIngredientsArray(item.ingredients, items);
 
-  item.ingredients.forEach((id: string) => {
+  item.ingredients.forEach((id) => {
     items.forEach((obj: any) => {
       if (obj._id === id && obj.type === "bun") {
         obj.count = 2;
       } else if (obj._id === id && obj.type !== "bun") {
         let count = 0;
 
-        item.ingredients.forEach((el: string) => {
+        item.ingredients.forEach((el) => {
           if (id === el) {
             count += 1;
           }
