@@ -52,7 +52,7 @@ const Order = () => {
   const orderCompound = getIngredientsArray(item.ingredients, items);
 
   item.ingredients.forEach((id) => {
-    items.forEach((obj: any) => {
+    items.forEach((obj) => {
       if (obj._id === id && obj.type === "bun") {
         obj.count = 2;
       } else if (obj._id === id && obj.type !== "bun") {
@@ -101,7 +101,7 @@ const Order = () => {
       <div className={`text text_type_main-medium mb-6`}>Состав:</div>
       <div className={`${styles.list} mr-6 custom-scroll`}>
         {orderCompound &&
-          orderCompound.map((obj: any, index: number) => {
+          orderCompound.map((obj, index) => {
             return (
               <div key={index} className={`${styles.listItem} mb-4`}>
                 <div className={`${styles.icon} mr-4`}>

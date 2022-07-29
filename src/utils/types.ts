@@ -44,6 +44,7 @@ export type TItemObject = {
   type: string;
   __v: number;
   _id: string;
+  count?: number;
 };
 
 export type TItemMobile = {
