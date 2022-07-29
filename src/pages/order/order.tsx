@@ -48,7 +48,7 @@ const Order = () => {
 
   const currentOrder = getCurrentOrder(id, data);
   const item: TOrderItem = currentOrder[0];
-  console.log(item, "item");
+
   const orderCompound = getIngredientsArray(item.ingredients, items);
 
   item.ingredients.forEach((id) => {
