@@ -1,7 +1,7 @@
 import { WebSocketStatus, TOrder } from "../../utils/types";
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  connecting,
+  connect,
   disconnect,
   wsOpen,
   wsClose,
@@ -22,7 +22,7 @@ const initialState: WsOrdersStore = {
 };
 
 export const wsOrderReducer = createReducer(initialState, (builder) => {
-  builder.addCase(connecting, (state) => {
+  builder.addCase(connect, (state) => {
     state.status = WebSocketStatus.CONNECTING;
   });
   builder.addCase(disconnect, (state) => {

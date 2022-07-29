@@ -17,7 +17,7 @@ const OrderDetails = () => {
   id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
 
   const dispatch = useDispatch();
-  console.log(orderItems, "orderItems");
+
   useEffect(() => {
     dispatch(postItems(orderItems) as any);
   }, [dispatch, orderItems]);

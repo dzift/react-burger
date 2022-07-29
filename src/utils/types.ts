@@ -5,15 +5,18 @@ import { Action, ActionCreator } from "redux";
 import { TConstructorActions } from "../services/actions/burger-constructor";
 import { TIngredientsActions } from "../services/actions//burger-Ingredients";
 import { TAuthorizationActions } from "../services/actions/authorization";
+import { TOrderWsAction } from "../services/actions/ws-orders";
+import { rootReducer } from "../services/reducers/app";
 
 import { store } from "../services/store";
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 
 type TApplicationActions =
   | TAuthorizationActions
   | TConstructorActions
-  | TIngredientsActions;
+  | TIngredientsActions
+  | TOrderWsAction;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
@@ -84,19 +87,7 @@ export type TCookieProps = {
 
 export type TOrder = {
   success: boolean;
-  orders: [
-    {
-      ingredients: string[];
-      _id: string;
-      name: string;
-      status: string;
-      number: number;
-      createdAt: Date;
-      updatedAt: Date;
-      price: number;
-      __v: number;
-    }
-  ];
+  orders: Array<TOrderItem>;
   total: number;
   totalToday: number;
 };
@@ -106,3 +97,15 @@ export enum WebSocketStatus {
   ONLINE = "ONLINE",
   OFFLINE = "OFFLINE",
 }
+
+export type TOrderItem = {
+  ingredients: string[];
+  _id?: string;
+  name: string;
+  status?: string;
+  number: number;
+  createdAt: string;
+  updatedAt?: Date;
+  price?: number;
+  __v?: number;
+};

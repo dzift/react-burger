@@ -1,5 +1,6 @@
-import { TCookieProps } from "./types";
+import { TCookieProps, TItemObject, TOrder } from "./types";
 const URL_FOR_API = "https://norma.nomoreparties.space/api";
+export const WS_URL = "wss://norma.nomoreparties.space/orders/all";
 
 export const getIngredients = () => {
   return fetch(`${URL_FOR_API}/ingredients`, {
@@ -12,6 +13,7 @@ export const postIngredients = (orderItems: string[]) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
       ingredients: orderItems,
@@ -228,3 +230,36 @@ const getDays = (days: number) =>
     : days > 1
     ? `${days} дня(-ей) назад`
     : "Что-то пошло не так:(";
+
+export const getPrice = (arr: any) => {
+  return arr.reduce((acc: any, { price, count }: any) => {
+    return (acc += price * count);
+  }, 0);
+};
+
+export const getIngredientsArray = (
+  ingredients: Array<string>,
+  items: TItemObject[]
+) => {
+  return ingredients
+    ?.map((id: string) => items.filter((item) => item._id === id))
+    ?.flat();
+};
+
+export const getOrdersStatus = (arr: any) => {
+  return arr?.reduce(
+    (acc: any, curr: any) => {
+      if (curr.status === "done") {
+        acc["done"] = [...acc["done"], curr];
+      } else {
+        acc["pending"] = [...acc["pending"], curr];
+      }
+      return acc;
+    },
+    { done: [], pending: [] }
+  );
+};
+
+export const getCurrentOrder = (id: string, data: TOrder) => {
+  return data.orders.filter((item: any) => String(item.number) === id);
+};

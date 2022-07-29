@@ -1,51 +1,79 @@
-import React, { memo } from "react";
-import styles from "./order.module.css";
-import { dataFeed } from "../../utils/data";
-import { useSelector } from "../../utils/hooks";
-import { getTrueDate } from "../../utils/burger-api";
+import React, { memo, useEffect } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { orderCompound } from "../../utils/data";
+import styles from "./order.module.css";
+import { useSelector, useDispatch } from "../../utils/hooks";
+import {
+  getTrueDate,
+  getPrice,
+  getIngredientsArray,
+  getCurrentOrder,
+  getCookie,
+} from "../../utils/burger-api";
 import Preloader from "../../components/preloader/preloader";
-
+import { useParams } from "react-router-dom";
+import {
+  connect as OrderWsConnect,
+  disconnect as OrderWsDisconnect,
+} from "../../services/actions/ws-orders";
+let WS_URL = "wss://norma.nomoreparties.space/orders/all";
 const Order = () => {
-  // const { items } = useSelector((store: any) => store.BurgerIngredients);
+  const { items } = useSelector((store) => store.BurgerIngredients);
+  const { data } = useSelector((store) => store.ws);
   const { requestInProgress } = useSelector((store) => store.AuthorizationData);
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((store) => store.AuthorizationData);
 
-  const item = dataFeed.orders[0];
-  // const arr: any[] = [];
+  if (isLoggedIn) {
+    const token = getCookie("accessToken");
+    WS_URL = `wss://norma.nomoreparties.space/orders?token=${token}`;
+  } else {
+    WS_URL = "wss://norma.nomoreparties.space/orders/all";
+  }
 
-  // useEffect(() => {
-  //   item.ingredients.map((id: string) => {
-  //     items.map((obj: any) => {
-  //       if (obj._id === id && obj.type === "bun") {
-  //         obj.count = 2;
-  //         arr.push(obj);
-  //       } else if (obj._id === id && obj.type !== "bun") {
-  //         let count = 0;
+  useEffect(() => {
+    dispatch(OrderWsConnect(WS_URL));
+    return () => {
+      dispatch(OrderWsDisconnect());
+    };
+  }, [dispatch]);
 
-  //         item.ingredients.forEach((el: string) => {
-  //           if (id === el) {
-  //             count += 1;
-  //           }
-  //         });
+  if (!data) {
+    return <Preloader />;
+  }
 
-  //         if (obj.count === undefined) {
-  //           obj.count = count;
-  //           arr.push(obj);
-  //         }
-  //       }
-  //     });
-  //   });
-  // }, []);
-  // console.log(arr);
+  const currentOrder = getCurrentOrder(id, data);
 
-  const getPrice = (arr: any) => {
-    return arr.reduce((acc: any, { price, count }: any) => {
-      return (acc += price * count);
-    }, 0);
+  const item = currentOrder[0];
+
+  const orderCompound = getIngredientsArray(item.ingredients, items);
+
+  item.ingredients.forEach((id: string) => {
+    items.forEach((obj: any) => {
+      if (obj._id === id && obj.type === "bun") {
+        obj.count = 2;
+      } else if (obj._id === id && obj.type !== "bun") {
+        let count = 0;
+
+        item.ingredients.forEach((el: string) => {
+          if (id === el) {
+            count += 1;
+          }
+        });
+        if (obj.count === undefined) {
+          obj.count = count;
+        }
+      }
+    });
+  });
+  const getStatus = (status: string) => {
+    if (status === "done") return "Выполнен";
+    if (status === "created") return "Создан";
+    if (status === "pending") return "Готовится";
+    return false;
   };
 
-  let price = getPrice(orderCompound);
+  const price = getPrice(orderCompound);
   const time = item && item.createdAt && getTrueDate(item?.createdAt);
 
   if (requestInProgress) {
@@ -59,17 +87,22 @@ const Order = () => {
   return (
     <div className={`${styles.container} mt-10 mb-10 mr-10 ml-10`}>
       <div className={`${styles.id} text text_type_digits-default `}>
-        #{dataFeed.orders[0]._id}
+        #{item.number}
       </div>
       <div className={` text text_type_main-medium mt-10 mb-3`}>
-        {dataFeed.orders[0].name}
+        {item.name}
       </div>
       <div className={`${styles.status} text text_type_main-default mb-15`}>
-        {dataFeed.orders[0].status}
+        <span
+          className="text text_type_main-default"
+          style={{ color: item.status === "done" ? "#00CCCC" : "#FFFFFF" }}
+        >
+          {item.status && getStatus(item.status)}
+        </span>
       </div>
 
       <div className={`text text_type_main-medium mb-6`}>Состав:</div>
-      <div className={`${styles.list} mr-6`}>
+      <div className={`${styles.list} mr-6 custom-scroll`}>
         {orderCompound &&
           orderCompound.map((obj: any, index: number) => {
             return (

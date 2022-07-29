@@ -1,15 +1,38 @@
-import { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import ProfileInfo from "../../components/profile-info/profile-info";
 import Sidebar from "../../components/sidebar/sidebar";
 import Preloader from "../../components/preloader/preloader";
-import { useSelector } from "../../utils/hooks";
+import { useSelector, useDispatch } from "../../utils/hooks";
 import OrdersFeed from "../../components/orders-feed/orders-feed";
 
+import {
+  connect as OrderWsConnect,
+  disconnect as OrderWsDisconnect,
+} from "../../services/actions/ws-orders";
+import { getCookie } from "../../utils/burger-api";
+let WS_URL = "wss://norma.nomoreparties.space/orders/all";
 const Profile = () => {
   const { requestInProgress } = useSelector((store) => store.AuthorizationData);
+  const dispatch = useDispatch();
+
+  const { isLoggedIn } = useSelector((store) => store.AuthorizationData);
+
+  if (isLoggedIn) {
+    const token = getCookie("accessToken");
+    WS_URL = `wss://norma.nomoreparties.space/orders?token=${token}`;
+  } else {
+    WS_URL = "wss://norma.nomoreparties.space/orders/all";
+  }
+
+  useEffect(() => {
+    dispatch(OrderWsConnect(WS_URL));
+    return () => {
+      dispatch(OrderWsDisconnect());
+    };
+  }, [dispatch]);
 
   if (requestInProgress) {
     return (

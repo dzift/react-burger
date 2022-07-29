@@ -132,7 +132,7 @@ const BurgerConstructor = () => {
     return (
       bun * 2 +
       store.BurgerConstructor.itemConstructor.ingredients.reduce(
-        (acc, item: { price: number }) => acc + item.price,
+        (acc: any, item: { price: number }) => acc + item.price,
         0
       )
     );

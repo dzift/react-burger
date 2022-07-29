@@ -2,25 +2,37 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./orders-feed.module.css";
 import OrderCard from "../order-card/order-card";
-import { dataFeed } from "../../utils/data";
-import { TOrder } from "../../utils/types";
+
+import { useSelector } from "../../utils/hooks";
+import Preloader from "../preloader/preloader";
 
 const OrdersFeed = () => {
   const location = useLocation();
-  const items: any = dataFeed;
+  const { data } = useSelector((store) => store.ws);
+
+  if (!data) {
+    return <Preloader />;
+  }
+
   return (
     <section className={`${styles.feed} custom-scroll`}>
-      {items.orders?.map((obj: TOrder) => {
+      {data?.orders.map((orders) => {
         return (
           <Link
-            key={obj._id}
+            key={orders._id}
             to={{
-              pathname: `/feed/${obj.number}`,
+              pathname: `${location.pathname}/${orders.number}`,
               state: { background: location },
             }}
             className={styles.link}
           >
-            <OrderCard {...obj} />
+            <OrderCard
+              number={orders.number}
+              name={orders.name}
+              ingredients={orders.ingredients}
+              createdAt={orders.createdAt}
+              status={orders.status}
+            />
           </Link>
         );
       })}
