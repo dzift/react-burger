@@ -54,12 +54,7 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
   const count = checkCount();
   return !isDrag ? (
     <>
-      <div
-        ref={drag}
-        className={`${styles.itemCard} pb-8`}
-        key={_id}
-        // onClick={openModal}
-      >
+      <div ref={drag} className={`${styles.itemCard} pb-8`} key={_id}>
         {count !== 0 && <Counter count={count} size="default" />}
         <img src={image} alt="fff" />
         <div className={styles.itemPrice}>

@@ -8,6 +8,7 @@ import {
   getTrueDate,
   getPrice,
   getIngredientsArray,
+  getStatus,
 } from "../../utils/burger-api";
 
 const OrderCard: FC<TOrderItem> = ({
@@ -21,21 +22,14 @@ const OrderCard: FC<TOrderItem> = ({
   const location = useLocation();
   const orderCompound = getIngredientsArray(ingredients, items);
 
-  const getStatus = (status: string) => {
-    if (status === "done") return "Выполнен";
-    if (status === "created") return "Создан";
-    if (status === "pending") return "Готовится";
-    return false;
-  };
-
-  ingredients.forEach((id: string) => {
+  ingredients.forEach((id) => {
     items.forEach((obj: any) => {
       if (obj._id === id && obj.type === "bun") {
         obj.count = 2;
       } else if (obj._id === id && obj.type !== "bun") {
         let count = 0;
 
-        ingredients.forEach((el: string) => {
+        ingredients.forEach((el) => {
           if (id === el) {
             count += 1;
           }
@@ -73,7 +67,7 @@ const OrderCard: FC<TOrderItem> = ({
       ) : null}
       <div className={`${styles.cardBottom}`}>
         <div className={`${styles.ingredientImg}`}>
-          {orderCompound.map((obj: any, index: number) => {
+          {orderCompound.map((obj, index) => {
             if (index <= 4) {
               return (
                 <div

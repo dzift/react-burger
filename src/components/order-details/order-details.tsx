@@ -4,15 +4,16 @@ import styles from "./order-details.module.css";
 import Done from "../../images/done.gif";
 import { useSelector, useDispatch } from "../../utils/hooks";
 import Preloader from "../preloader/preloader";
-import { TItemObject } from "../../utils/types";
 
 const OrderDetails = () => {
   const { orderInfo } = useSelector((store) => store.BurgerConstructor);
 
-  const id = useSelector((store: any) => store.BurgerConstructor);
+  const { bun, ingredients } = useSelector(
+    (store) => store.BurgerConstructor.itemConstructor
+  );
 
-  const orderItems = useMemo(() => [id.bun._id], [id.bun._id]);
-  id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
+  const orderItems = useMemo(() => [bun?._id], [bun?._id]);
+  ingredients.map((obj) => orderItems.push(obj._id));
 
   const dispatch = useDispatch();
 

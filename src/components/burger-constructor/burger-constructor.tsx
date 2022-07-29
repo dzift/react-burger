@@ -122,7 +122,7 @@ const BurgerConstructor = () => {
   const history = useHistory();
 
   const dataFromApi = useSelector(
-    (store: any) => store.BurgerConstructor.itemConstructor
+    (store) => store.BurgerConstructor.itemConstructor
   );
 
   const getTotaPrice = useSelector((store) => {
@@ -203,7 +203,7 @@ const BurgerConstructor = () => {
             )}
           </div>
           <ul className={`${styles.constructorItemFlex} custom-scroll`}>
-            {dataFromApi.ingredients.map((obj: TItemObject, index: number) => {
+            {dataFromApi.ingredients.map((obj, index) => {
               const deleteItem = () => {
                 dispatch({
                   type: DEL_ITEM_IN_CONSTRUCTOR,
