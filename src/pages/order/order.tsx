@@ -8,6 +8,7 @@ import {
   getIngredientsArray,
   getCurrentOrder,
   getCookie,
+  getStatus,
 } from "../../utils/burger-api";
 import Preloader from "../../components/preloader/preloader";
 import { useParams } from "react-router-dom";
@@ -15,7 +16,10 @@ import {
   connect as OrderWsConnect,
   disconnect as OrderWsDisconnect,
 } from "../../services/actions/ws-orders";
-let WS_URL = "wss://norma.nomoreparties.space/orders/all";
+import { WSS } from "../../utils/burger-api";
+
+let WS_URL = WSS;
+
 const Order = () => {
   const { items } = useSelector((store) => store.BurgerIngredients);
   const { data } = useSelector((store) => store.ws);
@@ -28,7 +32,7 @@ const Order = () => {
     const token = getCookie("accessToken");
     WS_URL = `wss://norma.nomoreparties.space/orders?token=${token}`;
   } else {
-    WS_URL = "wss://norma.nomoreparties.space/orders/all";
+    WS_URL = WSS;
   }
 
   useEffect(() => {
@@ -43,9 +47,7 @@ const Order = () => {
   }
 
   const currentOrder = getCurrentOrder(id, data);
-
   const item = currentOrder[0];
-
   const orderCompound = getIngredientsArray(item.ingredients, items);
 
   item.ingredients.forEach((id: string) => {
@@ -66,12 +68,6 @@ const Order = () => {
       }
     });
   });
-  const getStatus = (status: string) => {
-    if (status === "done") return "Выполнен";
-    if (status === "created") return "Создан";
-    if (status === "pending") return "Готовится";
-    return false;
-  };
 
   const price = getPrice(orderCompound);
   const time = item && item.createdAt && getTrueDate(item?.createdAt);

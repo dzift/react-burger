@@ -13,7 +13,10 @@ import {
   disconnect as OrderWsDisconnect,
 } from "../../services/actions/ws-orders";
 import { getCookie } from "../../utils/burger-api";
-let WS_URL = "wss://norma.nomoreparties.space/orders/all";
+import { WSS } from "../../utils/burger-api";
+
+let WS_URL = WSS;
+
 const Profile = () => {
   const { requestInProgress } = useSelector((store) => store.AuthorizationData);
   const dispatch = useDispatch();
@@ -24,7 +27,7 @@ const Profile = () => {
     const token = getCookie("accessToken");
     WS_URL = `wss://norma.nomoreparties.space/orders?token=${token}`;
   } else {
-    WS_URL = "wss://norma.nomoreparties.space/orders/all";
+    WS_URL = WSS;
   }
 
   useEffect(() => {

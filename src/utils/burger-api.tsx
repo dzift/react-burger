@@ -1,6 +1,6 @@
 import { TCookieProps, TItemObject, TOrder } from "./types";
 const URL_FOR_API = "https://norma.nomoreparties.space/api";
-export const WS_URL = "wss://norma.nomoreparties.space/orders/all";
+export const WSS = "wss://norma.nomoreparties.space/orders/all";
 
 export const getIngredients = () => {
   return fetch(`${URL_FOR_API}/ingredients`, {
@@ -262,4 +262,11 @@ export const getOrdersStatus = (arr: any) => {
 
 export const getCurrentOrder = (id: string, data: TOrder) => {
   return data.orders.filter((item: any) => String(item.number) === id);
+};
+
+export const getStatus = (status: string) => {
+  if (status === "done") return "Выполнен";
+  if (status === "created") return "Создан";
+  if (status === "pending") return "Готовится";
+  return false;
 };

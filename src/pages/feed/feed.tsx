@@ -7,20 +7,18 @@ import {
   disconnect as OrderWsDisconnect,
 } from "../../services/actions/ws-orders";
 import { TOrderItem } from "../../utils/types";
-// import { WS_URL } from "../../utils/burger-api";
-import { getOrdersStatus, getCookie } from "../../utils/burger-api";
 
-let WS_URL = "wss://norma.nomoreparties.space/orders/all";
+import { getOrdersStatus, getCookie } from "../../utils/burger-api";
+import { WSS } from "../../utils/burger-api";
+
+let WS_URL = WSS;
 
 const Feed = () => {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((store) => store.AuthorizationData);
-  console.log(isLoggedIn);
   if (isLoggedIn) {
     const token = getCookie("accessToken");
     WS_URL = `wss://norma.nomoreparties.space/orders?token=${token}`;
-  } else {
-    WS_URL = "wss://norma.nomoreparties.space/orders/all";
   }
 
   useEffect(() => {

@@ -9,9 +9,7 @@ import { TItemObject } from "../../utils/types";
 const OrderDetails = () => {
   const { orderInfo } = useSelector((store) => store.BurgerConstructor);
 
-  const id = useSelector(
-    (store: any) => store.BurgerConstructor.itemConstructor
-  );
+  const id = useSelector((store: any) => store.BurgerConstructor);
 
   const orderItems = useMemo(() => [id.bun._id], [id.bun._id]);
   id.ingredients.map((obj: TItemObject) => orderItems.push(obj._id));
@@ -19,7 +17,7 @@ const OrderDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(postItems(orderItems) as any);
+    dispatch(postItems(orderItems));
   }, [dispatch, orderItems]);
 
   if (!orderInfo) {
