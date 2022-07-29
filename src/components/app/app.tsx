@@ -66,11 +66,12 @@ const App = () => {
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile">
-          <Profile />
-        </ProtectedRoute>
+
         <ProtectedRoute path="/profile/orders/:id" exact={true}>
           <Order />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile">
+          <Profile />
         </ProtectedRoute>
         <Route path="/ingredients/:id" exact={true}>
           <IngredientDetails />
