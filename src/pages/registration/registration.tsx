@@ -8,14 +8,14 @@ import {
 import { createNewUser } from "../../services/actions/authorization";
 import { Link, Redirect } from "react-router-dom";
 import styles from "./registration.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 
 import Preloader from "../../components/preloader/preloader";
 
 const Register = () => {
   const dispatch = useDispatch();
   const { requestInProgress, isLoggedIn } = useSelector(
-    (store: any) => store.AuthorizationData
+    (store) => store.AuthorizationData
   );
 
   const [name, setName] = useState("");
@@ -35,7 +35,7 @@ const Register = () => {
 
   const sendNewUser = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(createNewUser(password, email, name) as any);
+    dispatch(createNewUser(password, email, name));
   };
 
   if (isLoggedIn) {

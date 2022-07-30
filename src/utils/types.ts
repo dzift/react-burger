@@ -1,4 +1,28 @@
 import { Location } from "history";
+import { ThunkAction } from "redux-thunk";
+import { Action, ActionCreator } from "redux";
+
+import { TConstructorActions } from "../services/actions/burger-constructor";
+import { TIngredientsActions } from "../services/actions//burger-Ingredients";
+import { TAuthorizationActions } from "../services/actions/authorization";
+import { TOrderWsAction } from "../services/actions/ws-orders";
+import { rootReducer } from "../services/reducers/app";
+
+import { store } from "../services/store";
+
+export type RootState = ReturnType<typeof rootReducer>;
+
+type TApplicationActions =
+  | TAuthorizationActions
+  | TConstructorActions
+  | TIngredientsActions
+  | TOrderWsAction;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>;
+
+export type AppDispatch = typeof store.dispatch;
 
 export type TLocataionState = {
   background: Location;
@@ -20,6 +44,7 @@ export type TItemObject = {
   type: string;
   __v: number;
   _id: string;
+  count?: number;
 };
 
 export type TItemMobile = {
@@ -39,6 +64,11 @@ export type TUserData = {
   refreshToken: string;
   success: boolean;
 };
+export type TUser = {
+  name: string;
+  email: string;
+  password?: string | undefined;
+};
 
 export type TOrderData = {
   name: string;
@@ -55,3 +85,28 @@ export type TCookieProps = {
   expires?: number | string;
   path?: string;
 } & { [extraParams: string]: string | number | boolean };
+
+export type TOrder = {
+  success: boolean;
+  orders: Array<TOrderItem>;
+  total: number;
+  totalToday: number;
+};
+
+export enum WebSocketStatus {
+  CONNECTING = "CONNECTING...",
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+}
+
+export type TOrderItem = {
+  ingredients: string[];
+  _id?: string;
+  name: string;
+  status?: string;
+  number: number;
+  createdAt: string;
+  updatedAt?: Date;
+  price?: number;
+  __v?: number;
+};

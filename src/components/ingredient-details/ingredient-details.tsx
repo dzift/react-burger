@@ -2,18 +2,17 @@ import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import styles from "./ingredient-details.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 
 import Preloader from "../preloader/preloader";
-import { TItemObject } from "../../utils/types";
 
 const IngredientDetails = () => {
-  let { id }: any = useParams();
-  const { items } = useSelector((store: any) => store.BurgerIngredients);
+  let { id } = useParams<{ id: string }>();
+  const { items } = useSelector((store) => store.BurgerIngredients);
 
   const data = useMemo(() => {
     if (!!items) {
-      let ingredient = items.find((el: TItemObject) => el._id === id);
+      let ingredient = items.find((el) => el._id === id);
       return ingredient;
     } else {
       return null;
@@ -22,11 +21,11 @@ const IngredientDetails = () => {
 
   return (
     <div className={`${styles.container} `}>
-      <div className={`${styles.modalHeader} ml-10 mt-10 mr-10`}>
+      <div className={`${styles.modalHeader} mt-10`}>
         <div className="text text_type_main-large">Детали ингредиента</div>
       </div>
       {!!data ? (
-        <div className={`${styles.modalContent} pl-5 pr-5 pb-15`}>
+        <div className={`${styles.modalContent} `}>
           <div className={`${styles.modalImg} pl-5 pr-5 mb-4`}>
             <img src={data.image_large} alt="fff" />
           </div>

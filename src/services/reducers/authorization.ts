@@ -23,9 +23,23 @@ import {
   LOGOUT_SUCCESS,
   LOGOUT_REQUEST,
   LOGOUT_FAILED,
-} from "../actions/authorization";
+} from "../constants/authorization";
 
-const initialState = {
+import { TAuthorizationActions } from "../actions/authorization";
+
+export type TAuthState = {
+  user: {
+    email: string;
+    password: string;
+    name: string;
+  };
+  auth: boolean;
+  isLoggedIn: boolean;
+  requestInProgress: boolean;
+  requestError: boolean;
+};
+
+const initialState: TAuthState = {
   user: {
     email: "",
     password: "",
@@ -37,7 +51,10 @@ const initialState = {
   requestError: false,
 };
 
-export const reducerAuthorization = (state = initialState, action) => {
+export const reducerAuthorization = (
+  state = initialState,
+  action: TAuthorizationActions
+): TAuthState => {
   switch (action.type) {
     //регистрация начало
     case REGISTER_REQUEST:
@@ -54,6 +71,7 @@ export const reducerAuthorization = (state = initialState, action) => {
         user: {
           email: action.user.email,
           name: action.user.name,
+          password: "",
         },
       };
     case REGISTER_FAILED:
@@ -158,6 +176,8 @@ export const reducerAuthorization = (state = initialState, action) => {
         ...state,
         user: {
           email: action.email,
+          name: "",
+          password: "",
         },
         requestInProgress: false,
         requestError: false,
@@ -167,6 +187,8 @@ export const reducerAuthorization = (state = initialState, action) => {
         ...state,
         user: {
           email: "",
+          name: "",
+          password: "",
         },
         requestInProgress: false,
         requestError: true,
@@ -184,7 +206,9 @@ export const reducerAuthorization = (state = initialState, action) => {
       return {
         ...state,
         user: {
-          password: true,
+          password: "true",
+          email: "",
+          name: "",
         },
         requestInProgress: false,
         requestError: false,
@@ -194,6 +218,8 @@ export const reducerAuthorization = (state = initialState, action) => {
         ...state,
         user: {
           password: "",
+          email: "",
+          name: "",
         },
         requestInProgress: false,
         requestError: true,
@@ -217,6 +243,7 @@ export const reducerAuthorization = (state = initialState, action) => {
         user: {
           email: action.user.email,
           name: action.user.name,
+          password: "",
         },
       };
     case GET_USER_FAILED:
@@ -243,6 +270,7 @@ export const reducerAuthorization = (state = initialState, action) => {
         user: {
           email: action.user.email,
           name: action.user.name,
+          password: "",
         },
       };
     case UPDATE_USER_FAILED:

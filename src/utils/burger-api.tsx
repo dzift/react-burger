@@ -1,16 +1,11 @@
-import {
-  TIngredientsData,
-  TOrderData,
-  TApiData,
-  TUserData,
-  TCookieProps,
-} from "./types";
+import { TCookieProps, TItemObject, TOrder } from "./types";
 const URL_FOR_API = "https://norma.nomoreparties.space/api";
+export const WSS = "wss://norma.nomoreparties.space/orders/all";
 
 export const getIngredients = () => {
   return fetch(`${URL_FOR_API}/ingredients`, {
     method: "GET",
-  }).then((res) => checkReponse<TIngredientsData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postIngredients = (orderItems: string[]) => {
@@ -18,11 +13,12 @@ export const postIngredients = (orderItems: string[]) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
       ingredients: orderItems,
     }),
-  }).then((res) => checkReponse<TOrderData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postForgotPassword = (email: string) => {
@@ -34,7 +30,7 @@ export const postForgotPassword = (email: string) => {
     body: JSON.stringify({
       email: email,
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const postResetPassword = (password: string, token: string) => {
@@ -47,7 +43,7 @@ export const postResetPassword = (password: string, token: string) => {
       password: password,
       token: token,
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const createUser = (password: string, email: string, name: string) => {
@@ -61,7 +57,7 @@ export const createUser = (password: string, email: string, name: string) => {
       password: password,
       name: name,
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const loginUser = (password: string, email: string) => {
@@ -75,7 +71,7 @@ export const loginUser = (password: string, email: string) => {
       email: email,
       password: password,
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const getUser = () => {
@@ -100,7 +96,7 @@ export const updateUser = (password: string, email: string, name: string) => {
       password: password,
       name: name,
     }),
-  });
+  }).then((res) => checkReponse(res));
 };
 
 export const refreshToken = () => {
@@ -112,7 +108,7 @@ export const refreshToken = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse<TUserData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const logoutUser = () => {
@@ -124,7 +120,7 @@ export const logoutUser = () => {
     body: JSON.stringify({
       token: localStorage.getItem("refreshToken"),
     }),
-  }).then((res) => checkReponse<TApiData>(res));
+  }).then((res) => checkReponse(res));
 };
 
 export const setCookie = (
@@ -177,7 +173,7 @@ export const deleteCookie = (name: string) => {
   });
 };
 
-const checkReponse = <T,>(res: Response): Promise<T> => {
+const checkReponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
@@ -204,4 +200,73 @@ const fetchWithRefresh = async (url: string, options: any) => {
       return Promise.reject(err);
     }
   }
+};
+
+export const getTrueDate = (date: string) => {
+  const dayCreated: Date = new Date(date);
+  const today: Date = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diffTime: number = Math.ceil(
+    (today.getTime() - dayCreated.getTime()) / (60 * 60 * 24 * 1000)
+  );
+  const hours =
+    dayCreated.getHours() > 9
+      ? dayCreated.getHours()
+      : `0${dayCreated.getHours()}`;
+  const min =
+    dayCreated.getMinutes() > 9
+      ? dayCreated.getMinutes()
+      : `0${dayCreated.getMinutes()}`;
+
+  return `${getDays(diffTime)}, ${hours}:${min} i-GMT+${
+    (dayCreated.getTimezoneOffset() * -1) / 60
+  }`;
+};
+const getDays = (days: number) =>
+  days === 0
+    ? "Сегодня"
+    : days === 1
+    ? "Вчера"
+    : days > 1
+    ? `${days} дня(-ей) назад`
+    : "Что-то пошло не так:(";
+
+export const getPrice = (arr: any) => {
+  return arr.reduce((acc: any, { price, count }: any) => {
+    return (acc += price * count);
+  }, 0);
+};
+
+export const getIngredientsArray = (
+  ingredients: Array<string>,
+  items: TItemObject[]
+) => {
+  return ingredients
+    ?.map((id: string) => items.filter((item) => item._id === id))
+    ?.flat();
+};
+
+export const getOrdersStatus = (arr: any) => {
+  return arr?.reduce(
+    (acc: any, curr: any) => {
+      if (curr.status === "done") {
+        acc["done"] = [...acc["done"], curr];
+      } else {
+        acc["pending"] = [...acc["pending"], curr];
+      }
+      return acc;
+    },
+    { done: [], pending: [] }
+  );
+};
+
+export const getCurrentOrder = (id: string, data: TOrder) => {
+  return data.orders.filter((item: any) => String(item.number) === id);
+};
+
+export const getStatus = (status: string) => {
+  if (status === "done") return "Выполнен";
+  if (status === "created") return "Создан";
+  if (status === "pending") return "Готовится";
+  return false;
 };

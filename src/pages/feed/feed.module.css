@@ -1,0 +1,39 @@
+.head {
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 608px 572px;
+  align-items: start;
+  margin: 0 auto;
+  max-width: 1240px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.block {
+  display: grid;
+  grid-template-columns: auto auto;
+  max-height: 350px;
+}
+
+.list {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 350px;
+  max-width: 272px;
+}
+
+.done {
+  color: #00cccc;
+}

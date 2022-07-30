@@ -33,7 +33,7 @@ const Modal = ({ children, onClose }: TModalProps) => {
     ReactDOM.createPortal(
       <>
         <ModalOverlay onClose={onClose} />
-        <div className={styles.modal}>
+        <div className={`${styles.modal}  pb-10 pr-10 pl-10`}>
           <button
             className={`${styles.modalButton}  ml-10 mt-15 mr-10`}
             onClick={onClose}

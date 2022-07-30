@@ -7,7 +7,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { postForgotPass } from "../../services/actions/authorization";
 import styles from "./forgot-password.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 
 import Preloader from "../../components/preloader/preloader";
 
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
 
   const { requestInProgress, user, isLoggedIn } = useSelector(
-    (store: any) => store.AuthorizationData
+    (store) => store.AuthorizationData
   );
 
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
 
   const sendMail = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(postForgotPass(email) as any);
+    dispatch(postForgotPass(email));
   };
   if (user.email) {
     return (

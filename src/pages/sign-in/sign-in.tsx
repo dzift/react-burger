@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./sign-in.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/hooks";
 
 import Preloader from "../../components/preloader/preloader";
 
@@ -17,7 +17,7 @@ import { TLocataionState } from "../../utils/types";
 const Login = () => {
   const dispatch = useDispatch();
   const { requestInProgress, isLoggedIn } = useSelector(
-    (store: any) => store.AuthorizationData
+    (store) => store.AuthorizationData
   );
 
   const location = useLocation<TLocataionState>();
@@ -38,7 +38,7 @@ const Login = () => {
 
   const loginUser = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(loginInApp(password, email) as any);
+    dispatch(loginInApp(password, email));
   };
 
   if (isLoggedIn) {

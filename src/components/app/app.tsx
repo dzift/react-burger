@@ -3,18 +3,21 @@ import { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+
 import {
   Login,
   Register,
   ForgotPassword,
   ResetPassword,
   Profile,
+  Feed,
+  Order,
 } from "../../pages";
 import styles from "./app.module.css";
 import ProtectedRoute from "../protected-route";
-import { getItem } from "../../services/actions/burger-Ingredients.js";
-import { getUserData } from "../../services/actions/authorization.js";
-import { useDispatch } from "react-redux";
+import { getItem } from "../../services/actions/burger-Ingredients";
+import { getUserData } from "../../services/actions/authorization";
+import { useDispatch } from "../../utils/hooks";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
@@ -28,8 +31,8 @@ const App = () => {
   let background = location.state && location.state.background;
 
   useEffect(() => {
-    dispatch(getItem() as any);
-    dispatch(getUserData() as any);
+    dispatch(getItem());
+    dispatch(getUserData());
   }, [dispatch]);
 
   return (
@@ -50,12 +53,22 @@ const App = () => {
         <Route path="/register" exact={true}>
           <Register />
         </Route>
+        <Route path="/feed" exact={true}>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id">
+          <Order />
+        </Route>
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />
         </Route>
         <Route path="/reset-password" exact={true}>
           <ResetPassword />
         </Route>
+
+        <ProtectedRoute path="/profile/orders/:id" exact={true}>
+          <Order />
+        </ProtectedRoute>
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
@@ -70,14 +83,32 @@ const App = () => {
       </Switch>
 
       {background && (
-        <Route
-          path="/ingredients/:id"
-          children={
-            <Modal onClose={() => history.goBack()}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
+        <>
+          <Route
+            path="/ingredients/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <Order />
+              </Modal>
+            }
+          />
+          <ProtectedRoute
+            path="/profile/orders/:id"
+            children={
+              <Modal onClose={() => history.goBack()}>
+                <Order />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

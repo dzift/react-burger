@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { RouteProps } from "react-router";
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../utils/hooks";
 import Preloader from "./preloader/preloader";
 
 const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { requestInProgress, isLoggedIn } = useSelector(
-    (store: any) => store.AuthorizationData
+    (store) => store.AuthorizationData
   );
   if (requestInProgress) {
     <div className={`pt-30`}>
