@@ -100,25 +100,24 @@ const Order = () => {
 
       <div className={`text text_type_main-medium mb-6`}>Состав:</div>
       <div className={`${styles.list} mr-6 custom-scroll`}>
-        {orderCompound &&
-          orderCompound.map((obj, index) => {
-            return (
-              <div key={index} className={`${styles.listItem} mb-4`}>
-                <div className={`${styles.icon} mr-4`}>
-                  <img src={obj.image_mobile} alt="fff" />
-                </div>
-                <div className={`${styles.info} text text_type_main-default`}>
-                  {obj.name}
-                  <div className={`${styles.price} ml-4 `}>
-                    <span className={`text text_type_digits-default mr-2`}>
-                      {obj.count} x {obj.price}
-                    </span>
-                    <CurrencyIcon type="primary" />
-                  </div>
+        {orderCompound.map((obj, index) => {
+          return (
+            <div key={index} className={`${styles.listItem} mb-4`}>
+              <div className={`${styles.icon} mr-4`}>
+                <img src={obj.image_mobile} alt="fff" />
+              </div>
+              <div className={`${styles.info} text text_type_main-default`}>
+                {obj.name}
+                <div className={`${styles.price} ml-4 `}>
+                  <span className={`text text_type_digits-default mr-2`}>
+                    {obj.count} x {obj.price}
+                  </span>
+                  <CurrencyIcon type="primary" />
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
       <div className={`${styles.info} text text_type_main-default mt-10`}>
         {time}

@@ -23,7 +23,7 @@ const OrderDetails = () => {
 
   if (!orderInfo) {
     return (
-      <div className={`pt-30`}>
+      <div className={`${styles.preloader}`}>
         <Preloader />
       </div>
     );
@@ -31,7 +31,7 @@ const OrderDetails = () => {
 
   return (
     <>
-      <div className={`${styles.modalOrder} mt-30 mb-8`}>
+      <div className={`${styles.modalOrder} mt-30 `}>
         <>
           <p className="text text_type_digits-large mb-15">
             {orderInfo.order.number}

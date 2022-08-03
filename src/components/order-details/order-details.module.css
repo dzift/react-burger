@@ -19,3 +19,6 @@
 .orderText {
   color: #8585ad;
 }
+.preloader {
+  min-width: 640px;
+}

@@ -39,7 +39,7 @@ const App = () => {
     <>
       <AppHeader />
       <Switch location={background || location}>
-        <Route path="/" exact={true}>
+        <Route path={["/", "/react-burger"]} exact={true}>
           <main className={styles.page}>
             <div className={styles.content}>
               <BurgerIngredients />
