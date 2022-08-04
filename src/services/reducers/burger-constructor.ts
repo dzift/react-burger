@@ -46,6 +46,7 @@ export const reducerBurgerConstructor = (
       return {
         ...state,
         postingOrder: true,
+        orderInfo: false,
         error: false,
       };
     case GET_ORDER_SUCCESS:

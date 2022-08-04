@@ -14,7 +14,7 @@ if (!rootElement) throw new Error("Failed to find the root element");
 export const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <Router>
+  <Router basename="/react-burger/">
     <React.StrictMode>
       <DndProvider backend={HTML5Backend}>
         <Provider store={store}>

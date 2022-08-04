@@ -21,4 +21,5 @@
 }
 .preloader {
   min-width: 640px;
+  margin: auto;
 }
