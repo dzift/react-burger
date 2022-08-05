@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build &&  scp -r ./build/* dzift@51.250.88.247:/home/dzift/stellar-frontend",
+    "predeploy": "npm run build &&  scp -r ./build/* dzift@51.250.88.247:/home/dzift/react-burger",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
@@ -61,6 +61,5 @@
     "@testing-library/react": "^13.3.0",
     "gh-pages": "^4.0.0",
     "react-test-renderer": "^18.2.0"
-  },
-  "homepage": "https://dzift.github.io/react-burger"
+  }
 }
