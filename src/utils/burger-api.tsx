@@ -232,7 +232,7 @@ const getDays = (days: number) =>
     : "Что-то пошло не так:(";
 
 export const getPrice = (arr: any) => {
-  return arr.reduce((acc: any, { price, count }: any) => {
+  return arr?.reduce((acc: any, { price, count }: any) => {
     return (acc += price * count);
   }, 0);
 };

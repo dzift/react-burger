@@ -10,6 +10,7 @@ import {
   getIngredientsArray,
   getStatus,
 } from "../../utils/burger-api";
+// import { items, location } from "../../utils/data";
 
 const OrderCard: FC<TOrderItem> = ({
   number,
@@ -22,7 +23,7 @@ const OrderCard: FC<TOrderItem> = ({
   const location = useLocation();
   const orderCompound = getIngredientsArray(ingredients, items);
 
-  ingredients.forEach((id) => {
+  ingredients?.forEach((id) => {
     items.forEach((obj: any) => {
       if (obj._id === id && obj.type === "bun") {
         obj.count = 2;
@@ -67,7 +68,7 @@ const OrderCard: FC<TOrderItem> = ({
       ) : null}
       <div className={`${styles.cardBottom}`}>
         <div className={`${styles.ingredientImg}`}>
-          {orderCompound.map((obj, index) => {
+          {orderCompound?.map((obj, index) => {
             if (index <= 4) {
               return (
                 <div
