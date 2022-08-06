@@ -59,6 +59,8 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
+    "cypress": "^9.7.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "gh-pages": "^4.0.0",
     "react-test-renderer": "^18.2.0"
   },

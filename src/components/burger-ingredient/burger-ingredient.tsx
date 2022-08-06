@@ -69,7 +69,11 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
       }}
       ref={drag}
     >
-      <div className={`${styles.itemCard} pb-8`} style={{ opacity }}>
+      <div
+        data-cy="ingredient"
+        className={`${styles.itemCard} pb-8`}
+        style={{ opacity }}
+      >
         {count !== 0 && <Counter count={count} size="default" />}
         <img src={image} alt="fff" />
         <div className={styles.itemPrice}>

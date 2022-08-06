@@ -10,7 +10,7 @@ import {
   getIngredientsArray,
   getStatus,
 } from "../../utils/burger-api";
-import { items, location } from "../../utils/data";
+// import { items, location } from "../../utils/data";
 
 const OrderCard: FC<TOrderItem> = ({
   number,
@@ -19,8 +19,8 @@ const OrderCard: FC<TOrderItem> = ({
   createdAt,
   status,
 }) => {
-  // const { items } = useSelector((store) => store.BurgerIngredients);
-  // const location = useLocation();
+  const { items } = useSelector((store) => store.BurgerIngredients);
+  const location = useLocation();
   const orderCompound = getIngredientsArray(ingredients, items);
 
   ingredients?.forEach((id) => {
