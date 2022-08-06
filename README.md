@@ -33,7 +33,7 @@
 последовательного запуска команд в терминале (должны быть установлены программы Git, NodeJS и менеджер пакетов npm):
 
 ```bash
-git clone https://github.com/BogdanovSergey/react-burger.git
+git clone https://github.com/dzift/react-burger.git
 
 cd react-burger
 

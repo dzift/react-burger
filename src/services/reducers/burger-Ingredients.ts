@@ -16,7 +16,7 @@ export type IIngredientState = {
   error: boolean;
 };
 
-const initialState: IIngredientState = {
+export const initialState: IIngredientState = {
   items: [],
   loading: false,
   error: false,

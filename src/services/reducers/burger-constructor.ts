@@ -24,7 +24,7 @@ export type TConstructorState = {
   error: boolean;
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   itemConstructor: {
     ingredients: [],
     bun: null,
