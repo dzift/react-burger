@@ -11,6 +11,13 @@ import { initialState } from "./burger-Ingredients";
 
 import { reducerBurgerIngredients } from "./burger-Ingredients";
 
+const ingredientsData = {
+  items: [],
+  loading: false,
+  error: false,
+  currentItem: false,
+};
+
 describe("Redux store and actions", () => {
   beforeEach(() => {
     jest.spyOn(global, "fetch").mockResolvedValue({
@@ -34,8 +41,8 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
+        ...ingredientsData,
         loading: true,
-        error: false,
       })
     );
   });
@@ -48,8 +55,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        loading: false,
-        error: false,
+        ...ingredientsData,
         items: items,
       })
     );
@@ -62,6 +68,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
+        ...ingredientsData,
         loading: true,
         error: true,
       })
@@ -76,6 +83,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
+        ...ingredientsData,
         currentItem: items[0],
       })
     );
@@ -88,9 +96,7 @@ describe("Redux store and actions", () => {
         currentItem: false,
       })
     ).toEqual(
-      expect.objectContaining({
-        currentItem: false,
-      })
+      expect.objectContaining({ ...ingredientsData, currentItem: false })
     );
   });
 });

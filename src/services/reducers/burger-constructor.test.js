@@ -8,6 +8,19 @@ import { initialState } from "./burger-constructor";
 
 import { reducerBurgerConstructor } from "./burger-constructor";
 
+const constructorData = {
+  itemConstructor: {
+    ingredients: [],
+    bun: null,
+    draggedIngredient: null,
+  },
+  orderInfo: false,
+  orderItems: [],
+  posting: true,
+  postingOrder: false,
+  error: false,
+};
+
 describe("Redux store and actions", () => {
   beforeEach(() => {
     jest.spyOn(global, "fetch").mockResolvedValue({
@@ -30,18 +43,7 @@ describe("Redux store and actions", () => {
         type: GET_ORDER_REQUEST,
       })
     ).toEqual(
-      expect.objectContaining({
-        itemConstructor: {
-          ingredients: [],
-          bun: null,
-          draggedIngredient: null,
-        },
-        orderInfo: false,
-        orderItems: [],
-        posting: true,
-        postingOrder: true,
-        error: false,
-      })
+      expect.objectContaining({ ...constructorData, postingOrder: true })
     );
   });
 
@@ -53,16 +55,8 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        itemConstructor: {
-          ingredients: [],
-          bun: null,
-          draggedIngredient: null,
-        },
+        ...constructorData,
         orderInfo: [test],
-        orderItems: [],
-        posting: true,
-        postingOrder: false,
-        error: false,
       })
     );
   });
@@ -74,15 +68,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        itemConstructor: {
-          ingredients: [],
-          bun: null,
-          draggedIngredient: null,
-        },
-        orderInfo: false,
-        orderItems: [],
-        posting: true,
-        postingOrder: false,
+        ...constructorData,
         error: true,
       })
     );

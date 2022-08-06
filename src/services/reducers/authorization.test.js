@@ -31,6 +31,18 @@ import { initialState } from "./authorization";
 
 import { reducerAuthorization } from "./authorization";
 
+const userData = {
+  user: {
+    email: "",
+    password: "",
+    name: "",
+  },
+  auth: false,
+  isLoggedIn: false,
+  requestInProgress: true,
+  requestError: false,
+};
+
 describe("Redux store and actions", () => {
   beforeEach(() => {
     jest.spyOn(global, "fetch").mockResolvedValue({
@@ -52,19 +64,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: REGISTER_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle REGISTER_SUCCESS", () => {
@@ -79,15 +79,13 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           email: "Danila",
           name: "danila@mail.com",
           password: "",
         },
-        auth: false,
-        isLoggedIn: false,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -99,13 +97,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -117,19 +109,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: LOGIN_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle LOGIN_SUCCESS", () => {
@@ -144,15 +124,15 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           email: "Danila",
           name: "danila@mail.com",
           password: "",
         },
-        requestInProgress: false,
-        requestError: false,
         isLoggedIn: true,
         auth: true,
+        requestInProgress: false,
       })
     );
   });
@@ -164,13 +144,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -182,19 +156,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: TOKEN_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle TOKEN_SUCCESS", () => {
@@ -204,15 +166,10 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
+        ...userData,
         auth: true,
         isLoggedIn: true,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -224,15 +181,9 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: false,
+        ...userData,
         requestError: true,
+        requestInProgress: false,
       })
     );
   });
@@ -242,19 +193,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: LOGOUT_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle LOGOUT_SUCCESS", () => {
@@ -264,15 +203,8 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -284,13 +216,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -302,19 +228,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: FORGOT_PASSWORD_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle FORGOT_PASSWORD_SUCCESS", () => {
@@ -323,21 +237,17 @@ describe("Redux store and actions", () => {
         type: FORGOT_PASSWORD_SUCCESS,
         user: {
           email: undefined,
-          name: "",
-          password: "",
         },
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           email: undefined,
           password: "",
           name: "",
         },
-        auth: false,
-        isLoggedIn: false,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -349,13 +259,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -367,19 +271,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: RESET_PASSWORD_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle RESET_PASSWORD_SUCCESS", () => {
@@ -388,21 +280,17 @@ describe("Redux store and actions", () => {
         type: RESET_PASSWORD_SUCCESS,
         user: {
           password: "true",
-          email: "",
-          name: "",
         },
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           password: "true",
           email: "",
           name: "",
         },
-        auth: false,
-        isLoggedIn: false,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -414,13 +302,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -431,19 +313,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: GET_USER_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle GET_USER_SUCCESS", () => {
@@ -453,11 +323,11 @@ describe("Redux store and actions", () => {
         user: {
           email: "Danila",
           name: "danila@mail.com",
-          password: "",
         },
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           password: "",
           email: "Danila",
@@ -466,7 +336,6 @@ describe("Redux store and actions", () => {
         auth: true,
         isLoggedIn: true,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -478,13 +347,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
@@ -496,19 +359,7 @@ describe("Redux store and actions", () => {
       reducerAuthorization(initialState, {
         type: UPDATE_USER_REQUEST,
       })
-    ).toEqual(
-      expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
-        requestInProgress: true,
-        requestError: false,
-      })
-    );
+    ).toEqual(expect.objectContaining(userData));
   });
 
   it("should handle UPDATE_USER_SUCCESS", () => {
@@ -518,20 +369,17 @@ describe("Redux store and actions", () => {
         user: {
           email: "Danila",
           name: "danila@mail.com",
-          password: "",
         },
       })
     ).toEqual(
       expect.objectContaining({
+        ...userData,
         user: {
           email: "Danila",
           name: "danila@mail.com",
           password: "",
         },
-        auth: false,
-        isLoggedIn: false,
         requestInProgress: false,
-        requestError: false,
       })
     );
   });
@@ -543,13 +391,7 @@ describe("Redux store and actions", () => {
       })
     ).toEqual(
       expect.objectContaining({
-        user: {
-          email: "",
-          password: "",
-          name: "",
-        },
-        auth: false,
-        isLoggedIn: false,
+        ...userData,
         requestInProgress: false,
         requestError: true,
       })
