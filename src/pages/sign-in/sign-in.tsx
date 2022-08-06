@@ -70,11 +70,13 @@ const Login = () => {
               onIconClick={onIconClick}
               errorText={"Ошибка"}
               size={"default"}
+              data-cy="mail"
             />
             <PasswordInput
               onChange={onChange}
               value={password}
               name={"password"}
+              data-cy="pass"
             />
             <Button type="primary" size="large">
               Войти

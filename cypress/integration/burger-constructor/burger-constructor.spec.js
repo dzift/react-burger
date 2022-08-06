@@ -46,5 +46,13 @@ describe("service is available", function () {
       });
     cy.get("button").contains("Оформить заказ").click();
     cy.wait(500);
+    cy.get('[name="email"]').type("test123@mail.com");
+    cy.get('[name="password"]').type("ZN*KW(S2SUt");
+    cy.get("button").contains("Войти").click().as("login");
+    cy.get("button").contains("Оформить заказ").click();
+    cy.wait(15000);
+    cy.get(".text_type_digits-large").then(($orderNumber) => {
+      cy.exec("print " + $orderNumber.text());
+    });
   });
 });
