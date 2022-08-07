@@ -24,7 +24,7 @@ export type TConstructorState = {
   error: boolean;
 };
 
-const initialState: TConstructorState = {
+export const initialState: TConstructorState = {
   itemConstructor: {
     ingredients: [],
     bun: null,
@@ -46,6 +46,7 @@ export const reducerBurgerConstructor = (
       return {
         ...state,
         postingOrder: true,
+        orderInfo: false,
         error: false,
       };
     case GET_ORDER_SUCCESS:

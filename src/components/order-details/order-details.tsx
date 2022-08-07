@@ -23,7 +23,10 @@ const OrderDetails = () => {
 
   if (!orderInfo) {
     return (
-      <div className={`${styles.preloader}`}>
+      <div className={`${styles.preloader} pt-30`}>
+        <div className="text text_type_main-large pb-10">
+          Идет подготовка вашего заказа...
+        </div>
         <Preloader />
       </div>
     );

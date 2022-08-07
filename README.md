@@ -49,4 +49,4 @@ npm run cypress:open //для тестирования:
 
 ## Адрес проекта
 
-[https://dzift.github.io/react-burger/](https://dzift.github.io/react-burger/)
+[https://starshrek.nomoredomains.sbs/](https://starshrek.nomoredomains.sbs/)

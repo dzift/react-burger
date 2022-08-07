@@ -190,9 +190,13 @@ const BurgerConstructor = () => {
           <OrderDetails />
         </Modal>
       )}
-      <section ref={dropRef} className={`pt-25 pl-4 pb-10`}>
+      <section
+        ref={dropRef}
+        data-cy="drop-target"
+        className={`pt-25 pl-4 pb-10`}
+      >
         <div className={styles.constructorMenu}>
-          <div className={`${styles.constructorItemTop} pl-8`}>
+          <div className={`${styles.constructorItemTop} pl-8`} data-cy="up-bun">
             {dataFromApi.bun && (
               <ElementBunTop
                 key={dataFromApi.bun._id}
@@ -202,7 +206,10 @@ const BurgerConstructor = () => {
               />
             )}
           </div>
-          <ul className={`${styles.constructorItemFlex} custom-scroll`}>
+          <ul
+            className={`${styles.constructorItemFlex} custom-scroll`}
+            data-cy="other-ingredients-container"
+          >
             {dataFromApi.ingredients.map((obj, index) => {
               const deleteItem = () => {
                 dispatch({
@@ -225,7 +232,10 @@ const BurgerConstructor = () => {
               }
             })}
           </ul>
-          <div className={`${styles.constructorItemBottom} pl-8`}>
+          <div
+            className={`${styles.constructorItemBottom} pl-8`}
+            data-cy="down-bun"
+          >
             {dataFromApi.bun && (
               <ElementBunBottom
                 key={dataFromApi.bun._id}

@@ -1,3 +1,10 @@
+export const location = {
+  pathname: "/feed",
+  search: "",
+  hash: "",
+  state: null,
+  key: "jflgix",
+};
 export const dataFeed = {
   success: true,
   orders: [
@@ -64,7 +71,7 @@ export const orderCompound: any[] = [
   },
 ];
 
-export const data = [
+export const items = [
   {
     _id: "60666c42cc7b410027a1a9b1",
     name: "Краторная булка N-200i",

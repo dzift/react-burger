@@ -3,9 +3,8 @@ import React, { useState, useRef } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import { Link, useLocation } from "react-router-dom";
 import Preloader from "../preloader/preloader";
-import { TLocataionState } from "../../utils/types";
+
 import { useSelector } from "../../utils/hooks";
 
 declare module "react" {
@@ -16,7 +15,6 @@ declare module "react" {
 
 const BurgerIngredients = () => {
   const [typeItem, setTypeItem] = useState<string>("Булки");
-  const location = useLocation<TLocataionState>();
 
   const menu = useRef<HTMLHeadingElement>(null);
   const bun = useRef<HTMLHeadingElement>(null);
@@ -133,16 +131,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "bun") {
                   return (
-                    <Link
-                      key={obj._id}
-                      to={{
-                        pathname: `/ingredients/${obj._id}`,
-                        state: { background: location },
-                      }}
-                      className={styles.link}
-                    >
-                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
-                    </Link>
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 } else {
                   return null;
@@ -159,16 +148,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "sauce") {
                   return (
-                    <Link
-                      key={obj._id}
-                      to={{
-                        pathname: `/ingredients/${obj._id}`,
-                        state: { background: location },
-                      }}
-                      className={styles.link}
-                    >
-                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
-                    </Link>
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 } else {
                   return null;
@@ -185,16 +165,7 @@ const BurgerIngredients = () => {
               {items.map((obj) => {
                 if (obj.type === "main") {
                   return (
-                    <Link
-                      key={obj._id}
-                      to={{
-                        pathname: `/ingredients/${obj._id}`,
-                        state: { background: location },
-                      }}
-                      className={styles.link}
-                    >
-                      <BurgerIngredient key={obj._id} dataIngredient={obj} />
-                    </Link>
+                    <BurgerIngredient key={obj._id} dataIngredient={obj} />
                   );
                 } else {
                   return null;

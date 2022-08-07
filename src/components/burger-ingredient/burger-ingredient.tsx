@@ -7,6 +7,9 @@ import {
 import { useSelector } from "../../utils/hooks";
 import { useDrag } from "react-dnd";
 import { TItemObject } from "../../utils/types";
+import { Link, useLocation } from "react-router-dom";
+import { TLocataionState } from "../../utils/types";
+
 interface IBurgerIngredientProps {
   dataIngredient: TItemObject;
 }
@@ -16,13 +19,18 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
     (store) => store.BurgerConstructor.itemConstructor
   );
 
+  const location = useLocation<TLocataionState>();
+
   const [{ isDrag }, drag] = useDrag({
     type: "NEW_INGREDIENT",
     item: dataIngredient,
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
+      handlerId: monitor.getHandlerId(),
     }),
   });
+  const opacity = isDrag ? 0.4 : 1;
+  if (isDrag) console.log("isDrag");
 
   const { image, name, price, type, _id } = dataIngredient;
 
@@ -52,9 +60,20 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
   };
 
   const count = checkCount();
-  return !isDrag ? (
-    <>
-      <div ref={drag} className={`${styles.itemCard} pb-8`} key={_id}>
+  return (
+    <Link
+      className={styles.link}
+      to={{
+        pathname: `/ingredients/${dataIngredient._id}`,
+        state: { background: location },
+      }}
+      ref={drag}
+    >
+      <div
+        data-cy="ingredient"
+        className={`${styles.itemCard} pb-8`}
+        style={{ opacity }}
+      >
         {count !== 0 && <Counter count={count} size="default" />}
         <img src={image} alt="fff" />
         <div className={styles.itemPrice}>
@@ -65,9 +84,7 @@ const BurgerIngredient = ({ dataIngredient }: IBurgerIngredientProps) => {
           {name}
         </div>
       </div>
-    </>
-  ) : (
-    <></>
+    </Link>
   );
 };
 

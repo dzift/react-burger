@@ -39,7 +39,7 @@ export type TAuthState = {
   requestError: boolean;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   user: {
     email: "",
     password: "",

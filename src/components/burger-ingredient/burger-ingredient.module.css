@@ -16,3 +16,8 @@
   max-width: 255px;
   text-align: center;
 }
+
+.link {
+  text-decoration: none;
+  color: #f2f2f3;
+}
