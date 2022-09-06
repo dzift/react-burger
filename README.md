@@ -1,4 +1,3 @@
-
 # **Космическая бургерная**
 
 Учебный проект на курсе Яндекс практикум
@@ -49,4 +48,4 @@ npm run cypress:open //для тестирования:
 
 ## Адрес проекта
 
-[https://starshrek.nomoredomains.sbs/](https://starshrek.nomoredomains.sbs/)
+[https://dzift.github.io/react-burger/](https://dzift.github.io/react-burger/)
