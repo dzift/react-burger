@@ -202,7 +202,6 @@ const BurgerConstructor = () => {
                 key={dataFromApi.bun._id}
                 image_mobile={dataFromApi.bun.image_mobile}
                 price={dataFromApi.bun.price}
-                gf
                 name={dataFromApi.bun.name}
               />
             )}
